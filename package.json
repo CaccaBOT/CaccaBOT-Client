@@ -13,6 +13,7 @@
     "@tailwindcss/typography": "^0.5.13",
     "autoprefixer": "^10.4.19",
     "pinia": "^2.1.7",
+    "showdown": "^2.1.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.2",
     "vue3-apexcharts": "^1.5.2"

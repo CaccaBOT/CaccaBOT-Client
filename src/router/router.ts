@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 import Profile from '../views/Profile.vue'
 import Stats from '../views/Stats.vue'
 import Users from '../views/Users.vue'
+import Manual from '../views/Manual.vue'
 import { useGlobalStore } from '../stores/global'
 
 const routes = [
@@ -14,7 +15,8 @@ const routes = [
   { path: '/leaderboard/:year/:month', component: Leaderboard, name: 'monthlyLeaderboard' },
   { path: '/profile/:id', component: Profile, name: 'profile' },
   { path: '/profile/:id/:year/:month', component: Profile, name: 'monthlyProfile' },
-  { path: '/users', component: Users, name: 'users'}
+  { path: '/users', component: Users, name: 'users'},
+  { path: '/manual', component: Manual, name: 'manual'}
 ]
 
 const router = createRouter({
