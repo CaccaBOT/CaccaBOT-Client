@@ -5,13 +5,18 @@ import { useGlobalStore } from '../stores/global';
 import { useAPIStore } from '../stores/api';
 import { UserStats } from '../types/UserStats';
 import icon from '/favicon.ico'
+import {color} from "../main.ts";
 const globalStore = useGlobalStore()
 const APIStore = useAPIStore()
 const monthlyPoops = ref([])
 
 const treemapOpts = {
     chart: {
-        type: 'treemap'
+        type: 'treemap',
+        background: 'transparent'
+    },
+    theme: {
+      mode: color
     }
 }
 
@@ -79,6 +84,7 @@ onMounted(async () =>
     areaOpts.value = {
         chart: {
             type: 'area',
+            background: 'transparent'
         },
         dataLabels: {
             enabled: false
@@ -86,6 +92,9 @@ onMounted(async () =>
         xaxis: {
             type: 'date',
             categories: groupedByDay.map(x => x.date)
+        },
+        theme: {
+          mode: color
         }
     }
 
@@ -156,16 +165,11 @@ onMounted(async () =>
         </div>
 
         <div class="charts-wrapper m-2">
-            <div id="chart">
-                <h2>Poop distribution</h2>
-                <apexchart height="400px" type="treemap" :options="treemapOpts" :series="treemapSeries"></apexchart>
-            </div>
+            <h2>Poop distribution</h2>
+            <apexchart height="400px" type="treemap" :options="treemapOpts" :series="treemapSeries"/>
 
-
-            <div id="chart">
-                <h2>Poops per day</h2>
-                <apexchart height="400px" type="area" :options="areaOpts" :series="areaSeries"></apexchart>
-            </div>
+            <h2>Poops per day</h2>
+            <apexchart height="400px" type="area" :options="areaOpts" :series="areaSeries"/>
         </div>
     </div>
 </template>

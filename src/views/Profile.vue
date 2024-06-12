@@ -5,6 +5,7 @@ import { useGlobalStore } from '../stores/global';
 import { useAPIStore } from '../stores/api';
 import { UserStats } from '../types/UserStats';
 import noPfp from '../assets/no_pfp.webp'
+import {color} from "../main.ts";
 const globalStore = useGlobalStore()
 const { client } = useAPIStore()
 const userStats = ref({} as UserStats)
@@ -70,6 +71,9 @@ onMounted(async () =>
       xaxis: {
         type: 'date',
         categories: result.map(x => x.date)
+      },
+      theme: {
+        mode: color
       }
     }
 
@@ -171,7 +175,7 @@ onMounted(async () =>
     </div>
     <div v-show="!userStats.monthlyLeaderboardPosition" class="skeleton h-72 w-11/12 mt-10 mx-auto"></div>
     <div v-show="userStats.monthlyLeaderboardPosition" class="w-full chart mx-auto">
-      <apexchart height="400px" type="area" :options="options" :series="series"></apexchart>
+      <apexchart height="400px" type="area" :options="options" :series="series"/>
     </div>
   </div>
 </template>
