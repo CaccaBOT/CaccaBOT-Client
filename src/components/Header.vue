@@ -4,8 +4,10 @@ import router from "../router/router"
 
 <template>
   <div class="header-wrapper w-full">
-    <div class="navbar mx-auto mt-4 w-11/12 rounded-2xl bg-base-300">
-      <div>
+    <div
+      class="navbar navbar-start mx-auto mt-4 w-11/12 rounded-2xl bg-base-300"
+    >
+      <div class="navbar-start">
         <div class="dropdown">
           <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
             <svg
@@ -25,17 +27,14 @@ import router from "../router/router"
           </div>
           <ul
             tabindex="0"
-            class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
+            class="menu dropdown-content z-[1] mt-3 w-52 rounded-box bg-base-300 p-2 shadow"
           >
-            <li><a>Item 1</a></li>
             <li>
-              <a>Parent</a>
-              <ul class="p-2">
-                <li><a>Submenu 1</a></li>
-                <li><a>Submenu 2</a></li>
-              </ul>
+              <button @click="router.push('/leaderboard')">Rankings</button>
             </li>
-            <li><a>Item 3</a></li>
+            <li><button @click="router.push('/manual')">Manual</button></li>
+            <li><button @click="router.push('/stats')">Stats</button></li>
+            <li><button @click="router.push('/users')">Users</button></li>
           </ul>
         </div>
         <a class="btn btn-ghost mr-6 text-2xl" @click="router.push('/')"
@@ -46,11 +45,16 @@ import router from "../router/router"
         <button class="btn mx-2 w-36" @click="router.push('/leaderboard')">
           Rankings
         </button>
-        <button class="btn mx-2 w-36">Manual</button>
-        <button class="btn mx-2 w-36">Stats</button>
-        <button class="btn mx-2 w-36">Users</button>
+        <button class="btn mx-2 w-36" @click="router.push('/manual')">
+          Manual
+        </button>
+        <button class="btn mx-2 w-36" @click="router.push('/stats')">
+          Stats
+        </button>
+        <button class="btn mx-2 w-36" @click="router.push('/users')">
+          Users
+        </button>
       </div>
-
       <div class="navbar-end">
         <button class="btn mx-2 w-36">GitHub</button>
       </div>
