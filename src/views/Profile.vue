@@ -9,7 +9,7 @@ import { color } from "../main.ts"
 import HeroiconsTrophy from "~icons/heroicons/trophy"
 import HeroiconsFire from "~icons/heroicons/fire"
 import HeroiconsChartBar from "~icons/heroicons/chart-bar"
-import MaterialSymbolsExposurePlus1Rounded from '~icons/material-symbols/exposure-plus-1-rounded';
+import MaterialSymbolsExposurePlus1Rounded from "~icons/material-symbols/exposure-plus-1-rounded"
 
 const globalStore = useGlobalStore()
 const { client } = useAPIStore()
@@ -86,16 +86,16 @@ onMounted(async () => {
       yaxis: {
         labels: {
           formatter: (val: number) => {
-            return val.toFixed(0);
-          }
-        }
+            return val.toFixed(0)
+          },
+        },
       },
       tooltip: {
         y: {
           formatter: (val: number) => {
-            return val.toString();
-          }
-        }
+            return val.toString()
+          },
+        },
       },
       theme: {
         mode: color,
@@ -124,7 +124,7 @@ onMounted(async () => {
         ></div>
         <div
           v-show="globalStore.profile.username"
-          class="w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 custom-shadow"
+          class="custom-shadow w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100"
         >
           <img :src="globalStore.profile.pfp ?? noPfp" />
         </div>
@@ -145,7 +145,10 @@ onMounted(async () => {
       v-show="globalStore.profile.username"
       class="card mx-auto mt-5 w-5/6 bg-base-200 text-center shadow-xl"
     >
-      <div class="prose card-body mx-auto text-center" v-show="globalStore.profile.bio">
+      <div
+        class="prose card-body mx-auto text-center"
+        v-show="globalStore.profile.bio"
+      >
         <h1 class="quote-top">“</h1>
         <p>
           {{ globalStore.profile.bio ?? "This user has not set a bio yet." }}

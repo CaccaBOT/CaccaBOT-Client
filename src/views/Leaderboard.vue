@@ -235,37 +235,59 @@ function setTime(): TimeUntilNewMonth {
   cursor: pointer;
 }
 
-tr:nth-child(1) > td {
-  line-height:1;
+tr:nth-child(1),
+tr:nth-child(2),
+tr:nth-child(3) {
+  line-height: 1;
   text-align: center;
-  background: linear-gradient(90deg,
-   rgba(186,148,62,1) 0%, 
-   rgba(236,172,32,1) 20%, 
-   rgba(186,148,62,1) 39%,
-    rgba(249,244,180,1) 50%,
-     rgba(186,148,62,1) 60%,
-      rgba(236,172,32,1) 80%, 
-      rgba(186,148,62,1) 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;	
-  animation: shine 3s infinite;
+  -webkit-text-fill-color: transparent;
+  animation: shine 2s infinite;
   background-size: 200%;
   background-position: left;
+}
+
+tr:nth-child(1) > td {
+  background: linear-gradient(
+    45deg,
+    rgba(186, 148, 62, 1) 0%,
+    rgba(236, 172, 32, 1) 20%,
+    rgba(186, 148, 62, 1) 39%,
+    rgba(249, 244, 180, 1) 50%,
+    rgba(186, 148, 62, 1) 60%,
+    rgba(236, 172, 32, 1) 80%,
+    rgba(186, 148, 62, 1) 100%
+  );
 }
 
 tr:nth-child(2) > td {
-  line-height:1;
-  text-align: center;
-  background: linear-gradient(90deg, #757575 0%, #9E9E9E 25%, #E8E8E8 50%, #9E9E9E 75%, #757575 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;	
-  animation: shine 3s infinite;
-  background-size: 200%;
-  background-position: left;
+  background: linear-gradient(
+    45deg,
+    #757575 0%,
+    #9e9e9e 25%,
+    #e8e8e8 50%,
+    #9e9e9e 75%,
+    #757575 100%
+  );
+}
+
+tr:nth-child(3) > td {
+  background: linear-gradient(
+    45deg,
+    rgba(153, 101, 21, 1) 0%,
+    rgba(172, 117, 35, 1) 20%,
+    rgba(153, 101, 21, 1) 39%,
+    rgba(186, 140, 59, 1) 50%,
+    rgba(153, 101, 21, 1) 60%,
+    rgba(172, 117, 35, 1) 80%,
+    rgba(153, 101, 21, 1) 100%
+  );
 }
 
 @keyframes shine {
-  to{background-position: right}
+  to {
+    background-position: right;
+  }
 }
 
 @media only screen and (max-width: 700px) {
