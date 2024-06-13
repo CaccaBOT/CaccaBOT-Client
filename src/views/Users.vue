@@ -24,7 +24,7 @@ onMounted(async () => {
 
 <template>
   <div class="users-wrapper">
-    <div class="prose m-5 mx-auto w-full text-center">
+    <div class="prose mx-auto w-full text-center">
       <h1>CACCA USERS</h1>
     </div>
     <div

@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import router from "../router/router"
 import HugeiconsGithub from "~icons/hugeicons/github"
+function isCurrentRoute(elem) {
+    console.log(elem)
+    return true
+}
 </script>
 
 <template>
   <div class="header-wrapper w-full">
     <div
-      class="navbar navbar-start mx-auto mt-4 w-11/12 rounded-2xl bg-base-300"
+      class="navbar navbar-start mx-auto mt-4 w-11/12 rounded-2xl bg-base-300 mb-5 shadow-2xl"
     >
       <div class="navbar-start">
         <div class="dropdown">

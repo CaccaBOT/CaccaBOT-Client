@@ -89,7 +89,7 @@ function setTime(): TimeUntilNewMonth {
 <template>
   <div class="leaderboard-wrapper">
     <div
-      class="header mx-auto flex w-11/12 flex-row items-center justify-between py-7"
+      class="header mx-auto flex w-11/12 flex-row items-center justify-between"
     >
       <button @click="prevMonth()" class="btn btn-circle btn-active">
         <svg
