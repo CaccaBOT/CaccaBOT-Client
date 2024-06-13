@@ -67,11 +67,8 @@ function isCurrentRoute(elem) {
         </button>
       </div>
       <div class="navbar-end">
-        <button class="btn mx-2 w-36">
-          <span class="flex items-center">
-            <HugeiconsGithub class="mr-2 text-lg" />
-            GitHub
-          </span>
+        <button class="btn mx-2 w-12">
+            <HugeiconsGithub class="text-xl" />
         </button>
       </div>
     </div>
