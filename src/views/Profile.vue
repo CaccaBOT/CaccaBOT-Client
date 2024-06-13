@@ -116,7 +116,7 @@ onMounted(async () => {
 
 <template>
   <div class="profile-wrapper">
-    <div class="profile-header mx-auto mt-5 text-center">
+    <div class="profile-header mx-auto mt-8 text-center">
       <div class="avatar">
         <div
           v-show="!globalStore.profile.username"
