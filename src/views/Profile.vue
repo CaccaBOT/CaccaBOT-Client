@@ -10,7 +10,6 @@ import HeroiconsTrophy from "~icons/heroicons/trophy"
 import HeroiconsCalculator from "~icons/heroicons/calculator"
 import HeroiconsFire from "~icons/heroicons/fire"
 import HeroiconsChartBar from "~icons/heroicons/chart-bar"
-
 const globalStore = useGlobalStore()
 const { client } = useAPIStore()
 const userStats = ref({} as UserStats)

@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue"
-import router from "../router/router"
-import { useGlobalStore } from "../stores/global"
+import { onMounted, ref } from "vue"
 import { useAPIStore } from "../stores/api"
-import { UserStats } from "../types/UserStats"
-import icon from "/favicon.ico"
 import noPfp from "../assets/no_pfp.webp"
-const globalStore = useGlobalStore()
 const { client } = useAPIStore()
 const users = ref([])
 

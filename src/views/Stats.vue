@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue"
-import router from "../router/router"
+import { onMounted, ref } from "vue"
 import { useGlobalStore } from "../stores/global"
 import { useAPIStore } from "../stores/api"
-import { UserStats } from "../types/UserStats"
-import icon from "/favicon.ico"
 import { color } from "../main.ts"
 const globalStore = useGlobalStore()
 const APIStore = useAPIStore()
