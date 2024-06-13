@@ -5,7 +5,7 @@ import noPfp from "../assets/no_pfp.webp"
 import { useGlobalStore } from "../stores/global"
 import { ref } from "vue"
 const globalStore = useGlobalStore()
-import type { Ref } from 'vue'
+import type { Ref } from "vue"
 
 const { year, month } = router.currentRoute.value.params
 
