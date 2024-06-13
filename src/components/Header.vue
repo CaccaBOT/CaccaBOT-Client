@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import router from "../router/router"
+import HugeiconsGithub from "~icons/hugeicons/github"
 </script>
 
 <template>
@@ -32,13 +33,19 @@ import router from "../router/router"
             <li>
               <button @click="router.push('/leaderboard')">Rankings</button>
             </li>
-            <li><button @click="router.push('/manual')">Manual</button></li>
-            <li><button @click="router.push('/stats')">Stats</button></li>
-            <li><button @click="router.push('/users')">Users</button></li>
+            <li>
+              <button @click="router.push('/manual')">Manual</button>
+            </li>
+            <li>
+              <button @click="router.push('/stats')">Stats</button>
+            </li>
+            <li>
+              <button @click="router.push('/users')">Users</button>
+            </li>
           </ul>
         </div>
         <a class="btn btn-ghost mr-6 text-2xl" @click="router.push('/')"
-          >CaccaBOT</a
+        >CaccaBOT</a
         >
       </div>
       <div class="navbar-start hidden lg:flex">
@@ -56,7 +63,12 @@ import router from "../router/router"
         </button>
       </div>
       <div class="navbar-end">
-        <button class="btn mx-2 w-36">GitHub</button>
+        <button class="btn mx-2 w-36">
+          <span class="flex items-center">
+            <HugeiconsGithub class="mr-2 text-lg" />
+            GitHub
+          </span>
+        </button>
       </div>
     </div>
   </div>
