@@ -166,7 +166,7 @@ onMounted(async () => {
             </div> -->
     </div>
 
-    <div class="charts-wrapper m-2">
+    <div class="charts-wrapper m-2 w-[95%] mx-auto">
       <h2>Poop distribution</h2>
       <apexchart
         height="400px"
