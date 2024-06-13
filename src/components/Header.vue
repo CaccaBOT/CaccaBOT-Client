@@ -67,7 +67,7 @@ function isActive(route) {
       </div>
       <div class="navbar-end">
         <button class="btn mx-2 w-12">
-            <HugeiconsGithub class="text-xl" />
+          <HugeiconsGithub class="text-xl" />
         </button>
       </div>
     </div>

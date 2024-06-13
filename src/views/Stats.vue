@@ -122,8 +122,8 @@ onMounted(async () => {
 
 <template>
   <div class="stats-wrapper">
-    <h1>CACCA STATS</h1>
-    <h2>{{ globalStore.displayDate }}</h2>
+    <h1 class="mt-3">CACCA STATS</h1>
+    <h2 class="mb-5">{{ globalStore.displayDate }}</h2>
     <div class="stats-wrapper">
       <!-- <div class="stats w-96 shadow m-2">
 
@@ -166,7 +166,7 @@ onMounted(async () => {
             </div> -->
     </div>
 
-    <div class="charts-wrapper m-2 w-[95%] mx-auto">
+    <div class="charts-wrapper m-2 mx-auto w-[95%]">
       <h2>Poop distribution</h2>
       <apexchart
         height="400px"

@@ -147,7 +147,7 @@ onMounted(async () => {
       v-show="userStats.monthlyLeaderboardPosition"
       class="card mx-auto my-5 flex w-5/6 bg-base-200 text-center shadow sm:flex-col md:flex-row"
     >
-      <div class="stat ">
+      <div class="stat">
         <div class="stat-figure text-secondary">
           <HeroiconsTrophy class="text-xl" />
         </div>
