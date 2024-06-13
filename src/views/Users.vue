@@ -16,8 +16,6 @@ onMounted(async () => {
   const us = await client.getLeaderboard()
   const usersJson = await us.json()
 
-  console.log(usersJson)
-
   users.value = usersJson.sort((a: User, b: User) => b.poops - a.poops)
 })
 </script>
