@@ -235,18 +235,6 @@ function setTime(): TimeUntilNewMonth {
   cursor: pointer;
 }
 
-tr:nth-child(1),
-tr:nth-child(2),
-tr:nth-child(3) {
-  line-height: 1;
-  text-align: center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 2s infinite;
-  background-size: 200%;
-  background-position: left;
-}
-
 tr:nth-child(1) > td {
   background: linear-gradient(
     45deg,
@@ -258,6 +246,12 @@ tr:nth-child(1) > td {
     rgba(236, 172, 32, 1) 80%,
     rgba(186, 148, 62, 1) 100%
   );
+  animation: shine 2s infinite;
+  background-size: 200%;
+  background-position: left;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 tr:nth-child(2) > td {
@@ -269,6 +263,12 @@ tr:nth-child(2) > td {
     #9e9e9e 75%,
     #757575 100%
   );
+  animation: shine 2s infinite;
+  background-size: 200%;
+  background-position: left;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 tr:nth-child(3) > td {
@@ -282,6 +282,12 @@ tr:nth-child(3) > td {
     rgba(172, 117, 35, 1) 80%,
     rgba(153, 101, 21, 1) 100%
   );
+  animation: shine 2s infinite;
+  background-size: 200%;
+  background-position: left;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @keyframes shine {
