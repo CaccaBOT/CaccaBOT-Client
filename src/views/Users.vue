@@ -2,6 +2,8 @@
 import { onMounted, ref } from "vue"
 import { useAPIStore } from "../stores/api"
 import noPfp from "../assets/no_pfp.webp"
+import { User } from "../types/User.ts"
+
 const { client } = useAPIStore()
 const users = ref([])
 
@@ -11,9 +13,12 @@ function goToProfile(id: string) {
 }
 
 onMounted(async () => {
-  users.value = (await (await client.getLeaderboard()).json()).sort(
-    (a, b) => b.poops - a.poops,
-  )
+  const us = await client.getLeaderboard()
+  const usersJson = await us.json()
+
+  console.log(usersJson)
+
+  users.value = usersJson.sort((a: User, b: User) => b.poops - a.poops)
 })
 </script>
 
