@@ -19,6 +19,7 @@
     "vue3-apexcharts": "^1.5.2"
   },
   "devDependencies": {
+    "@types/showdown": "^2.0.6",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/compiler-sfc": "^3.4.27",
     "daisyui": "^4.10.2",

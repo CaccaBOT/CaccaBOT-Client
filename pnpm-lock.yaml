@@ -30,6 +30,9 @@ importers:
         specifier: ^1.5.2
         version: 1.5.3(apexcharts@3.49.1)(vue@3.4.27(typescript@5.4.5))
     devDependencies:
+      '@types/showdown':
+        specifier: ^2.0.6
+        version: 2.0.6
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
         version: 5.0.5(vite@5.3.0)(vue@3.4.27(typescript@5.4.5))
@@ -347,6 +350,9 @@ packages:
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  '@types/showdown@2.0.6':
+    resolution: {integrity: sha512-pTvD/0CIeqe4x23+YJWlX2gArHa8G0J0Oh6GKaVXV7TAeickpkkZiNOgFcFcmLQ5lB/K0qBJL1FtRYltBfbGCQ==}
 
   '@vitejs/plugin-vue@5.0.5':
     resolution: {integrity: sha512-LOjm7XeIimLBZyzinBQ6OSm3UBCNVCpLkxGC0oWmm2YPzVZoxMsdvNVimLTBzpAnR9hl/yn1SHGuRfe6/Td9rQ==}
@@ -1276,6 +1282,8 @@ snapshots:
       tailwindcss: 3.4.4
 
   '@types/estree@1.0.5': {}
+
+  '@types/showdown@2.0.6': {}
 
   '@vitejs/plugin-vue@5.0.5(vite@5.3.0)(vue@3.4.27(typescript@5.4.5))':
     dependencies:
