@@ -56,18 +56,17 @@ const newMonth = new Date(
   1,
 )
 const timeUntilNewMonth: Ref<TimeUntilNewMonth> = ref(setTime())
-const interval = setInterval(setTime, 1000)
+const interval = setInterval(() => {
+  timeUntilNewMonth.value = setTime()
+}, 1000)
 
 function setTime(): TimeUntilNewMonth {
-  let time: TimeUntilNewMonth
-
   const MONTH_IN_MILLISECONDS = 2629746000
   if (
     globalStore.selectedDate.getTime() + MONTH_IN_MILLISECONDS <=
     new Date().getTime()
   ) {
-    timeUntilNewMonth.value = { days: 0, hours: 0, minutes: 0, seconds: 0 }
-    return
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 }
   }
 
   let now = new Date().getTime()
