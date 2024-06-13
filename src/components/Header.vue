@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import router from "../router/router"
 import HugeiconsGithub from "~icons/hugeicons/github"
-function isCurrentRoute(elem) {
-  console.log(elem)
-  return true
+function isActive(route) {
+    return router.currentRoute.value.path.startsWith(route)
 }
 </script>
 
@@ -53,16 +52,16 @@ function isCurrentRoute(elem) {
         >
       </div>
       <div class="navbar-start hidden lg:flex">
-        <button class="btn mx-2 w-36" @click="router.push('/leaderboard')">
+        <button class="btn mx-2 w-36" :class="{'btn-primary': isActive('/leaderboard')}" @click="router.push('/leaderboard')">
           Rankings
         </button>
-        <button class="btn mx-2 w-36" @click="router.push('/manual')">
+        <button class="btn mx-2 w-36" :class="{'btn-secondary': isActive('/manual')}" @click="router.push('/manual')">
           Manual
         </button>
-        <button class="btn mx-2 w-36" @click="router.push('/stats')">
+        <button class="btn mx-2 w-36" :class="{'btn-accent': isActive('/stats')}" @click="router.push('/stats')">
           Stats
         </button>
-        <button class="btn mx-2 w-36" @click="router.push('/users')">
+        <button class="btn mx-2 w-36" :class="{'btn-info': isActive('/users')}" @click="router.push('/users')">
           Users
         </button>
       </div>
