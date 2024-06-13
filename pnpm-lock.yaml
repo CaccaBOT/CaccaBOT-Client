@@ -36,6 +36,9 @@ importers:
       '@iconify-json/hugeicons':
         specifier: ^1.1.0
         version: 1.1.0
+      '@iconify-json/material-symbols':
+        specifier: ^1.1.80
+        version: 1.1.80
       '@types/showdown':
         specifier: ^2.0.6
         version: 2.0.6
@@ -248,6 +251,9 @@ packages:
 
   '@iconify-json/hugeicons@1.1.0':
     resolution: {integrity: sha512-MzzShBJQsOB92kzPMBe2dI35m0BrR7Z7yEQ0Al84ULQ46PRAAu+RBkqmTzqY+T2uBB1PeGe8sPs+8lGRXClGjg==}
+
+  '@iconify-json/material-symbols@1.1.80':
+    resolution: {integrity: sha512-JrDMmWeHxFFMp3BBSsjvDvSiYzJ0qdYmHAQYWY/L5fxVZcIoeoQvtQR0wM1iJN4UDIsnHwbpJQ/sqZ/cvph6sw==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1405,6 +1411,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/hugeicons@1.1.0':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/material-symbols@1.1.80':
     dependencies:
       '@iconify/types': 2.0.0
 

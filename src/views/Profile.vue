@@ -7,9 +7,10 @@ import { UserStats } from "../types/UserStats"
 import noPfp from "../assets/no_pfp.webp"
 import { color } from "../main.ts"
 import HeroiconsTrophy from "~icons/heroicons/trophy"
-import HeroiconsCalculator from "~icons/heroicons/calculator"
 import HeroiconsFire from "~icons/heroicons/fire"
 import HeroiconsChartBar from "~icons/heroicons/chart-bar"
+import MaterialSymbolsExposurePlus1Rounded from '~icons/material-symbols/exposure-plus-1-rounded';
+
 const globalStore = useGlobalStore()
 const { client } = useAPIStore()
 const userStats = ref({} as UserStats)
@@ -82,6 +83,20 @@ onMounted(async () => {
         type: "date",
         categories: result.map((x) => x.date),
       },
+      yaxis: {
+        labels: {
+          formatter: (val: number) => {
+            return val.toFixed(0);
+          }
+        }
+      },
+      tooltip: {
+        y: {
+          formatter: (val: number) => {
+            return val.toString();
+          }
+        }
+      },
       theme: {
         mode: color,
       },
@@ -109,7 +124,7 @@ onMounted(async () => {
         ></div>
         <div
           v-show="globalStore.profile.username"
-          class="w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100"
+          class="w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 custom-shadow"
         >
           <img :src="globalStore.profile.pfp ?? noPfp" />
         </div>
@@ -130,7 +145,7 @@ onMounted(async () => {
       v-show="globalStore.profile.username"
       class="card mx-auto mt-5 w-5/6 bg-base-200 text-center shadow-xl"
     >
-      <div class="prose card-body mx-auto text-center">
+      <div class="prose card-body mx-auto text-center" v-show="globalStore.profile.bio">
         <h1 class="quote-top">“</h1>
         <p>
           {{ globalStore.profile.bio ?? "This user has not set a bio yet." }}
@@ -145,49 +160,50 @@ onMounted(async () => {
     ></div>
     <div
       v-show="userStats.monthlyLeaderboardPosition"
-      class="card mx-auto my-5 flex w-5/6 bg-base-200 text-center shadow sm:flex-col md:flex-row"
+      class="card stats mx-auto my-5 flex w-5/6 bg-base-200 text-center shadow sm:flex-col md:flex-row"
     >
       <div class="stat">
-        <div class="stat-figure text-secondary">
+        <div class="stat-figure text-sky-500">
           <HeroiconsTrophy class="text-xl" />
         </div>
         <div class="stat-title">Leaderboard</div>
-        <div class="stat-value">
+        <div class="stat-value text-sky-500">
           #{{ userStats.monthlyLeaderboardPosition }}
         </div>
         <div class="stat-desc">{{ globalStore.displayDate }}</div>
       </div>
 
       <div class="stat">
-        <div class="stat-figure text-secondary">
-          <HeroiconsCalculator class="text-xl" />
+        <div class="stat-figure text-red-500">
+          <MaterialSymbolsExposurePlus1Rounded class="text-2xl" />
         </div>
         <div class="stat-title">Count</div>
-        <div class="stat-value">{{ monthlyUserPoops.length }}</div>
+        <div class="stat-value text-red-500">{{ monthlyUserPoops.length }}</div>
         <div class="stat-desc">{{ globalStore.displayDate }}</div>
       </div>
 
       <div class="stat">
-        <div class="stat-figure text-secondary">
+        <div class="stat-figure text-yellow-500">
           <HeroiconsFire class="text-xl" />
         </div>
         <div class="stat-title">Streak</div>
-        <div class="stat-value">{{ userStats.streak }}</div>
+        <div class="stat-value text-yellow-500">{{ userStats.streak }}</div>
         <div class="stat-desc">days in a row</div>
       </div>
 
       <div class="stat">
-        <div class="stat-figure text-secondary">
+        <div class="stat-figure text-green-500">
           <HeroiconsChartBar />
         </div>
         <div class="stat-title">Daily AVG</div>
-        <div class="stat-value">{{ userStats.poopAverage }}</div>
+        <div class="stat-value text-green-500">{{ userStats.poopAverage }}</div>
         <div class="stat-desc">{{ globalStore.displayDate }}</div>
       </div>
     </div>
+
     <div
       v-show="!userStats.monthlyLeaderboardPosition"
-      class="skeleton mx-auto mt-10 h-72 w-11/12"
+      class="skeleton mx-auto mt-20 h-72 w-11/12"
     ></div>
     <div
       v-show="userStats.monthlyLeaderboardPosition"
