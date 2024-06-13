@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import router from "../router/router"
 import HugeiconsGithub from "~icons/hugeicons/github"
+import HeroiconsTrophy from "~icons/heroicons/trophy"
+import HeroiconsBookOpen from "~icons/heroicons/book-open"
+import HeroiconsChartBar from "~icons/heroicons/chart-bar"
+import HeroiconsUsers from "~icons/heroicons/users"
 function isActive(route) {
     return router.currentRoute.value.path.startsWith(route)
 }
@@ -34,16 +38,28 @@ function isActive(route) {
             class="menu dropdown-content z-[1] mt-3 w-52 rounded-box bg-base-300 p-2 shadow"
           >
             <li>
-              <button @click="router.push('/leaderboard')">Rankings</button>
+              <button @click="router.push('/leaderboard')">
+                <HeroiconsTrophy class="text-xl" />
+                 Rankings
+                </button>
             </li>
             <li>
-              <button @click="router.push('/manual')">Manual</button>
+              <button @click="router.push('/manual')">
+                <HeroiconsBookOpen class="text-xl" />
+                Manual
+            </button>
             </li>
             <li>
-              <button @click="router.push('/stats')">Stats</button>
+              <button @click="router.push('/stats')">
+                <HeroiconsChartBar class="text-xl" />
+                Stats
+            </button>
             </li>
             <li>
-              <button @click="router.push('/users')">Users</button>
+              <button @click="router.push('/users')">
+                <HeroiconsUsers class="text-xl" />
+                Users
+            </button>
             </li>
           </ul>
         </div>
@@ -53,15 +69,19 @@ function isActive(route) {
       </div>
       <div class="navbar-start hidden lg:flex">
         <button class="btn mx-2 w-36" :class="{'btn-primary': isActive('/leaderboard')}" @click="router.push('/leaderboard')">
+            <HeroiconsTrophy class="text-xl" />
           Rankings
         </button>
         <button class="btn mx-2 w-36" :class="{'btn-secondary': isActive('/manual')}" @click="router.push('/manual')">
+            <HeroiconsBookOpen class="text-xl" />
           Manual
         </button>
         <button class="btn mx-2 w-36" :class="{'btn-accent': isActive('/stats')}" @click="router.push('/stats')">
+            <HeroiconsChartBar class="text-xl" />
           Stats
         </button>
         <button class="btn mx-2 w-36" :class="{'btn-info': isActive('/users')}" @click="router.push('/users')">
+        <HeroiconsUsers class="text-xl" />
           Users
         </button>
       </div>
