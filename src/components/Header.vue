@@ -2,15 +2,15 @@
 import router from "../router/router"
 import HugeiconsGithub from "~icons/hugeicons/github"
 function isCurrentRoute(elem) {
-    console.log(elem)
-    return true
+  console.log(elem)
+  return true
 }
 </script>
 
 <template>
   <div class="header-wrapper w-full">
     <div
-      class="navbar navbar-start mx-auto mt-4 w-11/12 rounded-2xl bg-base-300 mb-5 shadow-2xl"
+      class="navbar navbar-start mx-auto mb-5 mt-4 w-11/12 rounded-2xl bg-base-300 shadow-2xl"
     >
       <div class="navbar-start">
         <div class="dropdown">
@@ -49,7 +49,7 @@ function isCurrentRoute(elem) {
           </ul>
         </div>
         <a class="btn btn-ghost mr-6 text-2xl" @click="router.push('/')"
-        >CaccaBOT</a
+          >CaccaBOT</a
         >
       </div>
       <div class="navbar-start hidden lg:flex">

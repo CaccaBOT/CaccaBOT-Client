@@ -2,9 +2,9 @@
 import router from "../router/router"
 import homeImage from "../assets/home.webp"
 import HeroiconsTrophy from "~icons/heroicons/trophy"
-import HeroiconsBookOpen from '~icons/heroicons/book-open';
-import HeroiconsChartBar from '~icons/heroicons/chart-bar';
-import HeroiconsUsers from '~icons/heroicons/users';
+import HeroiconsBookOpen from "~icons/heroicons/book-open"
+import HeroiconsChartBar from "~icons/heroicons/chart-bar"
+import HeroiconsUsers from "~icons/heroicons/users"
 </script>
 
 <template>
@@ -18,7 +18,7 @@ import HeroiconsUsers from '~icons/heroicons/users';
         @click="router.push('/leaderboard')"
         class="btn btn-primary w-96 md:w-36 lg:w-48"
       >
-        <HeroiconsTrophy class="text-xl"/>
+        <HeroiconsTrophy class="text-xl" />
 
         Rankings
       </button>
@@ -26,7 +26,7 @@ import HeroiconsUsers from '~icons/heroicons/users';
         @click="router.push('/manual')"
         class="btn btn-secondary w-96 md:w-36 lg:w-48"
       >
-        <HeroiconsBookOpen class="text-xl"/>
+        <HeroiconsBookOpen class="text-xl" />
 
         Manual
       </button>
@@ -34,7 +34,7 @@ import HeroiconsUsers from '~icons/heroicons/users';
         @click="router.push('/stats')"
         class="btn btn-accent w-96 md:w-36 lg:w-48"
       >
-        <HeroiconsChartBar class="text-xl"/>
+        <HeroiconsChartBar class="text-xl" />
 
         Stats
       </button>
@@ -42,7 +42,7 @@ import HeroiconsUsers from '~icons/heroicons/users';
         @click="router.push('/users')"
         class="btn btn-info w-96 md:w-36 lg:w-48"
       >
-        <HeroiconsUsers class="text-xl"/>
+        <HeroiconsUsers class="text-xl" />
 
         Users
       </button>

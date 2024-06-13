@@ -8,7 +8,7 @@ export default defineConfig({
     vue(),
     Icons({
       compiler: "vue3",
-      autoInstall: true
-    })
-  ]
+      autoInstall: true,
+    }),
+  ],
 })

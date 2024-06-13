@@ -35,12 +35,12 @@ function fillMissingDays(grouped) {
   const startDate = new Date(
     globalStore.selectedDate.getFullYear(),
     globalStore.selectedDate.getMonth(),
-    2
+    2,
   )
   const endDate = new Date(
     globalStore.selectedDate.getFullYear(),
     globalStore.selectedDate.getMonth() + 1,
-    1
+    1,
   )
   const filled = {}
   let currentDate = new Date(startDate)
@@ -57,7 +57,7 @@ onMounted(async () => {
   if (router.currentRoute.value.name == "monthlyProfile") {
     const date = new Date(
       globalStore.selectedDate.getFullYear(),
-      globalStore.selectedDate.getMonth() + 1
+      globalStore.selectedDate.getMonth() + 1,
     )
     userStats.value = await (await client.getMonthlyUserStats(id, date)).json()
     monthlyUserPoops.value = await (
@@ -68,30 +68,30 @@ onMounted(async () => {
 
     const result = Object.keys(filledData).map((date) => ({
       date,
-      count: filledData[date]
+      count: filledData[date],
     }))
 
     options.value = {
       chart: {
-        type: "area"
+        type: "area",
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       xaxis: {
         type: "date",
-        categories: result.map((x) => x.date)
+        categories: result.map((x) => x.date),
       },
       theme: {
-        mode: color
-      }
+        mode: color,
+      },
     }
 
     series.value = [
       {
         name: "poop",
-        data: result.map((x) => x.count)
-      }
+        data: result.map((x) => x.count),
+      },
     ]
   } else {
     //TODO handle overall stats
