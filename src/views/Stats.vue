@@ -1,129 +1,134 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
-import router from '../router/router'
-import { useGlobalStore } from '../stores/global';
-import { useAPIStore } from '../stores/api';
-import { UserStats } from '../types/UserStats';
-import icon from '/favicon.ico'
-import {color} from "../main.ts";
+import { onMounted, ref, watch } from "vue"
+import router from "../router/router"
+import { useGlobalStore } from "../stores/global"
+import { useAPIStore } from "../stores/api"
+import { UserStats } from "../types/UserStats"
+import icon from "/favicon.ico"
+import { color } from "../main.ts"
 const globalStore = useGlobalStore()
 const APIStore = useAPIStore()
 const monthlyPoops = ref([])
 
 const treemapOpts = {
-    chart: {
-        type: 'treemap',
-        background: 'transparent'
-    },
-    theme: {
-      mode: color
-    }
+  chart: {
+    type: "treemap",
+    background: "transparent",
+  },
+  theme: {
+    mode: color,
+  },
 }
 
 const treemapSeries = ref([])
 let areaOpts = ref({})
 let areaSeries = ref([])
 
-function groupByUser(data)
-{
-    const grouped = {};
-    data.forEach(item =>
-    {
-        const user = item.username
-        if (!grouped[user])
-        {
-            grouped[user] = 0;
-        }
-        grouped[user]++;
-    })
-    return grouped;
-}
-
-function groupByDay(data)
-{
-    const grouped = {};
-    data.forEach(item =>
-    {
-        const date = new Date(item.timestamp);
-        const day = date.toISOString().split('T')[0];
-        if (!grouped[day])
-        {
-            grouped[day] = 0;
-        }
-        grouped[day]++;
-    });
-    return grouped;
-}
-
-function fillMissingDays(grouped)
-{
-    const startDate = new Date(globalStore.selectedDate.getFullYear(), globalStore.selectedDate.getMonth(), 2);
-    const endDate = new Date(globalStore.selectedDate.getFullYear(), globalStore.selectedDate.getMonth() + 1, 1);
-    const filled = {}
-    let currentDate = new Date(startDate);
-    while (currentDate <= endDate)
-    {
-        const day = currentDate.toISOString().split('T')[0];
-        filled[day] = grouped[day] || 0;
-        currentDate.setDate(currentDate.getDate() + 1);
+function groupByUser(data) {
+  const grouped = {}
+  data.forEach((item) => {
+    const user = item.username
+    if (!grouped[user]) {
+      grouped[user] = 0
     }
-    return filled;
+    grouped[user]++
+  })
+  return grouped
 }
 
-onMounted(async () =>
-{
-    const date = new Date(globalStore.selectedDate.getFullYear(), globalStore.selectedDate.getMonth() + 1)
-    monthlyPoops.value = await (await APIStore.client.getMonthlyPoops(date)).json()
-    const filledData = fillMissingDays(groupByDay(monthlyPoops.value));
-
-    const groupedByDay = Object.keys(filledData).map(date => ({
-        date,
-        count: filledData[date]
-    }))
-
-    areaOpts.value = {
-        chart: {
-            type: 'area',
-            background: 'transparent'
-        },
-        dataLabels: {
-            enabled: false
-        },
-        xaxis: {
-            type: 'date',
-            categories: groupedByDay.map(x => x.date)
-        },
-        theme: {
-          mode: color
-        }
+function groupByDay(data) {
+  const grouped = {}
+  data.forEach((item) => {
+    const date = new Date(item.timestamp)
+    const day = date.toISOString().split("T")[0]
+    if (!grouped[day]) {
+      grouped[day] = 0
     }
+    grouped[day]++
+  })
+  return grouped
+}
 
-    areaSeries.value = [{
-        name: 'poop',
-        data: groupedByDay.map(x => x.count)
-    }]
+function fillMissingDays(grouped) {
+  const startDate = new Date(
+    globalStore.selectedDate.getFullYear(),
+    globalStore.selectedDate.getMonth(),
+    2,
+  )
+  const endDate = new Date(
+    globalStore.selectedDate.getFullYear(),
+    globalStore.selectedDate.getMonth() + 1,
+    1,
+  )
+  const filled = {}
+  let currentDate = new Date(startDate)
+  while (currentDate <= endDate) {
+    const day = currentDate.toISOString().split("T")[0]
+    filled[day] = grouped[day] || 0
+    currentDate.setDate(currentDate.getDate() + 1)
+  }
+  return filled
+}
 
+onMounted(async () => {
+  const date = new Date(
+    globalStore.selectedDate.getFullYear(),
+    globalStore.selectedDate.getMonth() + 1,
+  )
+  monthlyPoops.value = await (
+    await APIStore.client.getMonthlyPoops(date)
+  ).json()
+  const filledData = fillMissingDays(groupByDay(monthlyPoops.value))
 
-    const groupedByUser = groupByUser(monthlyPoops.value)
+  const groupedByDay = Object.keys(filledData).map((date) => ({
+    date,
+    count: filledData[date],
+  }))
 
-    treemapSeries.value = [{
-        name: 'poop',
-        data: Object.entries(groupedByUser).map(
-            obj => ({ x: obj[0], y: obj[1] })
-        )
-    }]
+  areaOpts.value = {
+    chart: {
+      type: "area",
+      background: "transparent",
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    xaxis: {
+      type: "date",
+      categories: groupedByDay.map((x) => x.date),
+    },
+    theme: {
+      mode: color,
+    },
+  }
 
+  areaSeries.value = [
+    {
+      name: "poop",
+      data: groupedByDay.map((x) => x.count),
+    },
+  ]
+
+  const groupedByUser = groupByUser(monthlyPoops.value)
+
+  treemapSeries.value = [
+    {
+      name: "poop",
+      data: Object.entries(groupedByUser).map((obj) => ({
+        x: obj[0],
+        y: obj[1],
+      })),
+    },
+  ]
 })
-
 </script>
 
 <template>
+  <div class="stats-wrapper">
+    <h1>CACCA STATS</h1>
+    <h2>{{ globalStore.displayDate }}</h2>
     <div class="stats-wrapper">
-        <h1>CACCA STATS</h1>
-        <h2>{{ globalStore.displayDate }}</h2>
-        <div class="stats-wrapper">
-
-            <!-- <div class="stats w-96 shadow m-2">
+      <!-- <div class="stats w-96 shadow m-2">
 
                 <div class="stat bg-base-200 text-center">
                     <div class="stat-title">Total Monthly Poops</div>
@@ -162,31 +167,41 @@ onMounted(async () =>
                 </div>
 
             </div> -->
-        </div>
-
-        <div class="charts-wrapper m-2">
-            <h2>Poop distribution</h2>
-            <apexchart height="400px" type="treemap" :options="treemapOpts" :series="treemapSeries"/>
-
-            <h2>Poops per day</h2>
-            <apexchart height="400px" type="area" :options="areaOpts" :series="areaSeries"/>
-        </div>
     </div>
+
+    <div class="charts-wrapper m-2">
+      <h2>Poop distribution</h2>
+      <apexchart
+        height="400px"
+        type="treemap"
+        :options="treemapOpts"
+        :series="treemapSeries"
+      />
+
+      <h2>Poops per day</h2>
+      <apexchart
+        height="400px"
+        type="area"
+        :options="areaOpts"
+        :series="areaSeries"
+      />
+    </div>
+  </div>
 </template>
 
 <style scoped>
 .stats-wrapper {
-    margin: auto;
-    text-align: center;
+  margin: auto;
+  text-align: center;
 }
 
 h1 {
-    font-weight: bold;
-    font-size: 2rem;
+  font-weight: bold;
+  font-size: 2rem;
 }
 
 h2 {
-    font-weight: bold;
-    font-size: 1.6rem;
+  font-weight: bold;
+  font-size: 1.6rem;
 }
 </style>

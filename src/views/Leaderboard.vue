@@ -1,50 +1,71 @@
 <script setup lang="ts">
-import noPoopsFound from '../assets/no_poops_found.webp'
-import router from '../router/router'
-import noPfp from '../assets/no_pfp.webp'
-import { useGlobalStore } from '../stores/global'
-import { ref } from 'vue';
+import noPoopsFound from "../assets/no_poops_found.webp"
+import router from "../router/router"
+import noPfp from "../assets/no_pfp.webp"
+import { useGlobalStore } from "../stores/global"
+import { ref } from "vue"
 const globalStore = useGlobalStore()
+import type { Ref } from 'vue'
 
-const { year, month } = router.currentRoute.value.params;
+const { year, month } = router.currentRoute.value.params
 
-if (year && month)
-{
-  globalStore.selectedDate = new Date(parseInt(year as string), parseInt(month as string) - 1);
-} else
-{
-  globalStore.selectedDate = new Date();
-  router.replace(`/leaderboard/${globalStore.selectedDate.getFullYear()}/${globalStore.selectedDate.getMonth() + 1}`)
+if (year && month) {
+  globalStore.selectedDate = new Date(
+    parseInt(year as string),
+    parseInt(month as string) - 1,
+  )
+} else {
+  globalStore.selectedDate = new Date()
+  router.replace(
+    `/leaderboard/${globalStore.selectedDate.getFullYear()}/${globalStore.selectedDate.getMonth() + 1}`,
+  )
 }
 
-function goToProfile(id: string)
-{
-  router.push(`/profile/${id}/${globalStore.selectedDate.getFullYear()}/${globalStore.selectedDate.getMonth() + 1}`);
+function goToProfile(id: string) {
+  router.push(
+    `/profile/${id}/${globalStore.selectedDate.getFullYear()}/${globalStore.selectedDate.getMonth() + 1}`,
+  )
 }
 
-function prevMonth()
-{
+function prevMonth() {
   globalStore.prevMonth()
-  router.push(`/leaderboard/${globalStore.selectedDate.getFullYear()}/${globalStore.selectedDate.getMonth() + 1}`);
+  router.push(
+    `/leaderboard/${globalStore.selectedDate.getFullYear()}/${globalStore.selectedDate.getMonth() + 1}`,
+  )
   setTime()
 }
 
-function nextMonth()
-{
+function nextMonth() {
   globalStore.nextMonth()
-  router.push(`/leaderboard/${globalStore.selectedDate.getFullYear()}/${globalStore.selectedDate.getMonth() + 1}`);
+  router.push(
+    `/leaderboard/${globalStore.selectedDate.getFullYear()}/${globalStore.selectedDate.getMonth() + 1}`,
+  )
   setTime()
 }
 
-const newMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1);
-const timeUntilNewMonth = ref({})
+type TimeUntilNewMonth = {
+  days: number
+  hours: number
+  minutes: number
+  seconds: number
+}
+
+const newMonth = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth() + 1,
+  1,
+)
+const timeUntilNewMonth: Ref<TimeUntilNewMonth> = ref(setTime())
 const interval = setInterval(setTime, 1000)
 
-function setTime()
-{
+function setTime(): TimeUntilNewMonth {
+  let time: TimeUntilNewMonth
+
   const MONTH_IN_MILLISECONDS = 2629746000
-  if ((globalStore.selectedDate.getTime() + MONTH_IN_MILLISECONDS) <= new Date().getTime())
-  {
+  if (
+    globalStore.selectedDate.getTime() + MONTH_IN_MILLISECONDS <=
+    new Date().getTime()
+  ) {
     timeUntilNewMonth.value = { days: 0, hours: 0, minutes: 0, seconds: 0 }
     return
   }
@@ -52,8 +73,7 @@ function setTime()
   let now = new Date().getTime()
   let diff = newMonth.getTime() - now
 
-  if (diff <= 0)
-  {
+  if (diff <= 0) {
     clearInterval(interval)
     diff = 0
   }
@@ -63,25 +83,37 @@ function setTime()
   let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
   let seconds = Math.floor((diff % (1000 * 60)) / 1000)
 
-  timeUntilNewMonth.value = { days, hours, minutes, seconds }
+  return { days, hours, minutes, seconds }
 }
-
-setTime()
 </script>
 
 <template>
   <div class="leaderboard-wrapper">
-    <div class="header py-7 w-11/12 mx-auto flex flex-row justify-between items-center">
+    <div
+      class="header py-7 w-11/12 mx-auto flex flex-row justify-between items-center"
+    >
       <button @click="prevMonth()" class="btn btn-active btn-circle">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5 8.25 12l7.5-7.5"
+          />
         </svg>
       </button>
       <div>
         <h1 class="text-center m-0">CACCA LEADERBOARD</h1>
         <h2 class="text-center">{{ globalStore.displayDate }}</h2>
-        <div class="countdown-wrapper flex flex-col justify-center items-center flex-wrap">
+        <div
+          class="countdown-wrapper flex flex-col justify-center items-center flex-wrap"
+        >
           <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
             <div class="flex flex-col">
               <span class="countdown font-mono text-4xl">
@@ -111,21 +143,40 @@ setTime()
         </div>
       </div>
       <button @click="nextMonth()" class="btn btn-active btn-circle">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+          />
         </svg>
       </button>
     </div>
 
-    <img class="md:w-1/2 sm:w-full mx-auto" v-show="globalStore.leaderboard.length === 0 && !globalStore.isFetching"
-      :src="noPoopsFound">
+    <img
+      class="md:w-1/2 sm:w-full mx-auto"
+      v-show="globalStore.leaderboard.length === 0 && !globalStore.isFetching"
+      :src="noPoopsFound"
+    />
 
-    <div v-show="globalStore.isFetching" class="flex flex-col gap-2 w-11/12 mx-auto">
+    <div
+      v-show="globalStore.isFetching"
+      class="flex flex-col gap-2 w-11/12 mx-auto"
+    >
       <div v-for="n in 15" class="skeleton h-12 w-full"></div>
     </div>
 
-    <div v-show="globalStore.leaderboard.length > 0 && !globalStore.isFetching" class="overflow-x-auto">
+    <div
+      v-show="globalStore.leaderboard.length > 0 && !globalStore.isFetching"
+      class="overflow-x-auto"
+    >
       <table class="table table-xl">
         <thead>
           <tr class="prose text-center">
@@ -141,7 +192,10 @@ setTime()
             </td>
 
             <td>
-              <div class="flex items-center gap-3 user-cell" @click="goToProfile(user.id)">
+              <div
+                class="flex items-center gap-3 user-cell"
+                @click="goToProfile(user.id)"
+              >
                 <div class="avatar">
                   <div class="mask mask-circle w-16 h-16">
                     <img :src="user.pfp ?? noPfp" />

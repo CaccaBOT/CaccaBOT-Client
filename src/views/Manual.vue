@@ -1,34 +1,40 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import showdown from 'showdown'
+import { onMounted, ref } from "vue"
+import showdown from "showdown"
 
-const manual = ref('')
+const manual = ref("")
 onMounted(async () => {
-    let converter = new showdown.Converter()
-    converter.setFlavor('github')
-    manual.value = converter.makeHtml(await (await fetch('https://raw.githubusercontent.com/CaccaBOT/CaccaBOT-Manual/main/README.md')).text())
-    document.querySelector('.manual-wrapper').innerHTML = manual.value
+  let converter = new showdown.Converter()
+  converter.setFlavor("github")
+  manual.value = converter.makeHtml(
+    await (
+      await fetch(
+        "https://raw.githubusercontent.com/CaccaBOT/CaccaBOT-Manual/main/README.md",
+      )
+    ).text(),
+  )
+  document.querySelector(".manual-wrapper").innerHTML = manual.value
 })
 </script>
 
 <template>
   <div class="manual-wrapper prose p-5">
     <div class="loader-wrapper w-full flex justify-center items-center">
-        <span class="loading loading-spinner loading-lg"></span>
+      <span class="loading loading-spinner loading-lg"></span>
     </div>
   </div>
 </template>
 
 <style scoped>
 .manual-wrapper {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .loader-wrapper {
-    height: 85vh;
+  height: 85vh;
 }
 
 .loading {
-    transform: scale(1.5);
+  transform: scale(1.5);
 }
 </style>

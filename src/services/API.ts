@@ -1,46 +1,51 @@
 export default class API {
+  async getMonthlyLeaderboard(date: Date = new Date()) {
+    return await fetch(
+      `http://localhost:3000/api/poop/leaderboard/${date.getFullYear()}/${date.getMonth()}`,
+    )
+  }
 
-    async getMonthlyLeaderboard(date: Date = new Date()) {
-        return await fetch(`https://caccabot.duckdns.org/api/poop/leaderboard/${date.getFullYear()}/${date.getMonth()}`)
-    }
+  async getLeaderboard() {
+    return await fetch(`http://localhost:3000/api/poop/leaderboard`)
+  }
 
-    async getLeaderboard() {
-        return await fetch(`https://caccabot.duckdns.org/api/poop/leaderboard`)
-    }
+  async getProfile(id: string) {
+    return await fetch(`http://localhost:3000/api/profile/${id}`)
+  }
 
-    async getProfile(id: string) {
-        return await fetch(`https://caccabot.duckdns.org/api/profile/${id}`)
-    }
+  async getStats() {
+    return await fetch(`http://localhost:3000/api/poop/stats`)
+  }
 
-    async getAllProfiles() {
-        return await fetch(`https://caccabot.duckdns.org/api/profile/all`)
-    }
+  async getUserStats(id: string) {
+    return await fetch(`http://localhost:3000/api/poop/stats/${id}`)
+  }
 
-    async getStats() {
-        return await fetch(`https://caccabot.duckdns.org/api/poop/stats`)
-    }
+  async getMonthlyUserStats(id: string, date = new Date()) {
+    return await fetch(
+      `http://localhost:3000/api/poop/stats/${id}/${date.getFullYear()}/${date.getMonth()}`,
+    )
+  }
 
-    async getUserStats(id: string) {
-        return await fetch(`https://caccabot.duckdns.org/api/poop/stats/${id}`)
-    }
+  async searchProfile(username: string) {
+    return await fetch(
+      `http://localhost:3000/api/profile/search?username=${username}`,
+    )
+  }
 
-    async getMonthlyUserStats(id: string, date = new Date()) {
-        return await fetch(`https://caccabot.duckdns.org/api/poop/stats/${id}/${date.getFullYear()}/${date.getMonth()}`)
-    }
+  async getPoopsFromUser(id: string) {
+    return await fetch(`http://localhost:3000/api/poop/${id}`)
+  }
 
-    async searchProfile(username: string) {
-        return await fetch(`https://caccabot.duckdns.org/api/profile/search?username=${username}`)
-    }
+  async getMonthlyPoopsFromUser(id: string, date = new Date()) {
+    return await fetch(
+      `http://localhost:3000/api/poop/${id}/${date.getFullYear()}/${date.getMonth()}`,
+    )
+  }
 
-    async getPoopsFromUser(id: string) {
-        return await fetch(`https://caccabot.duckdns.org/api/poop/${id}`)
-    }
-    
-    async getMonthlyPoopsFromUser(id: string, date = new Date()) {
-        return await fetch(`https://caccabot.duckdns.org/api/poop/${id}/${date.getFullYear()}/${date.getMonth()}`)
-    }
-
-    async getMonthlyPoops(date = new Date()) {
-        return await fetch(`https://caccabot.duckdns.org/api/poop/all/${date.getFullYear()}/${date.getMonth()}`)
-    }
+  async getMonthlyPoops(date = new Date()) {
+    return await fetch(
+      `http://localhost:3000/api/poop/all/${date.getFullYear()}/${date.getMonth()}`,
+    )
+  }
 }
