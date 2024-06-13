@@ -5,14 +5,14 @@ import homeImage from "../assets/home.webp"
 
 <template>
   <div class="home-wrapper">
-    <img class="w-80 mb-5" :src="homeImage" />
+    <img class="mb-5 w-80" :src="homeImage" />
     <div class="prose">
       <h1>CaccaBOT</h1>
     </div>
     <div class="buttons">
       <button
         @click="router.push('/leaderboard')"
-        class="btn btn-primary lg:w-48 md:w-36 w-96"
+        class="btn btn-primary w-96 md:w-36 lg:w-48"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ import homeImage from "../assets/home.webp"
       </button>
       <button
         @click="router.push('/manual')"
-        class="btn btn-secondary lg:w-48 md:w-36 w-96"
+        class="btn btn-secondary w-96 md:w-36 lg:w-48"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ import homeImage from "../assets/home.webp"
       </button>
       <button
         @click="router.push('/stats')"
-        class="btn btn-accent lg:w-48 md:w-36 w-96"
+        class="btn btn-accent w-96 md:w-36 lg:w-48"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,7 @@ import homeImage from "../assets/home.webp"
       </button>
       <button
         @click="router.push('/users')"
-        class="btn btn-info lg:w-48 md:w-36 w-96"
+        class="btn btn-info w-96 md:w-36 lg:w-48"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -100,37 +100,37 @@ import homeImage from "../assets/home.webp"
 
 <style scoped>
 .home-wrapper {
-    width: 100%;
-    height: 85vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
-    font-size: 3rem;
+  font-size: 3rem;
 }
 
 .home-wrapper div {
-    margin: 5px;
+  margin: 5px;
 }
 
 .buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .buttons button {
-    margin: 10px;
-    transition: all .25s;
-    cursor: pointer;
+  margin: 10px;
+  transition: all 0.25s;
+  cursor: pointer;
 }
 
 .buttons button:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>

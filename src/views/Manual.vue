@@ -19,7 +19,7 @@ onMounted(async () => {
 
 <template>
   <div class="manual-wrapper prose p-5">
-    <div class="loader-wrapper w-full flex justify-center items-center">
+    <div class="loader-wrapper flex w-full items-center justify-center">
       <span class="loading loading-spinner loading-lg"></span>
     </div>
   </div>

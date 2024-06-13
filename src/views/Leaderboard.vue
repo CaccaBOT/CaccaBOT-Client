@@ -89,16 +89,16 @@ function setTime(): TimeUntilNewMonth {
 <template>
   <div class="leaderboard-wrapper">
     <div
-      class="header py-7 w-11/12 mx-auto flex flex-row justify-between items-center"
+      class="header mx-auto flex w-11/12 flex-row items-center justify-between py-7"
     >
-      <button @click="prevMonth()" class="btn btn-active btn-circle">
+      <button @click="prevMonth()" class="btn btn-circle btn-active">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6"
+          class="h-6 w-6"
         >
           <path
             stroke-linecap="round"
@@ -108,12 +108,12 @@ function setTime(): TimeUntilNewMonth {
         </svg>
       </button>
       <div>
-        <h1 class="text-center m-0">CACCA LEADERBOARD</h1>
+        <h1 class="m-0 text-center">CACCA LEADERBOARD</h1>
         <h2 class="text-center">{{ globalStore.displayDate }}</h2>
         <div
-          class="countdown-wrapper flex flex-col justify-center items-center flex-wrap"
+          class="countdown-wrapper flex flex-col flex-wrap items-center justify-center"
         >
-          <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
+          <div class="grid auto-cols-max grid-flow-col gap-5 text-center">
             <div class="flex flex-col">
               <span class="countdown font-mono text-4xl">
                 <span :style="'--value:' + timeUntilNewMonth.days"></span>
@@ -141,14 +141,14 @@ function setTime(): TimeUntilNewMonth {
           </div>
         </div>
       </div>
-      <button @click="nextMonth()" class="btn btn-active btn-circle">
+      <button @click="nextMonth()" class="btn btn-circle btn-active">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6"
+          class="h-6 w-6"
         >
           <path
             stroke-linecap="round"
@@ -160,14 +160,14 @@ function setTime(): TimeUntilNewMonth {
     </div>
 
     <img
-      class="md:w-1/2 sm:w-full mx-auto"
+      class="mx-auto sm:w-full md:w-1/2"
       v-show="globalStore.leaderboard.length === 0 && !globalStore.isFetching"
       :src="noPoopsFound"
     />
 
     <div
       v-show="globalStore.isFetching"
-      class="flex flex-col gap-2 w-11/12 mx-auto"
+      class="mx-auto flex w-11/12 flex-col gap-2"
     >
       <div v-for="n in 15" class="skeleton h-12 w-full"></div>
     </div>
@@ -176,7 +176,7 @@ function setTime(): TimeUntilNewMonth {
       v-show="globalStore.leaderboard.length > 0 && !globalStore.isFetching"
       class="overflow-x-auto"
     >
-      <table class="table table-xl">
+      <table class="table-xl table">
         <thead>
           <tr class="prose text-center">
             <th>Rank</th>
@@ -192,16 +192,16 @@ function setTime(): TimeUntilNewMonth {
 
             <td>
               <div
-                class="flex items-center gap-3 user-cell"
+                class="user-cell flex items-center gap-3"
                 @click="goToProfile(user.id)"
               >
                 <div class="avatar">
-                  <div class="mask mask-circle w-16 h-16">
+                  <div class="mask mask-circle h-16 w-16">
                     <img :src="user.pfp ?? noPfp" />
                   </div>
                 </div>
                 <div>
-                  <div class="font-bold prose">
+                  <div class="prose font-bold">
                     <h2>{{ user.username }}</h2>
                   </div>
                 </div>
@@ -241,8 +241,8 @@ function setTime(): TimeUntilNewMonth {
   }
 
   .header h1 {
-  font-size: 1.6rem;
-  font-weight: bold;
-}
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
 }
 </style>

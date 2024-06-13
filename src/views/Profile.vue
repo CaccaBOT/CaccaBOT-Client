@@ -97,22 +97,22 @@ onMounted(async () => {
 
 <template>
   <div class="profile-wrapper">
-    <div class="profile-header mt-5 mx-auto text-center">
+    <div class="profile-header mx-auto mt-5 text-center">
       <div class="avatar">
         <div
           v-show="!globalStore.profile.username"
-          class="skeleton w-32 rounded-full shrink-0"
+          class="skeleton w-32 shrink-0 rounded-full"
         ></div>
         <div
           v-show="globalStore.profile.username"
-          class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"
+          class="w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100"
         >
           <img :src="globalStore.profile.pfp ?? noPfp" />
         </div>
       </div>
       <div
         v-show="!globalStore.profile.username"
-        class="skeleton mt-5 h-6 w-1/6 mx-auto"
+        class="skeleton mx-auto mt-5 h-6 w-1/6"
       ></div>
       <div v-show="globalStore.profile.username" class="username">
         <h1>{{ globalStore.profile.username }}</h1>
@@ -120,13 +120,13 @@ onMounted(async () => {
     </div>
     <div
       v-show="!globalStore.profile.username"
-      class="skeleton h-32 w-5/6 mx-auto mt-5"
+      class="skeleton mx-auto mt-5 h-32 w-5/6"
     ></div>
     <div
       v-show="globalStore.profile.username"
-      class="card w-5/6 bg-base-200 shadow-xl mx-auto mt-5 text-center"
+      class="card mx-auto mt-5 w-5/6 bg-base-200 text-center shadow-xl"
     >
-      <div class="card-body text-center mx-auto prose">
+      <div class="prose card-body mx-auto text-center">
         <h1 class="quote-top">“</h1>
         <p>
           {{ globalStore.profile.bio ?? "This user has not set a bio yet." }}
@@ -137,11 +137,11 @@ onMounted(async () => {
 
     <div
       v-show="!userStats.monthlyLeaderboardPosition"
-      class="skeleton h-32 w-5/6 mx-auto mt-5"
+      class="skeleton mx-auto mt-5 h-32 w-5/6"
     ></div>
     <div
       v-show="userStats.monthlyLeaderboardPosition"
-      class="flex md:flex-row sm:flex-col mx-auto my-5 w-5/6 card bg-base-200 shadow text-center"
+      class="card mx-auto my-5 flex w-5/6 bg-base-200 text-center shadow sm:flex-col md:flex-row"
     >
       <div class="stat">
         <div class="stat-figure text-secondary">
@@ -151,7 +151,7 @@ onMounted(async () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            class="h-6 w-6"
           >
             <path
               stroke-linecap="round"
@@ -175,7 +175,7 @@ onMounted(async () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            class="h-6 w-6"
           >
             <path
               stroke-linecap="round"
@@ -197,7 +197,7 @@ onMounted(async () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            class="h-6 w-6"
           >
             <path
               stroke-linecap="round"
@@ -224,7 +224,7 @@ onMounted(async () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            class="h-6 w-6"
           >
             <path
               stroke-linecap="round"
@@ -240,11 +240,11 @@ onMounted(async () => {
     </div>
     <div
       v-show="!userStats.monthlyLeaderboardPosition"
-      class="skeleton h-72 w-11/12 mt-10 mx-auto"
+      class="skeleton mx-auto mt-10 h-72 w-11/12"
     ></div>
     <div
       v-show="userStats.monthlyLeaderboardPosition"
-      class="w-full chart mx-auto"
+      class="chart mx-auto w-full"
     >
       <apexchart
         height="400px"
