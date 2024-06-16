@@ -70,9 +70,9 @@ function isActive(route) {
           Users
         </button>
       </div>
-      <div class="navbar-end">
-        <div class="avatar absolute">
-          <div class="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+      <div class="navbar-end cursor-pointer">
+        <div class="avatar absolute right-[4vw]">
+          <div class="w-16 rounded-full bg-base-300 ring ring-primary ring-offset-base-100 ring-offset-2">
             <img :src="noPfp" />
           </div>
         </div>
@@ -83,6 +83,10 @@ function isActive(route) {
 
 <style scoped>
 .avatar {
-  right: 4vw;
+  transition: all .25s;
+}
+
+.avatar:hover {
+  transform: scale(1.1);
 }
 </style>

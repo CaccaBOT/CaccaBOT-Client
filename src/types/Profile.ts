@@ -4,4 +4,5 @@ export type Profile = {
   bio: string | null
   pfp: string | null
   poops: number
+  frozen: boolean
 }
