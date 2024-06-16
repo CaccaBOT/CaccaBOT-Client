@@ -209,7 +209,7 @@ function setTime(): TimeUntilNewMonth {
             </td>
 
             <td class="prose text-center">
-              <h3>{{ user.poop_count }}</h3>
+              <h3>{{ user.poops }}</h3>
             </td>
           </tr>
         </tbody>

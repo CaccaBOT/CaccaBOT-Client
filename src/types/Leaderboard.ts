@@ -3,6 +3,6 @@ export type Leaderboard = {
   username: string
   pfp: string | null
   bio: string | null
-  poop_count: number
+  poops: number
   rank: number
 }[]
