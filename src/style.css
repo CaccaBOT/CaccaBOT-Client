@@ -16,4 +16,5 @@ body::-webkit-scrollbar-thumb {
     oklch(0.748, 0.26, 342.55)
   ) !important;
   border-radius: 4px !important;
+  scrollbar-color: initial !important;
 }
