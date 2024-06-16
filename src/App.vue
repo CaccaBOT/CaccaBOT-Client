@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from "vue"
 import Header from "./components/Header.vue"
 import LoginPanel from "./components/LoginPanel.vue"
 import router from "./router/router"
@@ -9,7 +9,9 @@ const sessionStore = useSessionStore()
 
 <template>
   <Header v-show="router.currentRoute.value.name != 'home'" />
-  <LoginPanel v-show="false && !sessionStore.session.id"/> <!-- remember to remove false -->
+  <LoginPanel
+    v-show="!sessionStore.session.id && sessionStore.showLoginModal"
+  />
   <router-view v-slot="{ Component, route }">
     <component :is="Component" />
   </router-view>
