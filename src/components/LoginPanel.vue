@@ -26,9 +26,9 @@ async function login() {
 }
 
 function dismissModal(event) {
-    if (event.target.classList.contains("login-panel-wrapper")) {
-        sessionStore.showLoginModal = false
-    }
+  if (event.target.classList.contains("login-panel-wrapper")) {
+    sessionStore.showLoginModal = false
+  }
 }
 </script>
 
