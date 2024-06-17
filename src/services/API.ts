@@ -1,4 +1,4 @@
-export const baseURL = "https://caccabot.pages.dev"
+export const baseURL = "https://caccabot.duckdns.org"
 export const baseAPIURL = `${baseURL}/api`
 
 export default class API {
