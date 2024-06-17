@@ -6,3 +6,9 @@ export type Profile = {
   poops: number
   frozen: boolean
 }
+
+export type Poop = {
+  id: string
+  timestamp: string
+  user_id: string
+}

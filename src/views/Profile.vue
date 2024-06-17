@@ -10,16 +10,18 @@ import HeroiconsTrophy from "~icons/heroicons/trophy"
 import HeroiconsFire from "~icons/heroicons/fire"
 import HeroiconsChartBar from "~icons/heroicons/chart-bar"
 import MaterialSymbolsExposurePlus1Rounded from "~icons/material-symbols/exposure-plus-1-rounded"
+import { Poop } from "../types/Profile.ts"
 
 const globalStore = useGlobalStore()
 const { client } = useAPIStore()
 const userStats = ref({} as UserStats)
-const monthlyUserPoops = ref([])
+
+const monthlyUserPoops = ref([] as Poop[])
 
 let options = ref({})
 let series = ref([])
 
-function groupByDay(data) {
+function groupByDay(data: Poop[]): Record<string, number> {
   const grouped = {}
   data.forEach((item) => {
     const date = new Date(item.timestamp)
@@ -29,10 +31,11 @@ function groupByDay(data) {
     }
     grouped[day]++
   })
+
   return grouped
 }
 
-function fillMissingDays(grouped) {
+function fillMissingDays(grouped: Record<string, number>): Record<string, number> {
   const startDate = new Date(
     globalStore.selectedDate.getFullYear(),
     globalStore.selectedDate.getMonth(),
@@ -53,6 +56,11 @@ function fillMissingDays(grouped) {
   return filled
 }
 
+type DisplayedResult = {
+  date: string
+  count: number
+}
+
 onMounted(async () => {
   const id = router.currentRoute.value.params.id as string
   if (router.currentRoute.value.name == "monthlyProfile") {
@@ -67,7 +75,7 @@ onMounted(async () => {
     const groupedByDay = groupByDay(monthlyUserPoops.value)
     const filledData = fillMissingDays(groupedByDay)
 
-    const result = Object.keys(filledData).map((date) => ({
+    const result: DisplayedResult[] = Object.keys(filledData).map((date) => ({
       date,
       count: filledData[date],
     }))
