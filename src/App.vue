@@ -11,9 +11,9 @@ const sessionStore = useSessionStore()
 useHead({
   link: [
     {
-      rel: 'preconnect',
+      rel: "preconnect",
       href: baseURL,
-      crossorigin: 'anonymous'
+      crossorigin: "anonymous"
     }
   ]
 })
