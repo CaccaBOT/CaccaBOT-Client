@@ -3,7 +3,7 @@ import "./style.css"
 import router from "./router/router"
 import VueApexCharts from "vue3-apexcharts"
 import { createPinia } from "pinia"
-import { createHead } from '@unhead/vue'
+import { createHead } from "@unhead/vue"
 import App from "./App.vue"
 
 export const color =

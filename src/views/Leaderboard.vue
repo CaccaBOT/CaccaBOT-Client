@@ -239,15 +239,16 @@ tr:nth-child(1) > td {
   animation: shine 2s infinite;
   background-size: 200%;
   background: linear-gradient(
-    45deg,
-    rgba(186, 148, 62, 1) 0%,
-    rgba(236, 172, 32, 1) 20%,
-    rgba(186, 148, 62, 1) 39%,
-    rgba(249, 244, 180, 1) 50%,
-    rgba(186, 148, 62, 1) 60%,
-    rgba(236, 172, 32, 1) 80%,
-    rgba(186, 148, 62, 1) 100%
-  ) left;
+      45deg,
+      rgba(186, 148, 62, 1) 0%,
+      rgba(236, 172, 32, 1) 20%,
+      rgba(186, 148, 62, 1) 39%,
+      rgba(249, 244, 180, 1) 50%,
+      rgba(186, 148, 62, 1) 60%,
+      rgba(236, 172, 32, 1) 80%,
+      rgba(186, 148, 62, 1) 100%
+    )
+    left;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -257,13 +258,14 @@ tr:nth-child(2) > td {
   animation: shine 2s infinite;
   background-size: 200%;
   background: linear-gradient(
-    45deg,
-    #757575 0%,
-    #9e9e9e 25%,
-    #e8e8e8 50%,
-    #9e9e9e 75%,
-    #757575 100%
-  ) left;
+      45deg,
+      #757575 0%,
+      #9e9e9e 25%,
+      #e8e8e8 50%,
+      #9e9e9e 75%,
+      #757575 100%
+    )
+    left;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -273,15 +275,16 @@ tr:nth-child(3) > td {
   animation: shine 2s infinite;
   background-size: 200%;
   background: linear-gradient(
-    45deg,
-    rgba(153, 101, 21, 1) 0%,
-    rgba(172, 117, 35, 1) 20%,
-    rgba(153, 101, 21, 1) 39%,
-    rgba(186, 140, 59, 1) 50%,
-    rgba(153, 101, 21, 1) 60%,
-    rgba(172, 117, 35, 1) 80%,
-    rgba(153, 101, 21, 1) 100%
-  ) left;
+      45deg,
+      rgba(153, 101, 21, 1) 0%,
+      rgba(172, 117, 35, 1) 20%,
+      rgba(153, 101, 21, 1) 39%,
+      rgba(186, 140, 59, 1) 50%,
+      rgba(153, 101, 21, 1) 60%,
+      rgba(172, 117, 35, 1) 80%,
+      rgba(153, 101, 21, 1) 100%
+    )
+    left;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

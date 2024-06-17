@@ -13,9 +13,9 @@ useHead({
     {
       rel: "preconnect",
       href: baseURL,
-      crossorigin: "anonymous"
-    }
-  ]
+      crossorigin: "anonymous",
+    },
+  ],
 })
 </script>
 
