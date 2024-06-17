@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue"
-import showdown from "showdown"
+import { marked } from "marked"
+import markedKatex from "marked-katex-extension"
 
 const manual = ref("")
 onMounted(async () => {
-  let converter = new showdown.Converter()
-  converter.setFlavor("github")
-  manual.value = converter.makeHtml(
-    await (
+  const manualRaw = await (
       await fetch(
         "https://raw.githubusercontent.com/CaccaBOT/CaccaBOT-Manual/main/README.md",
       )
-    ).text(),
-  )
+    ).text()
+    marked.use(markedKatex({throwOnError: false}))
+  manual.value = await marked.parse(manualRaw)
   document.querySelector(".manual-wrapper").innerHTML = manual.value
 })
 </script>
