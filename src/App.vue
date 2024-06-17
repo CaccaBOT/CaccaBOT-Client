@@ -1,10 +1,22 @@
 <script setup lang="ts">
-import { ref } from "vue"
 import Header from "./components/Header.vue"
 import LoginPanel from "./components/LoginPanel.vue"
 import router from "./router/router"
 import { useSessionStore } from "./stores/session"
+import { useHead } from "@unhead/vue"
+import { baseURL } from "./services/API.ts"
+
 const sessionStore = useSessionStore()
+
+useHead({
+  link: [
+    {
+      rel: 'preconnect',
+      href: baseURL,
+      crossorigin: 'anonymous'
+    }
+  ]
+})
 </script>
 
 <template>
