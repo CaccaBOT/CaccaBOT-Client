@@ -35,7 +35,9 @@ function groupByDay(data: Poop[]): Record<string, number> {
   return grouped
 }
 
-function fillMissingDays(grouped: Record<string, number>): Record<string, number> {
+function fillMissingDays(
+  grouped: Record<string, number>,
+): Record<string, number> {
   const startDate = new Date(
     globalStore.selectedDate.getFullYear(),
     globalStore.selectedDate.getMonth(),

@@ -6,11 +6,13 @@ import markedKatex from "marked-katex-extension"
 const manual = ref("")
 onMounted(async () => {
   const manualRaw = await (
-      await fetch(
-        "https://raw.githubusercontent.com/CaccaBOT/CaccaBOT-Manual/main/README.md",
-      )
-    ).text()
-    marked.use(markedKatex({throwOnError: false}))
+    await fetch(
+      "https://raw.githubusercontent.com/CaccaBOT/CaccaBOT-Manual/main/README.md",
+    )
+  ).text()
+  marked.use(
+    markedKatex({ throwOnError: false, displayMode: true, output: "mathml" }),
+  )
   manual.value = await marked.parse(manualRaw)
   document.querySelector(".manual-wrapper").innerHTML = manual.value
 })
