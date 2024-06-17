@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import router from "../router/router"
-import HugeiconsGithub from "~icons/hugeicons/github"
 import HeroiconsTrophy from "~icons/heroicons/trophy"
 import HeroiconsBookOpen from "~icons/heroicons/book-open"
 import HeroiconsChartBar from "~icons/heroicons/chart-bar"
@@ -8,7 +7,8 @@ import HeroiconsUsers from "~icons/heroicons/users"
 import noPfp from "../assets/no_pfp.webp"
 import { useSessionStore } from "../stores/session"
 const sessionStore = useSessionStore()
-function isActive(route) {
+
+function isActive(route: string): boolean {
   return router.currentRoute.value.path.startsWith(route)
 }
 
