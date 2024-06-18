@@ -3,7 +3,7 @@ import noPoopsFound from "../assets/no_poops_found.webp"
 import router from "../router/router"
 import noPfp from "../assets/no_pfp.webp"
 import { useGlobalStore } from "../stores/global"
-import { ref } from "vue"
+import { ref, watch } from "vue"
 const globalStore = useGlobalStore()
 import type { Ref } from "vue"
 
@@ -50,17 +50,19 @@ type TimeUntilNewMonth = {
   seconds: number
 }
 
-const newMonth = new Date(
-  new Date().getFullYear(),
-  new Date().getMonth() + 1,
+const newMonth = ref(new Date(
+  globalStore.selectedDate.getFullYear(),
+  globalStore.selectedDate.getMonth() + 1,
   1,
-)
+))
+
 const timeUntilNewMonth: Ref<TimeUntilNewMonth> = ref(setTime())
 const interval = setInterval(() => {
   timeUntilNewMonth.value = setTime()
 }, 1000)
 
 function setTime(): TimeUntilNewMonth {
+  updateNewMonth()
   const MONTH_IN_MILLISECONDS = 2629746000
   if (
     globalStore.selectedDate.getTime() + MONTH_IN_MILLISECONDS <=
@@ -70,7 +72,7 @@ function setTime(): TimeUntilNewMonth {
   }
 
   let now = new Date().getTime()
-  let diff = newMonth.getTime() - now
+  let diff = newMonth.value.getTime() - now
 
   if (diff <= 0) {
     clearInterval(interval)
@@ -82,8 +84,21 @@ function setTime(): TimeUntilNewMonth {
   let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
   let seconds = Math.floor((diff % (1000 * 60)) / 1000)
 
+  if (days > 99) {
+    return {days: 99, hours: 99, minutes: 99, seconds: 99}
+  }
+
   return { days, hours, minutes, seconds }
 }
+
+function updateNewMonth() {
+  newMonth.value = new Date(
+  globalStore.selectedDate.getFullYear(),
+  globalStore.selectedDate.getMonth() + 1,
+  1,
+)
+}
+
 </script>
 
 <template>
