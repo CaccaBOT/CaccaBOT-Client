@@ -3,7 +3,7 @@ import noPoopsFound from "../assets/no_poops_found.webp"
 import router from "../router/router"
 import noPfp from "../assets/no_pfp.webp"
 import { useGlobalStore } from "../stores/global"
-import { ref, watch } from "vue"
+import { ref } from "vue"
 const globalStore = useGlobalStore()
 import type { Ref } from "vue"
 
@@ -50,11 +50,13 @@ type TimeUntilNewMonth = {
   seconds: number
 }
 
-const newMonth = ref(new Date(
-  globalStore.selectedDate.getFullYear(),
-  globalStore.selectedDate.getMonth() + 1,
-  1,
-))
+const newMonth = ref(
+  new Date(
+    globalStore.selectedDate.getFullYear(),
+    globalStore.selectedDate.getMonth() + 1,
+    1,
+  ),
+)
 
 const timeUntilNewMonth: Ref<TimeUntilNewMonth> = ref(setTime())
 const interval = setInterval(() => {
@@ -85,7 +87,7 @@ function setTime(): TimeUntilNewMonth {
   let seconds = Math.floor((diff % (1000 * 60)) / 1000)
 
   if (days > 99) {
-    return {days: 99, hours: 99, minutes: 99, seconds: 99}
+    return { days: 99, hours: 99, minutes: 99, seconds: 99 }
   }
 
   return { days, hours, minutes, seconds }
@@ -93,12 +95,11 @@ function setTime(): TimeUntilNewMonth {
 
 function updateNewMonth() {
   newMonth.value = new Date(
-  globalStore.selectedDate.getFullYear(),
-  globalStore.selectedDate.getMonth() + 1,
-  1,
-)
+    globalStore.selectedDate.getFullYear(),
+    globalStore.selectedDate.getMonth() + 1,
+    1,
+  )
 }
-
 </script>
 
 <template>
@@ -310,7 +311,6 @@ tr:nth-child(3) > td {
     background-position: right;
   }
 }
-
 
 @media only screen and (max-width: 700px) {
   .user-cell {
