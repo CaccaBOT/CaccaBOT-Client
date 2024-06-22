@@ -6,6 +6,8 @@ import HeroiconsChartBar from "~icons/heroicons/chart-bar"
 import HeroiconsUsers from "~icons/heroicons/users"
 import noPfp from "../assets/no_pfp.webp"
 import { useSessionStore } from "../stores/session"
+import NavMenu from "../components/NavMenu.vue"
+import { ref } from "vue"
 const sessionStore = useSessionStore()
 
 function isActive(route: string): boolean {
@@ -13,7 +15,13 @@ function isActive(route: string): boolean {
 }
 
 function showLoginModal() {
-  sessionStore.showLoginModal = true
+  if (sessionStore.session.id == null) {
+    sessionStore.showLoginModal = true
+  }
+}
+
+function toggleNavMenu() {
+  sessionStore.showNavMenu = !sessionStore.showNavMenu
 }
 </script>
 
@@ -108,14 +116,20 @@ function showLoginModal() {
           Users
         </button>
       </div>
-      <div class="navbar-end cursor-pointer" @click="showLoginModal">
-        <div class="avatar absolute right-[4vw]">
+      <div class="navbar-end cursor-pointer">
+        <div
+          @click="
+            sessionStore.session.id != null ? toggleNavMenu() : showLoginModal()
+          "
+          class="avatar absolute right-[4vw]"
+        >
           <div
             class="w-16 rounded-full bg-base-300 ring ring-primary ring-offset-2 ring-offset-base-100"
           >
-            <img :src="noPfp" />
+            <img :src="sessionStore.session.pfp ?? noPfp" />
           </div>
         </div>
+        <NavMenu/>
       </div>
     </div>
   </div>

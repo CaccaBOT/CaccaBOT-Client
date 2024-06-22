@@ -9,17 +9,38 @@ import { color } from "../main.ts"
 import HeroiconsTrophy from "~icons/heroicons/trophy"
 import HeroiconsFire from "~icons/heroicons/fire"
 import HeroiconsChartBar from "~icons/heroicons/chart-bar"
+import HeroiconsPencil from "~icons/heroicons/pencil"
+import MaterialSymbolsSaveOutline from "~icons/material-symbols/save-outline"
 import MaterialSymbolsExposurePlus1Rounded from "~icons/material-symbols/exposure-plus-1-rounded"
 import { Poop } from "../types/Profile.ts"
+import { DisplayedResult } from "../types/DisplayedResult.ts"
+import { useSessionStore } from "../stores/session.ts"
 
 const globalStore = useGlobalStore()
 const { client } = useAPIStore()
+const sessionStore = useSessionStore()
 const userStats = ref({} as UserStats)
+const isEditingUsername = ref(false)
+const isEditingBio = ref(false)
 
 const monthlyUserPoops = ref([] as Poop[])
 
 let options = ref({})
 let series = ref([])
+
+function editUsername() {
+  //TODO: implement API call
+  isEditingUsername.value = false
+}
+
+function editBio() {
+  //TODO: implement API call
+  isEditingBio.value = false
+}
+
+function isOwnProfile() {
+  return router.currentRoute.value.path.includes("/own")
+}
 
 function groupByDay(data: Poop[]): Record<string, number> {
   const grouped = {}
@@ -58,14 +79,11 @@ function fillMissingDays(
   return filled
 }
 
-type DisplayedResult = {
-  date: string
-  count: number
-}
-
 onMounted(async () => {
-  const id = router.currentRoute.value.params.id as string
-  if (router.currentRoute.value.name == "monthlyProfile") {
+  const id = (router.currentRoute.value.params.id ??
+    sessionStore.session.id) as string
+
+  if (router.currentRoute.value.name == "monthlyProfile" || isOwnProfile()) {
     const date = new Date(
       globalStore.selectedDate.getFullYear(),
       globalStore.selectedDate.getMonth() + 1,
@@ -138,13 +156,36 @@ onMounted(async () => {
         >
           <img :src="globalStore.profile.pfp ?? noPfp" />
         </div>
+        <div
+          v-show="isOwnProfile()"
+          class="absolute bottom-[-5px] left-[-5px] h-[2.5rem] w-[2.5rem] cursor-pointer rounded-full bg-primary"
+        >
+          <div class="flex h-full items-center justify-center">
+            <HeroiconsPencil class="mx-auto text-center" color="black" />
+          </div>
+        </div>
       </div>
       <div
         v-show="!globalStore.profile.username"
         class="skeleton mx-auto mt-5 h-6 w-1/6"
       ></div>
       <div v-show="globalStore.profile.username" class="username">
-        <h1>{{ globalStore.profile.username }}</h1>
+        <h1
+          class="mx-auto w-max outline-none"
+          :contenteditable="isEditingUsername"
+        >
+          {{ globalStore.profile.username }}
+          <HeroiconsPencil
+            v-show="isOwnProfile() && !isEditingUsername"
+            class="ml-1 inline cursor-pointer text-[1.25rem]"
+            @click="isEditingUsername = !isEditingUsername"
+          />
+          <MaterialSymbolsSaveOutline
+            v-show="isOwnProfile() && isEditingUsername"
+            class="ml-1 inline cursor-pointer text-[1.25rem]"
+            @click="editUsername"
+          />
+        </h1>
       </div>
     </div>
     <div

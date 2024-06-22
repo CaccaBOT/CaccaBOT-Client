@@ -7,6 +7,7 @@ import Stats from "../views/Stats.vue"
 import Users from "../views/Users.vue"
 import Manual from "../views/Manual.vue"
 import { useGlobalStore } from "../stores/global"
+import { useSessionStore } from "../stores/session"
 
 const routes = [
   { path: "/", component: Home, name: "home" },
@@ -23,6 +24,11 @@ const routes = [
     component: Profile,
     name: "monthlyProfile",
   },
+  {
+    path: "/profile/own",
+    component: Profile,
+    name: "ownProfile",
+  },
   { path: "/users", component: Users, name: "users" },
   { path: "/manual", component: Manual, name: "manual" },
 ]
@@ -34,6 +40,7 @@ const router = createRouter({
 
 router.afterEach(async (to, from) => {
   const globalStore = useGlobalStore()
+  const sessionStore = useSessionStore()
   switch (to.name) {
     case "monthlyLeaderboard":
       await globalStore.fetchLeaderboard(
@@ -56,6 +63,13 @@ router.afterEach(async (to, from) => {
         new Date().getMonth(),
       )
       await globalStore.fetchProfile(to.params.id as string)
+      break
+    case "ownProfile":
+      globalStore.selectedDate = new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+      )
+      await globalStore.fetchProfile(sessionStore.session.id as string)
       break
   }
 })

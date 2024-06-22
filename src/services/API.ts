@@ -13,6 +13,10 @@ export default class API {
     })
   }
 
+  async logout() {
+    // TODO: write implementation
+  }
+
   async getMonthlyLeaderboard(date: Date = new Date()) {
     return await fetch(
       `${baseAPIURL}/poop/leaderboard/${date.getFullYear()}/${date.getMonth()}`,

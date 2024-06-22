@@ -23,6 +23,7 @@ async function login() {
   }
 
   sessionStore.session = body
+  sessionStore.save()
 }
 
 function dismissModal(event) {

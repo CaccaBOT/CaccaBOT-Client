@@ -7,6 +7,7 @@ import { useHead } from "@unhead/vue"
 import { baseURL } from "./services/API.ts"
 
 const sessionStore = useSessionStore()
+sessionStore.load()
 
 useHead({
   link: [
