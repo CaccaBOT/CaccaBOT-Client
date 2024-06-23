@@ -39,7 +39,7 @@ function dismissModal(event) {
     @click="dismissModal($event)"
   >
     <div
-      class="mx-auto flex h-1/3 w-[85vw] flex-col items-center gap-4 rounded-2xl bg-base-300 p-4 text-center shadow-xl sm:w-2/3 md:w-[50vw] lg:w-[40vw] xl:w-[30vw]"
+      class="mx-auto flex md:h-[50vh] lg:h-[35vh] w-[85vw] flex-col items-center gap-4 rounded-2xl bg-base-300 p-4 text-center shadow-xl sm:w-2/3 md:w-[50vw] lg:w-[40vw] xl:w-[30vw]"
     >
       <div class="prose mx-auto my-4">
         <h1>Change Password</h1>
@@ -64,7 +64,7 @@ function dismissModal(event) {
         class="btn btn-primary mb-4 mt-auto w-2/3 text-lg"
         @click="change"
       >
-        Change Password
+        Change
       </button>
     </div>
   </div>
