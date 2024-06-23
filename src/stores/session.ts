@@ -7,7 +7,7 @@ export const useSessionStore = defineStore("session", {
     session: {} as Session,
     showLoginModal: false,
     showNavMenu: false,
-    showChangePasswordModal: false
+    showChangePasswordModal: false,
   }),
   getters: {},
   actions: {

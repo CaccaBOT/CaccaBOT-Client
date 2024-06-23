@@ -130,7 +130,7 @@ function toggleNavMenu() {
             <img :src="sessionStore.session.pfp ?? noPfp" />
           </div>
         </div>
-        <NavMenu/>
+        <NavMenu />
       </div>
     </div>
   </div>

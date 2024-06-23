@@ -66,7 +66,7 @@ router.afterEach(async (to, from) => {
       break
     case "ownProfile":
       if (!sessionStore.session.id) {
-        router.push('/')
+        router.push("/")
         return
       }
       globalStore.selectedDate = new Date(

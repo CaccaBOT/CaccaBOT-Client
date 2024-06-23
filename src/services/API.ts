@@ -4,7 +4,6 @@ export const baseURL = "https://caccabot.duckdns.org"
 export const baseAPIURL = `${baseURL}/api`
 
 export default class API {
-
   sessionStore = useSessionStore()
 
   async login(username: string, password: string) {
@@ -21,12 +20,12 @@ export default class API {
   async changePassword(password: string) {
     return await fetch(`${baseAPIURL}/auth/password`, {
       method: "POST",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
-        "X-Auth-Token": this.sessionStore.session.token
+        "X-Auth-Token": this.sessionStore.session.token,
       },
       body: JSON.stringify({
-        password
+        password,
       }),
     })
   }

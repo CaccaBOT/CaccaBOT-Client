@@ -19,7 +19,7 @@ async function login() {
     document
       .querySelectorAll("input")
       .forEach((x) => x.classList.add("input-bordered", "input-error"))
-      return
+    return
   }
 
   sessionStore.session = body

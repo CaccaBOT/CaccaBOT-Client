@@ -17,7 +17,6 @@ function showChangePasswordModal() {
   }
 }
 
-
 function logout() {
   sessionStore.logout()
   sessionStore.showLoginModal = false
@@ -31,7 +30,7 @@ function logout() {
     class="nav-menu-wrapper absolute right-[5vw] top-[8.5vh] z-[100]"
   >
     <ul
-    @click="sessionStore.showNavMenu = false"
+      @click="sessionStore.showNavMenu = false"
       tabindex="0"
       class="menu dropdown-content z-[1] mt-3 w-52 rounded-box bg-base-300 p-2 shadow"
     >

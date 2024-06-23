@@ -4,10 +4,34 @@ import homeImage from "../assets/home.webp"
 import HeroiconsTrophy from "~icons/heroicons/trophy"
 import HeroiconsBookOpen from "~icons/heroicons/book-open"
 import HeroiconsChartBar from "~icons/heroicons/chart-bar"
+import HeroiconsDownload from "~icons/heroicons/arrow-down-tray"
 import HeroiconsUsers from "~icons/heroicons/users"
+import { onMounted, ref } from "vue"
+
+let installPrompt = ref(null)
+
+async function install() {
+  await installPrompt.value.prompt()
+}
+
+onMounted(() => {
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault()
+    installPrompt.value = event
+  })
+})
 </script>
 
 <template>
+  <button
+    v-show="installPrompt != null"
+    @click="install"
+    class="btn btn-success absolute right-[1rem] top-[1rem]"
+  >
+    <HeroiconsDownload class="text-xl" />
+
+    Install
+  </button>
   <div class="home-wrapper">
     <img class="mb-5 w-80" :src="homeImage" />
     <div class="prose">

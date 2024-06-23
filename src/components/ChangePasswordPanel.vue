@@ -22,14 +22,14 @@ async function change() {
   sessionStore.showChangePasswordModal = false
   sessionStore.showLoginModal = false
   sessionStore.logout()
-  router.push('/')
+  router.push("/")
 }
 
 function dismissModal(event) {
   if (event.target.classList.contains("change-password-panel-wrapper")) {
     sessionStore.showChangePasswordModal = false
   }
-  newPassword.value = ''
+  newPassword.value = ""
 }
 </script>
 

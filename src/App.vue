@@ -26,7 +26,9 @@ useHead({
   <LoginPanel
     v-show="!sessionStore.session.id && sessionStore.showLoginModal"
   />
-  <ChangePasswordPanel v-show="sessionStore.session.id && sessionStore.showChangePasswordModal"/>
+  <ChangePasswordPanel
+    v-show="sessionStore.session.id && sessionStore.showChangePasswordModal"
+  />
   <router-view v-slot="{ Component, route }">
     <component :is="Component" />
   </router-view>
