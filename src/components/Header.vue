@@ -7,6 +7,7 @@ import HeroiconsUsers from "~icons/heroicons/users"
 import noPfp from "../assets/no_pfp.webp"
 import { useSessionStore } from "../stores/session"
 import NavMenu from "../components/NavMenu.vue"
+import ChangePasswordPanel from "../components/ChangePasswordPanel.vue"
 import { ref } from "vue"
 const sessionStore = useSessionStore()
 

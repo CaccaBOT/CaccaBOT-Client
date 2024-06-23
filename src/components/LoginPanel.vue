@@ -13,13 +13,13 @@ const password = ref("")
 async function login() {
   const response = await client.login(username.value, password.value)
   const body = await response.json()
-
+  username.value = ""
+  password.value = ""
   if (!response.ok) {
-    username.value = ""
-    password.value = ""
     document
       .querySelectorAll("input")
       .forEach((x) => x.classList.add("input-bordered", "input-error"))
+      return
   }
 
   sessionStore.session = body

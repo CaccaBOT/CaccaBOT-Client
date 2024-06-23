@@ -65,6 +65,10 @@ router.afterEach(async (to, from) => {
       await globalStore.fetchProfile(to.params.id as string)
       break
     case "ownProfile":
+      if (!sessionStore.session.id) {
+        router.push('/')
+        return
+      }
       globalStore.selectedDate = new Date(
         new Date().getFullYear(),
         new Date().getMonth(),

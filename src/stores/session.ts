@@ -6,7 +6,8 @@ export const useSessionStore = defineStore("session", {
   state: () => ({
     session: {} as Session,
     showLoginModal: false,
-    showNavMenu: false
+    showNavMenu: false,
+    showChangePasswordModal: false
   }),
   getters: {},
   actions: {

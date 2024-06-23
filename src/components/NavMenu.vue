@@ -11,6 +11,13 @@ import { useGlobalStore } from "../stores/global"
 const sessionStore = useSessionStore()
 const { client } = useAPIStore()
 
+function showChangePasswordModal() {
+  if (sessionStore.session.id) {
+    sessionStore.showChangePasswordModal = true
+  }
+}
+
+
 function logout() {
   sessionStore.logout()
   sessionStore.showLoginModal = false
@@ -35,7 +42,7 @@ function logout() {
         </button>
       </li>
       <li>
-        <button>
+        <button @click="showChangePasswordModal">
           <MaterialSymbolsPassword class="text-xl" />
           Change Password
         </button>
