@@ -36,7 +36,6 @@ onMounted(() => {
     <img class="mb-5 w-80" :src="homeImage" />
     <div class="prose">
       <h1>CaccaBOT</h1>
-      <h3>Cache Test</h3>
     </div>
     <div class="buttons">
       <button
