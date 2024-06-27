@@ -48,6 +48,9 @@ importers:
       '@iconify-json/material-symbols':
         specifier: ^1.1.80
         version: 1.1.80
+      '@iconify-json/streamline':
+        specifier: ^1.1.8
+        version: 1.1.8
       '@types/showdown':
         specifier: ^2.0.6
         version: 2.0.6
@@ -849,6 +852,9 @@ packages:
 
   '@iconify-json/material-symbols@1.1.80':
     resolution: {integrity: sha512-JrDMmWeHxFFMp3BBSsjvDvSiYzJ0qdYmHAQYWY/L5fxVZcIoeoQvtQR0wM1iJN4UDIsnHwbpJQ/sqZ/cvph6sw==}
+
+  '@iconify-json/streamline@1.1.8':
+    resolution: {integrity: sha512-9G9y1BYgh3VTZdE8CPUVSfzjHL39/PkkdPpyVCeWYZ64flyPEEBMeRz4YyoOU8A8MMTUj2zCq9GcsLpZb9Yg1Q==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -3457,7 +3463,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.24.7
       '@babel/helper-plugin-utils': 7.24.7
-      '@babel/types': 7.24.0
+      '@babel/types': 7.24.7
       esutils: 2.0.3
 
   '@babel/regjsgen@0.8.0': {}
@@ -3577,6 +3583,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/material-symbols@1.1.80':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/streamline@1.1.8':
     dependencies:
       '@iconify/types': 2.0.0
 

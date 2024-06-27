@@ -4,10 +4,12 @@ import HeroiconsTrophy from "~icons/heroicons/trophy"
 import HeroiconsBookOpen from "~icons/heroicons/book-open"
 import HeroiconsChartBar from "~icons/heroicons/chart-bar"
 import HeroiconsUsers from "~icons/heroicons/users"
+import poopIcon from "../assets/home.webp"
 import noPfp from "../assets/no_pfp.webp"
 import { useSessionStore } from "../stores/session"
 import NavMenu from "../components/NavMenu.vue"
 import ChangePasswordPanel from "../components/ChangePasswordPanel.vue"
+import StreamlineCards from "~icons/streamline/cards"
 import { ref } from "vue"
 const sessionStore = useSessionStore()
 
@@ -79,21 +81,21 @@ function toggleNavMenu() {
             </li>
           </ul>
         </div>
-        <a class="btn btn-ghost mr-6 text-2xl" @click="router.push('/')"
-          >CaccaBOT</a
-        >
+        <button class="btn btn-ghost mr-5 text-2xl" @click="router.push('/')">
+          CaccaBOT
+        </button>
       </div>
       <div class="navbar-start hidden lg:flex">
         <button
-          class="btn mx-2 w-36"
+          class="btn mx-1 w-32 xl:w-36"
           :class="{ 'btn-primary': isActive('/leaderboard') }"
           @click="router.push('/leaderboard')"
         >
           <HeroiconsTrophy class="text-xl" />
-          Rankings
+          Ranks
         </button>
         <button
-          class="btn mx-2 w-36"
+          class="btn mx-1 w-32 xl:w-36"
           :class="{ 'btn-secondary': isActive('/manual') }"
           @click="router.push('/manual')"
         >
@@ -101,7 +103,7 @@ function toggleNavMenu() {
           Manual
         </button>
         <button
-          class="btn mx-2 w-36"
+          class="btn mx-1 w-32 xl:w-36"
           :class="{ 'btn-accent': isActive('/stats') }"
           @click="router.push('/stats')"
         >
@@ -109,7 +111,16 @@ function toggleNavMenu() {
           Stats
         </button>
         <button
-          class="btn mx-2 w-36"
+        @click="router.push('/cards')"
+        class="btn mx-1 w-32 xl:w-36"
+        :class="{ 'btn-success': isActive('/cards') }"
+        >
+          <StreamlineCards class="text-xl" />
+
+          Cards
+        </button>
+        <button
+          class="btn mx-1 w-32 xl:w-36"
           :class="{ 'btn-info': isActive('/users') }"
           @click="router.push('/users')"
         >

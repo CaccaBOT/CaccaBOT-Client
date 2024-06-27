@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
+import { onMounted, ref, watch } from "vue"
 import router from "../router/router"
 import { useGlobalStore } from "../stores/global"
 import { useAPIStore } from "../stores/api"
@@ -79,10 +79,7 @@ function fillMissingDays(
   return filled
 }
 
-onMounted(async () => {
-  const id = (router.currentRoute.value.params.id ??
-    sessionStore.session.id) as string
-
+async function fetchProfileStats(id) {
   if (router.currentRoute.value.name == "monthlyProfile" || isOwnProfile()) {
     const date = new Date(
       globalStore.selectedDate.getFullYear(),
@@ -139,6 +136,21 @@ onMounted(async () => {
   } else {
     //TODO handle overall stats
   }
+}
+
+watch(router.currentRoute, async () => {
+  const id = (router.currentRoute.value.params.id ??
+    sessionStore.session.id) as string
+    userStats.value = {} as UserStats
+    options.value = {}
+    series.value = []
+  await fetchProfileStats(id)
+})
+
+onMounted(async () => {
+  const id = (router.currentRoute.value.params.id ??
+    sessionStore.session.id) as string
+  await fetchProfileStats(id)
 })
 </script>
 

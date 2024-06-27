@@ -6,6 +6,7 @@ import Profile from "../views/Profile.vue"
 import Stats from "../views/Stats.vue"
 import Users from "../views/Users.vue"
 import Manual from "../views/Manual.vue"
+import Cards from "../views/Cards.vue"
 import { useGlobalStore } from "../stores/global"
 import { useSessionStore } from "../stores/session"
 
@@ -31,6 +32,7 @@ const routes = [
   },
   { path: "/users", component: Users, name: "users" },
   { path: "/manual", component: Manual, name: "manual" },
+  { path: "/cards", component: Cards, name: "cards" }
 ]
 
 const router = createRouter({

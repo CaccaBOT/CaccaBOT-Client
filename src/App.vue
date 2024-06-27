@@ -22,7 +22,7 @@ useHead({
 </script>
 
 <template>
-  <Header v-show="router.currentRoute.value.name != 'home'" />
+  <Header />
   <LoginPanel
     v-show="!sessionStore.session.id && sessionStore.showLoginModal"
   />
