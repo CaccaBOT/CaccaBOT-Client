@@ -167,8 +167,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="cards-wrapper flex flex-col justify-between h-[80vh]">
-    <div class="card-pack flex flex-row items-center justify-center cursor-pointer"></div>
+  <div class="cards-wrapper flex flex-col justify-between h-[85vh]">
+    <div class="card-pack flex flex-row items-center justify-center cursor-pointer mt-10"></div>
     <button class="btn btn-error sm:w-2/3 md:w-1/6 lg:1/8 mx-auto">Not yet available</button>
   </div>
 </template>
