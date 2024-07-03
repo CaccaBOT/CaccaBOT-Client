@@ -74,6 +74,12 @@ function toggleNavMenu() {
               </button>
             </li>
             <li>
+              <button @click="router.push('/cards')">
+                <StreamlineCards class="text-xl" />
+                Cards
+              </button>
+            </li>
+            <li>
               <button @click="router.push('/users')">
                 <HeroiconsUsers class="text-xl" />
                 Users

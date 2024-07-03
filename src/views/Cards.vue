@@ -8,8 +8,8 @@ let camera;
 let renderer;
 let scene;
 let loop;
-let canvasWidth = 600
-let canvasHeight = 600
+let canvasWidth = window.innerWidth / 1.1
+let canvasHeight = window.innerHeight / 1.5
 
 function createRenderer() {
  const renderer = new WebGLRenderer({ antialias: true, alpha: true });
@@ -167,9 +167,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="cards-wrapper flex flex-col justify-center">
-    <div class="card-pack flex flex-row items-center justify-center my-[5vh] cursor-pointer"></div>
-    <button class="btn btn-error w-96 mx-auto">Not yet available</button>
+  <div class="cards-wrapper flex flex-col justify-between h-[80vh]">
+    <div class="card-pack flex flex-row items-center justify-center cursor-pointer"></div>
+    <button class="btn btn-error sm:w-2/3 md:w-1/6 lg:1/8 mx-auto">Not yet available</button>
   </div>
 </template>
 
