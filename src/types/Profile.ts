@@ -5,6 +5,7 @@ export type Profile = {
   pfp: string | null
   poops: number
   frozen: boolean
+  money: number
 }
 
 export type Poop = {

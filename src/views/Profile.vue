@@ -199,6 +199,7 @@ onMounted(async () => {
           />
         </h1>
       </div>
+      <div class="badge badge-success my-2 text-lg p-4">{{ globalStore.profile.money }} Merdollars</div>
     </div>
     <div
       v-show="!globalStore.profile.username"

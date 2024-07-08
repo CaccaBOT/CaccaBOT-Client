@@ -21,7 +21,6 @@ function createRenderer()
 {
   const renderer = new WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(canvasWidth, canvasHeight);
-  renderer.physicallyCorrectLights = true;
   return renderer;
 }
 
