@@ -2,6 +2,7 @@
 import { WebGLRenderer, PerspectiveCamera, DirectionalLight, Scene, Clock } from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { onMounted } from "vue";
 import JSConfetti from "js-confetti";
 import noPfp from "../assets/no_pfp.webp"
@@ -10,12 +11,14 @@ let camera;
 let renderer;
 let scene;
 let loop;
+let controls;
 let canvasWidth = window.innerWidth / 1.1;
 let canvasHeight = window.innerHeight / 1.5;
 let confetti = new JSConfetti();
 let rotationSpeed = 1;
 let exponentialFactor = 1.05;
 let shrinking = false;
+let userInteracting = false;
 
 function createRenderer()
 {
@@ -98,7 +101,10 @@ function createLights()
   const directionalLightFront = new DirectionalLight(0xffffff, 1);
   directionalLightFront.position.set(0, 0, 5);
 
-  return { directionalLightFront };
+  const directionalLightBack = new DirectionalLight(0xffffff, 1);
+  directionalLightBack.position.set(0, 0, -5);
+
+  return { directionalLightFront, directionalLightBack };
 }
 
 function createScene()
@@ -115,12 +121,24 @@ class World
     camera = createCamera();
     scene = createScene();
     renderer = createRenderer();
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.enableZoom = false;
+
+    controls.addEventListener('start', () => userInteracting = true);
+    controls.addEventListener('end', () => {
+      userInteracting = false;
+    });
+
     loop = new Loop(camera, scene, renderer);
     container.append(renderer.domElement);
 
-    const { directionalLightFront } = createLights();
+    const { directionalLightFront, directionalLightBack } = createLights();
     loop.updatables.push(directionalLightFront);
+    loop.updatables.push(directionalLightBack);
     scene.add(directionalLightFront);
+    scene.add(directionalLightBack);
 
     const resizer = new Resizer(container, camera, renderer);
     resizer.onResize = () =>
@@ -145,13 +163,15 @@ class World
         gltf.scene.scale.set(0.06, 0.06, 0.06);
         gltf.scene.tick = (delta) =>
         {
-          gltf.scene.rotation.y += delta * rotationSpeed;
+          if (!userInteracting) {
+            gltf.scene.rotation.y += delta * rotationSpeed;
+          }
           if (rotationSpeed >= 2)
           {
             rotationSpeed *= exponentialFactor;
             if (rotationSpeed > 300)
             {
-              shrinking = true
+              shrinking = true;
             }
           }
           if (shrinking)
@@ -161,10 +181,10 @@ class World
             {
               scene.remove(gltf.scene);
               loop.stop();
-              document.querySelector('.card-pack').classList.add('hidden')
+              document.querySelector('.card-pack').classList.add('hidden');
               showConfetti();
-              document.querySelector('.card-wrapper').classList.remove('hidden')
-              document.querySelector('.card-wrapper').classList.add('zoom-in')
+              document.querySelector('.card-wrapper').classList.remove('hidden');
+              document.querySelector('.card-wrapper').classList.add('zoom-in');
             }
           }
         };
