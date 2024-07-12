@@ -166,13 +166,13 @@ onMounted(async () => {
           v-show="globalStore.profile.username"
           class="custom-shadow w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100"
         >
-          <img :src="globalStore.profile.pfp ?? noPfp" />
+          <img :src="(isOwnProfile() ? sessionStore.session.pfp : globalStore.profile.pfp) ?? noPfp" />
         </div>
         <div
           v-show="isOwnProfile()"
           class="absolute bottom-[-5px] left-[-5px] h-[2.5rem] w-[2.5rem] cursor-pointer rounded-full bg-primary"
         >
-          <div class="flex h-full items-center justify-center">
+          <div class="flex h-full items-center justify-center" @click="sessionStore.showChangePfpModal = true">
             <HeroiconsPencil class="mx-auto text-center" color="black" />
           </div>
         </div>

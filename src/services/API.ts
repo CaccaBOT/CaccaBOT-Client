@@ -30,6 +30,29 @@ export default class API {
     })
   }
 
+  async changePfp(base64Pfp: string) {
+    return await fetch(`${baseAPIURL}/profile/pfp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Auth-Token": this.sessionStore.session.token,
+      },
+      body: JSON.stringify({
+        image: base64Pfp
+      }),
+    })
+  }
+
+  async removePfp() {
+    return await fetch(`${baseAPIURL}/profile/pfp`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Auth-Token": this.sessionStore.session.token,
+      }
+    })
+  }
+
   async logout() {
     // TODO: write implementation
   }
