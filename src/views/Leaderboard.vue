@@ -176,10 +176,12 @@ function updateNewMonth() {
     </div>
 
     <img
-      class="mx-auto sm:w-full md:w-1/2"
+      class="mx-auto sm:w-full md:w-1/3"
       v-show="globalStore.leaderboard.length === 0 && !globalStore.isFetching"
       :src="noPoopsFound"
     />
+
+      <h2 class="text-center text-4xl font-bold text-error">NO POOPS FOUND</h2>
 
     <div
       v-show="globalStore.isFetching"
