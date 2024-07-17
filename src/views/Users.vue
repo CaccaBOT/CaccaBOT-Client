@@ -13,16 +13,14 @@ function goToProfile(id: string) {
 }
 
 onMounted(async () => {
-  const us = await client.getLeaderboard()
-  const usersJson = await us.json()
-
-  users.value = usersJson.sort((a: User, b: User) => b.poops - a.poops)
+  const usersResponse = await (await client.getLeaderboard()).json()
+  users.value = usersResponse.sort((a: User, b: User) => b.poops - a.poops)
 })
 </script>
 
 <template>
   <div class="users-wrapper">
-    <div class="prose mx-auto w-full text-center">
+    <div class="prose mx-auto w-full text-center my-2">
       <h1>CACCA USERS</h1>
     </div>
     <div
@@ -41,9 +39,11 @@ onMounted(async () => {
               <img :src="user.pfp ?? noPfp" />
             </div>
           </div>
-          <div class="flex flex-col items-center justify-center">
+          <div class="flex flex-col items-center justify-between h-100">
             <h2 class="card-title">{{ user.username }}</h2>
-            <p>{{ user.poops }} poops</p>
+            <div class="badge badge-success mt-6 text-md p-4">
+              <strong>{{ user.poops }}</strong>&nbsp; Poops | &nbsp;<strong>{{ user.money }}</strong>&nbsp; 💩$
+            </div>
           </div>
         </div>
       </div>
