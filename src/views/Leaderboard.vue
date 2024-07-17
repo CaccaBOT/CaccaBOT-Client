@@ -181,7 +181,8 @@ function updateNewMonth() {
       :src="noPoopsFound"
     />
 
-      <h2 class="text-center text-4xl font-bold text-error">NO POOPS FOUND</h2>
+      <h2 v-show="globalStore.leaderboard.length === 0 && !globalStore.isFetching"
+      class="text-center text-4xl font-bold text-error">NO POOPS FOUND</h2>
 
     <div
       v-show="globalStore.isFetching"
