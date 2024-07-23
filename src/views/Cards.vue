@@ -3,9 +3,14 @@ import { WebGLRenderer, PerspectiveCamera, DirectionalLight, Scene, Clock } from
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import JSConfetti from "js-confetti";
 import noPfp from "../assets/no_pfp.webp"
+import { useAPIStore } from "../stores/api"
+import { useSessionStore } from "../stores/session";
+const { client } = useAPIStore()
+const sessionStore = useSessionStore()
+import caccantante_test from '../assets/cards/caccantante_Card.webp'
 
 let camera;
 let renderer;
@@ -19,29 +24,25 @@ let rotationSpeed = 1;
 let exponentialFactor = 1.05;
 let shrinking = false;
 let userInteracting = false;
+const foundCard = ref({})
 
-function createRenderer()
-{
+function createRenderer() {
   const renderer = new WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(canvasWidth, canvasHeight);
   return renderer;
 }
 
-const setSize = (container, camera, renderer) =>
-{
+const setSize = (container, camera, renderer) => {
   camera.aspect = canvasWidth / canvasHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(canvasWidth, canvasHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
 };
 
-class Resizer
-{
-  constructor(container, camera, renderer)
-  {
+class Resizer {
+  constructor(container, camera, renderer) {
     setSize(container, camera, renderer);
-    window.addEventListener('resize', () =>
-    {
+    window.addEventListener('resize', () => {
       setSize(container, camera, renderer);
       this.onResize();
     });
@@ -51,53 +52,43 @@ class Resizer
 
 const clock = new Clock();
 
-class Loop
-{
-  constructor(camera, scene, renderer)
-  {
+class Loop {
+  constructor(camera, scene, renderer) {
     this.camera = camera;
     this.scene = scene;
     this.renderer = renderer;
     this.updatables = [];
   }
 
-  start()
-  {
-    this.renderer.setAnimationLoop(() =>
-    {
+  start() {
+    this.renderer.setAnimationLoop(() => {
       this.tick();
       this.renderer.render(this.scene, this.camera);
     });
   }
 
-  stop()
-  {
+  stop() {
     this.renderer.setAnimationLoop(null);
   }
 
-  tick()
-  {
+  tick() {
     const delta = clock.getDelta();
-    for (const object of this.updatables)
-    {
-      if (typeof object.tick === 'function')
-      {
+    for (const object of this.updatables) {
+      if (typeof object.tick === 'function') {
         object.tick(delta);
       }
     }
   }
 }
 
-function createCamera()
-{
+function createCamera() {
   const camera = new PerspectiveCamera(35, 1, 0.1, 100);
   camera.position.set(0, 0, 10);
   camera.tick = (delta) => { };
   return camera;
 }
 
-function createLights()
-{
+function createLights() {
   const directionalLightFront = new DirectionalLight(0xffffff, 1);
   directionalLightFront.position.set(0, 0, 5);
 
@@ -107,17 +98,14 @@ function createLights()
   return { directionalLightFront, directionalLightBack };
 }
 
-function createScene()
-{
+function createScene() {
   const scene = new Scene();
   scene.background = null;
   return scene;
 }
 
-class World
-{
-  constructor(container)
-  {
+class World {
+  constructor(container) {
     camera = createCamera();
     scene = createScene();
     renderer = createRenderer();
@@ -141,16 +129,14 @@ class World
     scene.add(directionalLightBack);
 
     const resizer = new Resizer(container, camera, renderer);
-    resizer.onResize = () =>
-    {
+    resizer.onResize = () => {
       this.render();
     };
 
     this.loadModel();
   }
 
-  loadModel()
-  {
+  loadModel() {
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('draco/');
@@ -158,33 +144,28 @@ class World
 
     loader.load(
       'card-pack.glb',
-      (gltf) =>
-      {
+      (gltf) => {
         gltf.scene.scale.set(0.06, 0.06, 0.06);
-        gltf.scene.tick = (delta) =>
-        {
+        gltf.scene.tick = (delta) => {
           if (!userInteracting) {
             gltf.scene.rotation.y += delta * rotationSpeed;
           }
-          if (rotationSpeed >= 2)
-          {
+          if (rotationSpeed >= 2) {
             rotationSpeed *= exponentialFactor;
-            if (rotationSpeed > 300)
-            {
+            if (rotationSpeed > 300) {
               shrinking = true;
             }
           }
-          if (shrinking)
-          {
+          if (shrinking) {
             gltf.scene.scale.multiplyScalar(0.95);
-            if (gltf.scene.scale.x < 0.001)
-            {
+            if (gltf.scene.scale.x < 0.001) {
               scene.remove(gltf.scene);
               loop.stop();
               document.querySelector('.card-pack').classList.add('hidden');
               showConfetti();
               document.querySelector('.card-wrapper').classList.remove('hidden');
               document.querySelector('.card-wrapper').classList.add('zoom-in');
+              document.querySelector('.card-info').classList.remove('hidden');
             }
           }
         };
@@ -192,51 +173,90 @@ class World
         scene.add(gltf.scene);
       },
       undefined,
-      (error) =>
-      {
+      (error) => {
         console.error('An error happened', error);
       }
     );
   }
 
-  render()
-  {
+  render() {
     renderer.render(scene, camera);
   }
 
-  start()
-  {
+  start() {
     loop.start();
   }
 
-  stop()
-  {
+  stop() {
     loop.stop();
   }
 }
 
-function main()
-{
-  const container = document.querySelector(".card-pack");
+function main() {
+  const container = document.querySelector(".card-pack")
   const world = new World(container);
   world.start();
 }
 
-function openPack()
-{
+async function openPack() {
+  const response = await client.openPack()
+  if (!response.ok) {
+    return
+  }
+  sessionStore.session.money = sessionStore.session.money - 5
+  foundCard.value = await response.json()
+  document.querySelector('#openPack').classList.add('fade-out')
+  document.querySelector('.card').classList.add(getRarityClass(foundCard.value.rarity))
   rotationSpeed = 2;
 }
 
-function showConfetti()
-{
-  confetti.addConfetti({
-    emojis: ['💩'],
-    emojiSize: 50,
-  });
+function getRarityClass(rarityId) {
+  let rarityMap = {
+    'Merdume': 'glint-common',
+    'Escrementale': 'glint-rare',
+    'Sensazianale': 'glint-epic',
+    'Caccasmagorico': 'glint-legendary'
+  }
+
+  return rarityMap[rarityId]
 }
 
-onMounted(() =>
-{
+async function reset() {
+    document.querySelector('.card-info').classList.add('hidden');
+
+    document.querySelector('body').style.overflowY = 'hidden'
+    document.querySelector('.card').classList.add('slide-down')
+
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    document.querySelector('.card').classList.remove('slide-down')
+    document.querySelector('body').style.overflowY = 'auto'
+
+    // Clear the scene
+    while (scene.children.length > 0) {
+      scene.remove(scene.children[0]);
+    }
+    // Reset variables
+    rotationSpeed = 1;
+    shrinking = false;
+    userInteracting = false;
+    // Remove added classes
+    document.querySelector('.card-pack').classList.remove('hidden')
+    document.querySelector('.card-wrapper').classList.add('hidden')
+    document.querySelector('.card-wrapper').classList.remove('zoom-in')
+    document.querySelector('#openPack').classList.remove('fade-out')
+    document.querySelector('.card-pack').innerHTML = ''
+    // Start the world again
+    main()
+}
+
+function showConfetti() {
+  confetti.addConfetti({
+    emojis: ['💩', '🚽', '🧻'],
+    emojiSize: 50,
+  })
+}
+onMounted(() => {
   main();
 });
 </script>
@@ -246,36 +266,137 @@ onMounted(() =>
     <div class="card-pack flex flex-row items-center justify-center cursor-pointer mt-[5vh]"></div>
     <div class="card-wrapper flex justify-center items-center w-full mt-24 hidden">
       <div class="card lg:w-1/5 md:w-1/3 w-2/3 position-relative">
-        <img class="rounded-lg bg-base-300 glint-legendary" :src="noPfp">
+        <img class="rounded-lg bg-base-300" :src="caccantante_test" @click="reset">
       </div>
     </div>
-    <button class="btn btn-success w-2/3 sm:w-2/3 md:w-1/6 lg:w-1/8 mx-auto" @click="openPack">Open Pack</button>
+    <div class="card-info prose w-100 mx-auto text-center my-2 hidden">
+      <h1 class="mb-1">{{ foundCard.name }}</h1>
+      <h2 class="mt-3">{{ foundCard.rarity}}</h2>
+    </div>
+    <button v-if="!sessionStore.session.id" class="btn btn-error w-2/3 sm:w-2/3 md:w-1/6 lg:w-1/8 mx-auto">Login required</button>
+    <button v-if="sessionStore.session.money >= 5" id="openPack"
+      class="btn btn-success w-2/3 sm:w-2/3 md:w-1/6 lg:w-1/8 mx-auto" @click="openPack">Open Pack (5 $💩)</button>
+    <button v-if="sessionStore.session.money <= 5"
+      class="btn btn-error w-2/3 sm:w-2/3 md:w-1/6 lg:w-1/8 mx-auto" @click="openPack">You can't buy this item (5
+      $💩)</button>
   </div>
 </template>
 
 <style scoped>
 .glint-legendary {
-  animation: glint 2s infinite alternate, pulse 2s infinite alternate;
-  border: 5px solid gold;
+  position: relative;
+  border: 8px solid gold;
   color: gold;
+  overflow: hidden;
+}
+
+.glint-legendary::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg,
+    rgba(255, 0, 0, 0.8),
+    rgba(255, 127, 0, 0.8),
+    rgba(255, 255, 0, 0.8),
+    rgba(0, 255, 0, 0.8),
+    rgba(0, 0, 255, 0.8),
+    rgba(75, 0, 130, 0.8),
+    rgba(148, 0, 211, 0.8));
+  animation: rotateGlint 5s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: color;
+  opacity: .3;
+  transform: scale(1.1);
+}
+
+@keyframes rotateGlint {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .glint-epic {
   animation: glint 2s infinite alternate, pulse 2s infinite alternate;
-  border: 5px solid purple;
+  border: 8px solid #ff00ff;
   color: purple;
+}
+
+.glint-epic::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 5px;
+  background: linear-gradient(45deg, #ff00ff, #800080, #4b0082);
+  background-size: 200% 200%;
+  animation: chroma 4s infinite alternate;
+  z-index: -1;
+  transform: scale(.8);
 }
 
 .glint-rare {
   animation: glint 2s infinite alternate, pulse 2s infinite alternate;
-  border: 5px solid blue;
-  color: blue;
+  border: 8px solid #094bf6;
+  color: #0010ff;
+}
+
+.glint-rare::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 5px;
+  background: linear-gradient(45deg, #0000ff, #00ffff);
+  background-size: 200% 200%;
+  animation: chroma 4s infinite alternate;
+  z-index: -1;
+  transform: scale(.8);
 }
 
 .glint-common {
   animation: glint 2s infinite alternate, pulse 2s infinite alternate;
   border: 5px solid gray;
   color: gray;
+}
+
+.glint-common::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 5px;
+  background: linear-gradient(45deg, #808080, #a9a9a9);
+  background-size: 200% 200%;
+  animation: chroma 4s infinite alternate;
+  z-index: -1;
+}
+
+.slide-down {
+  animation: slide-down .5s ease-in-out forwards;
+}
+
+
+
+@keyframes slide-down {
+  from {
+    transform: translateY(0vh);
+  }
+
+  to {
+    transform: translateY(100vh);
+  }
 }
 
 @keyframes glint {
@@ -308,7 +429,7 @@ onMounted(() =>
   0% {
     transform: scale(0);
   }
-  
+
   80% {
     transform: scale(1.1);
   }
@@ -318,10 +439,25 @@ onMounted(() =>
   }
 }
 
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fade-out .5s linear forwards;
+}
+
 .card::before {
   content: "";
   display: block;
-  padding-bottom: 141.67%; /* Aspect ratio 5:7 */
+  padding-bottom: 141.67%;
+  /* Aspect ratio 5:7 */
 }
 
 .card img {
@@ -336,5 +472,4 @@ onMounted(() =>
 .zoom-in {
   animation: zoom-in 1s forwards ease-out;
 }
-
 </style>

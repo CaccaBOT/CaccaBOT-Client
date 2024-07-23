@@ -1,6 +1,7 @@
 import { useSessionStore } from "../stores/session"
 
-export const baseURL = "https://caccabot.duckdns.org"
+//export const baseURL = "https://caccabot.duckdns.org"
+export const baseURL = "http://192.168.0.147:3000"
 export const baseAPIURL = `${baseURL}/api`
 
 export default class API {
@@ -43,6 +44,14 @@ export default class API {
     })
   }
 
+  async openPack() {
+    return await fetch(`${baseAPIURL}/cards/open`, {
+      headers: {
+        "X-Auth-Token": this.sessionStore.session.token,
+      }
+    })
+  }
+
   async removePfp() {
     return await fetch(`${baseAPIURL}/profile/pfp`, {
       method: "DELETE",
@@ -69,6 +78,14 @@ export default class API {
 
   async getProfile(id: string) {
     return await fetch(`${baseAPIURL}/profile/${id}`)
+  }
+
+  async getOwnProfile() {
+    return await fetch(`${baseAPIURL}/profile`, {
+      headers: {
+        "X-Auth-Token": this.sessionStore.session.token,
+      }
+    })
   }
 
   async getStats() {

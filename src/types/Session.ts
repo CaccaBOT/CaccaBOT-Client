@@ -6,4 +6,5 @@ export type Session = {
   poops: number
   token: string
   frozen: boolean
+  money: number
 }

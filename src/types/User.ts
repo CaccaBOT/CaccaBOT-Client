@@ -5,4 +5,5 @@ export type User = {
   pfp: string | null
   poops: number
   rank: number
+  money: number
 }

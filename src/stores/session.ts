@@ -14,13 +14,21 @@ export const useSessionStore = defineStore("session", {
   getters: {},
   actions: {
     save() {
-      localStorage.setItem("session", JSON.stringify(this.session))
+        localStorage.setItem("token", this.session.token)
     },
-    load() {
-      this.session = JSON.parse(localStorage.getItem("session") ?? "{}")
+    async load() {
+      const token = localStorage.getItem("token") ?? null
+      if (!token) {
+        return
+      }
+      this.session.token = token
+      const {client} = useAPIStore()
+      this.session = await (await client.getOwnProfile()).json()
+      this.session.token = token
     },
     logout() {
       this.session = {}
+      this.session.token = null
       this.save()
     },
   },
