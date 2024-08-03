@@ -28,8 +28,7 @@ export const useSessionStore = defineStore("session", {
     },
     logout() {
       this.session = {}
-      this.session.token = null
-      this.save()
+      localStorage.removeItem("token")
     },
   },
 })

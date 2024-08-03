@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import { WebGLRenderer, PerspectiveCamera, DirectionalLight, Scene, Clock } from "three";
+import { WebGLRenderer, PerspectiveCamera, DirectionalLight, Scene, Clock, Camera } from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { onMounted, ref } from "vue";
 import JSConfetti from "js-confetti";
-import noPfp from "../assets/no_pfp.webp"
 import { useAPIStore } from "../stores/api"
 import { useSessionStore } from "../stores/session";
+import { Card } from "../types/Card"
 const { client } = useAPIStore()
 const sessionStore = useSessionStore()
-import caccantante_test from '../assets/cards/caccantante_Card.webp'
 
-let camera;
-let renderer;
-let scene;
-let loop;
+let camera: Camera;
+let renderer: WebGLRenderer;
+let scene: Scene;
+let loop: Loop;
 let controls;
 let canvasWidth = window.innerWidth / 1.1;
 let canvasHeight = window.innerHeight / 1.5;
@@ -24,7 +23,8 @@ let rotationSpeed = 1;
 let exponentialFactor = 1.05;
 let shrinking = false;
 let userInteracting = false;
-const foundCard = ref({})
+const foundCard = ref({} as Card)
+let isOpening = ref(false);
 
 function createRenderer() {
   const renderer = new WebGLRenderer({ antialias: true, alpha: true });
@@ -166,6 +166,7 @@ class World {
               document.querySelector('.card-wrapper').classList.remove('hidden');
               document.querySelector('.card-wrapper').classList.add('zoom-in');
               document.querySelector('.card-info').classList.remove('hidden');
+              isOpening.value = false
             }
           }
         };
@@ -199,6 +200,7 @@ function main() {
 }
 
 async function openPack() {
+  isOpening.value = true
   const response = await client.openPack()
   if (!response.ok) {
     return
@@ -212,41 +214,34 @@ async function openPack() {
 
 function getRarityClass(rarityId) {
   let rarityMap = {
-    'Merdume': 'glint-common',
-    'Escrementale': 'glint-rare',
-    'Sensazianale': 'glint-epic',
-    'Caccasmagorico': 'glint-legendary'
+    'Merdume': 'rarity-common',
+    'Escrementale': 'rarity-rare',
+    'Sensazianale': 'rarity-epic',
+    'Caccasmagorico': 'rarity-legendary'
   }
 
   return rarityMap[rarityId]
 }
 
 async function reset() {
-    document.querySelector('.card-info').classList.add('hidden');
-
+    document.querySelector('.card-info').classList.add('hidden')
     document.querySelector('body').style.overflowY = 'hidden'
     document.querySelector('.card').classList.add('slide-down')
-
     await new Promise(resolve => setTimeout(resolve, 1000))
-
     document.querySelector('.card').classList.remove('slide-down')
     document.querySelector('body').style.overflowY = 'auto'
-
-    // Clear the scene
     while (scene.children.length > 0) {
       scene.remove(scene.children[0]);
     }
-    // Reset variables
     rotationSpeed = 1;
     shrinking = false;
     userInteracting = false;
-    // Remove added classes
     document.querySelector('.card-pack').classList.remove('hidden')
     document.querySelector('.card-wrapper').classList.add('hidden')
     document.querySelector('.card-wrapper').classList.remove('zoom-in')
     document.querySelector('#openPack').classList.remove('fade-out')
+    document.querySelector('.card').classList.remove('rarity-common', 'rarity-rare', 'rarity-epic', 'rarity-legendary')
     document.querySelector('.card-pack').innerHTML = ''
-    // Start the world again
     main()
 }
 
@@ -256,6 +251,7 @@ function showConfetti() {
     emojiSize: 50,
   })
 }
+
 onMounted(() => {
   main();
 });
@@ -266,16 +262,16 @@ onMounted(() => {
     <div class="card-pack flex flex-row items-center justify-center cursor-pointer mt-[5vh]"></div>
     <div class="card-wrapper flex justify-center items-center w-full mt-24 hidden">
       <div class="card lg:w-1/5 md:w-1/3 w-2/3 position-relative">
-        <img class="rounded-lg bg-base-300" :src="caccantante_test" @click="reset">
+        <img class="rounded-lg bg-base-300" :src="foundCard.asset_url" @click="reset">
       </div>
     </div>
     <div class="card-info prose w-100 mx-auto text-center my-2 hidden">
-      <h1 class="mb-1">{{ foundCard.name }}</h1>
-      <h2 class="mt-3">{{ foundCard.rarity}}</h2>
+      <h1 class="mb-1 mt-5">{{ foundCard.name }}</h1>
+      <h2 class="mt-3 rarity">{{ foundCard.rarity}}</h2>
     </div>
     <button v-if="!sessionStore.session.id" class="btn btn-error w-2/3 sm:w-2/3 md:w-1/6 lg:w-1/8 mx-auto">Login required</button>
     <button v-if="sessionStore.session.money >= 5" id="openPack"
-      class="btn btn-success w-2/3 sm:w-2/3 md:w-1/6 lg:w-1/8 mx-auto" @click="openPack">Open Pack (5 $💩)</button>
+      :disabled="isOpening" class="btn btn-success w-2/3 sm:w-2/3 md:w-1/6 lg:w-1/8 mx-auto" @click="openPack">Open Pack (5 $💩)</button>
     <button v-if="sessionStore.session.money <= 5"
       class="btn btn-error w-2/3 sm:w-2/3 md:w-1/6 lg:w-1/8 mx-auto" @click="openPack">You can't buy this item (5
       $💩)</button>
@@ -283,111 +279,25 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.glint-legendary {
-  position: relative;
-  border: 8px solid gold;
-  color: gold;
-  overflow: hidden;
+.rarity-legendary {
+  border: 8px solid #ffd600;
 }
 
-.glint-legendary::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg,
-    rgba(255, 0, 0, 0.8),
-    rgba(255, 127, 0, 0.8),
-    rgba(255, 255, 0, 0.8),
-    rgba(0, 255, 0, 0.8),
-    rgba(0, 0, 255, 0.8),
-    rgba(75, 0, 130, 0.8),
-    rgba(148, 0, 211, 0.8));
-  animation: rotateGlint 5s linear infinite;
-  pointer-events: none;
-  mix-blend-mode: color;
-  opacity: .3;
-  transform: scale(1.1);
+.rarity-epic {
+  border: 8px solid #9500ff;
 }
 
-@keyframes rotateGlint {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.rarity-rare {
+  border: 8px solid #0068ff;
 }
 
-.glint-epic {
-  animation: glint 2s infinite alternate, pulse 2s infinite alternate;
-  border: 8px solid #ff00ff;
-  color: purple;
-}
-
-.glint-epic::after {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  border-radius: 5px;
-  background: linear-gradient(45deg, #ff00ff, #800080, #4b0082);
-  background-size: 200% 200%;
-  animation: chroma 4s infinite alternate;
-  z-index: -1;
-  transform: scale(.8);
-}
-
-.glint-rare {
-  animation: glint 2s infinite alternate, pulse 2s infinite alternate;
-  border: 8px solid #094bf6;
-  color: #0010ff;
-}
-
-.glint-rare::after {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  border-radius: 5px;
-  background: linear-gradient(45deg, #0000ff, #00ffff);
-  background-size: 200% 200%;
-  animation: chroma 4s infinite alternate;
-  z-index: -1;
-  transform: scale(.8);
-}
-
-.glint-common {
-  animation: glint 2s infinite alternate, pulse 2s infinite alternate;
-  border: 5px solid gray;
-  color: gray;
-}
-
-.glint-common::after {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  border-radius: 5px;
-  background: linear-gradient(45deg, #808080, #a9a9a9);
-  background-size: 200% 200%;
-  animation: chroma 4s infinite alternate;
-  z-index: -1;
+.rarity-common {
+  border: 8px solid #808080;
 }
 
 .slide-down {
   animation: slide-down .5s ease-in-out forwards;
 }
-
-
 
 @keyframes slide-down {
   from {
@@ -410,18 +320,6 @@ onMounted(() => {
 
   100% {
     box-shadow: 0 0 3px 2px rgba(255, 255, 255, 0.5), 0 0 5px 3px;
-  }
-}
-
-@keyframes pulse {
-
-  0%,
-  100% {
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 10px currentColor);
-  }
-
-  50% {
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.7)) drop-shadow(0 0 20px currentColor);
   }
 }
 

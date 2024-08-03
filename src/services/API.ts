@@ -44,7 +44,7 @@ export default class API {
   }
 
   async openPack() {
-    return await fetch(`${baseAPIURL}/cards/open`, {
+    return await fetch(`${baseAPIURL}/collectible/open`, {
       headers: {
         "X-Auth-Token": this.sessionStore.session.token,
       }
@@ -89,6 +89,10 @@ export default class API {
 
   async getStats() {
     return await fetch(`${baseAPIURL}/poop/stats`)
+  }
+
+  async getUserCollectibles(id: string) {
+    return await fetch(`${baseAPIURL}/collectible/inventory/${id}`)
   }
 
   async getUserStats(id: string) {
