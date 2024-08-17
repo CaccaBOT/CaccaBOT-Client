@@ -1,204 +1,174 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
+import { onBeforeMount, onMounted, ref } from "vue"
 import { useGlobalStore } from "../stores/global"
 import { useAPIStore } from "../stores/api"
-import { color } from "../main.ts"
+import CirculatingMerdollars from "../components/stats/CirculatingMerdollars.vue"
+import MonthResetCountdown from "../components/stats/MonthResetCountdown.vue"
+import PoopCount from "../components/stats/PoopCount.vue"
+import TopPooper from "../components/stats/TopPooper.vue"
+import { User } from "../types/User"
+import UserCount from "../components/stats/UserCount.vue"
+import MonthlyPoopTreemapChart from "../components/stats/MonthlyPoopTreemapChart.vue"
+import PoopLineChart from "../components/stats/PoopLineChart.vue"
+import LongestStreak from "../components/stats/LongestStreak.vue"
 const globalStore = useGlobalStore()
-const APIStore = useAPIStore()
-const monthlyPoops = ref([])
+const { client } = useAPIStore()
 
-const treemapOpts = {
-  chart: {
-    type: "treemap",
-    background: "transparent",
-  },
-  theme: {
-    mode: color,
-  },
-}
-
-const treemapSeries = ref([])
-let areaOpts = ref({})
-let areaSeries = ref([])
-
-function groupByUser(data) {
-  const grouped = {}
-  data.forEach((item) => {
-    const user = item.username
-    if (!grouped[user]) {
-      grouped[user] = 0
-    }
-    grouped[user]++
-  })
-  return grouped
-}
-
-function groupByDay(data) {
-  const grouped = {}
-  data.forEach((item) => {
-    const date = new Date(item.timestamp)
-    const day = date.toISOString().split("T")[0]
-    if (!grouped[day]) {
-      grouped[day] = 0
-    }
-    grouped[day]++
-  })
-  return grouped
-}
-
-function fillMissingDays(grouped) {
-  const startDate = new Date(
-    globalStore.selectedDate.getFullYear(),
-    globalStore.selectedDate.getMonth(),
-    2,
-  )
-  const endDate = new Date(
-    globalStore.selectedDate.getFullYear(),
-    globalStore.selectedDate.getMonth() + 1,
-    1,
-  )
-  const filled = {}
-  let currentDate = new Date(startDate)
-  while (currentDate <= endDate) {
-    const day = currentDate.toISOString().split("T")[0]
-    filled[day] = grouped[day] || 0
-    currentDate.setDate(currentDate.getDate() + 1)
-  }
-  return filled
-}
+const stats = ref(null)
 
 onMounted(async () => {
-  const date = new Date(
-    globalStore.selectedDate.getFullYear(),
-    globalStore.selectedDate.getMonth() + 1,
-  )
-  monthlyPoops.value = await (
-    await APIStore.client.getMonthlyPoops(date)
-  ).json()
-  const filledData = fillMissingDays(groupByDay(monthlyPoops.value))
-
-  const groupedByDay = Object.keys(filledData).map((date) => ({
-    date,
-    count: filledData[date],
-  }))
-
-  areaOpts.value = {
-    chart: {
-      type: "area",
-      background: "transparent",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    xaxis: {
-      type: "date",
-      categories: groupedByDay.map((x) => x.date),
-    },
-    theme: {
-      mode: color,
-    },
+  const response = await client.getStats()
+  if (response.ok) {
+    stats.value = await response.json()
   }
-
-  areaSeries.value = [
-    {
-      name: "poop",
-      data: groupedByDay.map((x) => x.count),
-    },
-  ]
-
-  const groupedByUser = groupByUser(monthlyPoops.value)
-
-  treemapSeries.value = [
-    {
-      name: "poop",
-      data: Object.entries(groupedByUser).map((obj) => ({
-        x: obj[0],
-        y: obj[1],
-      })),
-    },
-  ]
 })
+
+const mockUser = {
+  username: "iBalls",
+} as User
 </script>
 
 <template>
   <div class="stats-wrapper">
-    <h1 class="mt-3">CACCA STATS</h1>
-    <h2 class="mb-5">{{ globalStore.displayDate }}</h2>
-    <div class="stats-wrapper">
-      <!-- <div class="stats w-96 shadow m-2">
-
-                <div class="stat bg-base-200 text-center">
-                    <div class="stat-title">Total Monthly Poops</div>
-                    <div class="stat-value">{{ monthlyPoops.length }}</div>
-                    <div class="stat-desc">{{ globalStore.displayDate }}</div>
-                </div>
-
-            </div>
-
-            <div class="stats w-96 shadow m-2">
-
-                <div class="stat bg-base-200 text-center">
-                    <div class="stat-title">Total Monthly Poops</div>
-                    <div class="stat-value">{{ monthlyPoops.length }}</div>
-                    <div class="stat-desc">{{ globalStore.displayDate }}</div>
-                </div>
-
-            </div>
-
-            <div class="stats w-96 shadow m-2">
-
-                <div class="stat bg-base-200 text-center">
-                    <div class="stat-title">Total Monthly Poops</div>
-                    <div class="stat-value">{{ monthlyPoops.length }}</div>
-                    <div class="stat-desc">{{ globalStore.displayDate }}</div>
-                </div>
-
-            </div>
-
-            <div class="stats w-96 shadow m-2">
-
-                <div class="stat bg-base-200 text-center">
-                    <div class="stat-title">Total Monthly Poops</div>
-                    <div class="stat-value">{{ monthlyPoops.length }}</div>
-                    <div class="stat-desc">{{ globalStore.displayDate }}</div>
-                </div>
-
-            </div> -->
+    <div
+      v-show="stats == null"
+      class="loader-wrapper flex h-[85vh] w-full items-center justify-center"
+    >
+      <span class="loading loading-spinner loading-lg"></span>
     </div>
 
-    <div class="charts-wrapper m-2 mx-auto w-[95%]">
-      <h2>Poop distribution</h2>
-      <apexchart
-        height="400px"
-        type="treemap"
-        :options="treemapOpts"
-        :series="treemapSeries"
-      />
+    <div
+      v-show="stats != null"
+      class="stats-widgets prose flex flex-wrap items-center justify-center text-center"
+    >
+      <div class="section m-2 w-max rounded-2xl bg-base-200 p-2">
+        <h1>Time</h1>
+        <div class="not-prose flex flex-wrap items-center justify-center">
+          <MonthResetCountdown />
+        </div>
+      </div>
 
-      <h2>Poops per day</h2>
-      <apexchart
-        height="400px"
-        type="area"
-        :options="areaOpts"
-        :series="areaSeries"
-      />
+      <div
+        v-show="stats != null"
+        class="section m-2 w-max rounded-2xl bg-base-200 p-2"
+      >
+        <h1>Users</h1>
+        <div class="not-prose flex flex-wrap items-center justify-center">
+          <UserCount :value="stats?.users.total" :is-monthly="false" />
+          <UserCount :value="stats?.users.monthly" :is-monthly="true" />
+        </div>
+      </div>
+
+      <div
+        v-show="stats != null"
+        class="section m-2 w-max rounded-2xl bg-base-200 p-2"
+      >
+        <h1>Economy</h1>
+        <div class="not-prose flex flex-wrap items-center justify-center">
+          <CirculatingMerdollars
+            :value="stats?.economy.circulatingMoneyWithAssets ?? 0"
+            :includes-assets="true"
+          />
+          <CirculatingMerdollars
+            :value="stats?.economy.circulatingMoney ?? 0"
+            :includes-assets="false"
+          />
+        </div>
+      </div>
+
+      <div
+        v-show="stats != null"
+        class="section m-2 w-max rounded-2xl bg-base-200 p-2"
+      >
+        <h1>Poops</h1>
+        <div class="not-prose flex flex-wrap items-center justify-center">
+          <PoopCount
+            frequency="daily"
+            :value="stats?.poopStats.daily.poops"
+            :trend="stats?.poopStats.daily.trend"
+          />
+          <PoopCount
+            frequency="weekly"
+            :value="stats?.poopStats.weekly.poops"
+            :trend="stats?.poopStats.weekly.trend"
+          />
+          <PoopCount
+            frequency="monthly"
+            :value="stats?.poopStats.monthly.poops"
+            :trend="stats?.poopStats.monthly.trend"
+          />
+          <PoopCount
+            frequency="total"
+            :value="stats?.poopStats.total.poops"
+            :trend="0"
+          />
+        </div>
+      </div>
+
+      <div v-show="stats" class="section m-2 w-max rounded-2xl bg-base-200 p-2">
+        <h1>Top Poopers</h1>
+        <div class="not-prose flex flex-wrap items-center justify-center">
+          <TopPooper
+            :user="stats?.topPoopers.daily"
+            :value="stats?.topPoopers.daily?.poops"
+            frequency="daily"
+          />
+          <TopPooper
+            :user="stats?.topPoopers.weekly"
+            :value="stats?.topPoopers.weekly?.poops"
+            frequency="weekly"
+          />
+          <TopPooper
+            :user="stats?.topPoopers.monthly"
+            :value="stats?.topPoopers.monthly?.poops"
+            frequency="monthly"
+          />
+          <TopPooper
+            :user="stats?.topPoopers.total"
+            :value="stats?.topPoopers.total?.poops"
+            frequency="total"
+          />
+        </div>
+      </div>
+
+      <!-- <div v-show="stats" class="section m-2 w-max rounded-2xl bg-base-200 p-2">
+        <h1>Streak</h1>
+        <div class="not-prose flex flex-wrap items-center justify-center">
+          <LongestStreak :user="mockUser" :value="123" />
+        </div>
+      </div> -->
+
+      <div v-show="stats" class="section m-2 w-max rounded-2xl bg-base-200 p-2">
+        <h1>Monthly Poop Distribution</h1>
+        <div class="not-prose flex flex-wrap items-center justify-center">
+          <MonthlyPoopTreemapChart :users="stats?.distribution" />
+        </div>
+      </div>
+
+      <div v-show="stats" class="section m-2 w-max rounded-2xl bg-base-200 p-2">
+        <h1>Poop Trend</h1>
+        <div class="not-prose flex flex-wrap items-center justify-center">
+          <PoopLineChart :poopsPerDay="stats?.poopsPerDay" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.stats-wrapper {
-  margin: auto;
-  text-align: center;
+.stats-widgets h1 {
+  margin-bottom: 1vh;
 }
 
-h1 {
-  font-weight: bold;
-  font-size: 2rem;
+.section div {
+  margin: 5px;
 }
 
-h2 {
-  font-weight: bold;
-  font-size: 1.6rem;
+.stats-widgets {
+  max-width: 100%;
+}
+
+.loading {
+  transform: scale(1.5);
 }
 </style>

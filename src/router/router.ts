@@ -32,7 +32,7 @@ const routes = [
   },
   { path: "/users", component: Users, name: "users" },
   { path: "/manual", component: Manual, name: "manual" },
-  { path: "/cards", component: Cards, name: "cards" }
+  { path: "/cards", component: Cards, name: "cards" },
 ]
 
 const router = createRouter({

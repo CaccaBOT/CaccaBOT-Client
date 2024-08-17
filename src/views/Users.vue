@@ -20,9 +20,6 @@ onMounted(async () => {
 
 <template>
   <div class="users-wrapper">
-    <div class="prose mx-auto w-full text-center my-2">
-      <h1>CACCA USERS</h1>
-    </div>
     <div
       class="users flex w-full flex-row flex-wrap items-center justify-center"
     >
@@ -39,10 +36,12 @@ onMounted(async () => {
               <img :src="user.pfp ?? noPfp" />
             </div>
           </div>
-          <div class="flex flex-col items-center justify-between h-100">
+          <div class="h-100 flex flex-col items-center justify-between">
             <h2 class="card-title">{{ user.username }}</h2>
-            <div class="badge badge-success mt-6 text-md p-4">
-              <strong>{{ user.poops }}</strong>&nbsp; Poops | &nbsp;<strong>{{ user.money }}</strong>&nbsp; 💩$
+            <div class="text-md badge badge-success mt-6 p-4">
+              <strong>{{ user.poops }}</strong
+              >&nbsp; Poops | &nbsp;<strong>{{ user.money }}</strong
+              >&nbsp; 💩$
             </div>
           </div>
         </div>

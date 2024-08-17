@@ -34,8 +34,26 @@ useHead({
     v-show="sessionStore.session.id && sessionStore.showChangePfpModal"
   />
   <router-view v-slot="{ Component, route }">
-    <component :is="Component" />
+    <Transition name="bounce">
+      <component :is="Component" />
+    </Transition>
   </router-view>
 </template>
 
-<style scoped></style>
+<style scoped>
+.bounce-enter-active {
+  animation: bounce-in 0.35s;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style>

@@ -35,7 +35,13 @@ function toggleNavMenu() {
     >
       <div class="xl:navbar-start">
         <div class="dropdown">
-          <div tabindex="0" class="btn btn-ghost lg:hidden" @click="sessionStore.showMobileNavbar = !sessionStore.showMobileNavbar">
+          <div
+            tabindex="0"
+            class="btn btn-ghost lg:hidden"
+            @click="
+              sessionStore.showMobileNavbar = !sessionStore.showMobileNavbar
+            "
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-5 w-5"
@@ -52,7 +58,7 @@ function toggleNavMenu() {
             </svg>
           </div>
           <ul
-          v-show="sessionStore.showMobileNavbar"
+            v-show="sessionStore.showMobileNavbar"
             class="menu dropdown-content z-[1] mt-3 w-52 rounded-box bg-base-300 p-2 shadow"
           >
             <li>
@@ -117,9 +123,9 @@ function toggleNavMenu() {
           Stats
         </button>
         <button
-        @click="router.push('/cards')"
-        class="btn mx-1 w-32 xl:w-36"
-        :class="{ 'btn-success': isActive('/cards') }"
+          @click="router.push('/cards')"
+          class="btn mx-1 w-32 xl:w-36"
+          :class="{ 'btn-success': isActive('/cards') }"
         >
           <StreamlineCards class="text-xl" />
 

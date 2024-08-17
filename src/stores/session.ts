@@ -9,12 +9,12 @@ export const useSessionStore = defineStore("session", {
     showNavMenu: false,
     showChangePasswordModal: false,
     showChangePfpModal: false,
-    showMobileNavbar: false
+    showMobileNavbar: false,
   }),
   getters: {},
   actions: {
     save() {
-        localStorage.setItem("token", this.session.token)
+      localStorage.setItem("token", this.session.token)
     },
     async load() {
       const token = localStorage.getItem("token") ?? null
@@ -22,7 +22,7 @@ export const useSessionStore = defineStore("session", {
         return
       }
       this.session.token = token
-      const {client} = useAPIStore()
+      const { client } = useAPIStore()
       this.session = await (await client.getOwnProfile()).json()
       this.session.token = token
     },

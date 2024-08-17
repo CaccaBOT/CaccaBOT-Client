@@ -11,13 +11,13 @@ body {
 }
 
 body::-webkit-scrollbar {
-  width: 0.5rem !important;
+  width: 0.5rem;
 }
 
 body::-webkit-scrollbar-thumb {
   background: linear-gradient(
     oklch(0.6569 0.196 275.75),
     oklch(0.748 0.26 342.55)
-  ) !important;
-  border-radius: 4px !important;
+  );
+  border-radius: 4px;
 }

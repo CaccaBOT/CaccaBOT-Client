@@ -28,7 +28,11 @@ onMounted(() => {
     <div class="prose">
       <h1>CaccaBOT</h1>
     </div>
-    <button v-show="installPrompt != null" @click="install" class="btn btn-success mt-6 w-80">
+    <button
+      v-show="installPrompt != null"
+      @click="install"
+      class="btn btn-success mt-6 w-80"
+    >
       <HeroiconsDownload class="text-xl" />
 
       Install

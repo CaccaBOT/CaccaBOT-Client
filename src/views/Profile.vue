@@ -46,7 +46,7 @@ function isOwnProfile() {
   return router.currentRoute.value.path.includes("/own")
 }
 
-function groupByDay(data: Poop[]): Record<string, number> {
+function groupByDay(data: Poop[]) {
   const grouped = {}
   data.forEach((item) => {
     const date = new Date(item.timestamp)
@@ -60,9 +60,7 @@ function groupByDay(data: Poop[]): Record<string, number> {
   return grouped
 }
 
-function fillMissingDays(
-  grouped: Record<string, number>,
-): Record<string, number> {
+function fillMissingDays(grouped) {
   const startDate = new Date(
     globalStore.selectedDate.getFullYear(),
     globalStore.selectedDate.getMonth(),
@@ -167,8 +165,8 @@ onMounted(async () => {
 })
 
 function shouldShowToggleArrow() {
-  if (document.querySelector('.inventory')) {
-    if (document.querySelector('.inventory').clientHeight > 250) {
+  if (document.querySelector(".inventory")) {
+    if (document.querySelector(".inventory").clientHeight > 250) {
       inventoryExpanded.value = false
     }
   }
@@ -181,33 +179,73 @@ function shouldShowToggleArrow() {
   <div class="profile-wrapper">
     <div class="profile-header mx-auto mt-8 text-center">
       <div class="avatar">
-        <div v-show="!globalStore.profile.username" class="skeleton w-32 shrink-0 rounded-full"></div>
-        <div v-show="globalStore.profile.username"
-          class="custom-shadow w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
-          <img :src="(isOwnProfile() ? sessionStore.session.pfp : globalStore.profile.pfp) ?? noPfp" />
+        <div
+          v-show="!globalStore.profile.username"
+          class="skeleton w-32 shrink-0 rounded-full"
+        ></div>
+        <div
+          v-show="globalStore.profile.username"
+          class="custom-shadow w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100"
+        >
+          <img
+            :src="
+              (isOwnProfile()
+                ? sessionStore.session.pfp
+                : globalStore.profile.pfp) ?? noPfp
+            "
+          />
         </div>
-        <div v-show="isOwnProfile()"
-          class="absolute bottom-[-5px] left-[-5px] h-[2.5rem] w-[2.5rem] cursor-pointer rounded-full bg-primary">
-          <div class="flex h-full items-center justify-center" @click="sessionStore.showChangePfpModal = true">
+        <div
+          v-show="isOwnProfile()"
+          class="absolute bottom-[-5px] left-[-5px] h-[2.5rem] w-[2.5rem] cursor-pointer rounded-full bg-primary"
+        >
+          <div
+            class="flex h-full items-center justify-center"
+            @click="sessionStore.showChangePfpModal = true"
+          >
             <HeroiconsPencil class="mx-auto text-center" color="black" />
           </div>
         </div>
       </div>
-      <div v-show="!globalStore.profile.username" class="skeleton mx-auto mt-5 h-6 w-1/6"></div>
+      <div
+        v-show="!globalStore.profile.username"
+        class="skeleton mx-auto mt-5 h-6 w-1/6"
+      ></div>
       <div v-show="globalStore.profile.username" class="username">
-        <h1 class="mx-auto w-max outline-none" :contenteditable="isEditingUsername">
+        <h1
+          class="mx-auto w-max outline-none"
+          :contenteditable="isEditingUsername"
+        >
           {{ globalStore.profile.username }}
-          <HeroiconsPencil v-show="isOwnProfile() && !isEditingUsername"
-            class="ml-1 inline cursor-pointer text-[1.25rem]" @click="isEditingUsername = !isEditingUsername" />
-          <MaterialSymbolsSaveOutline v-show="isOwnProfile() && isEditingUsername"
-            class="ml-1 inline cursor-pointer text-[1.25rem]" @click="editUsername" />
+          <HeroiconsPencil
+            v-show="isOwnProfile() && !isEditingUsername"
+            class="ml-1 inline cursor-pointer text-[1.25rem]"
+            @click="isEditingUsername = !isEditingUsername"
+          />
+          <MaterialSymbolsSaveOutline
+            v-show="isOwnProfile() && isEditingUsername"
+            class="ml-1 inline cursor-pointer text-[1.25rem]"
+            @click="editUsername"
+          />
         </h1>
       </div>
-      <div class="badge badge-success my-2 text-lg p-4"><strong>{{ globalStore.profile.money }}</strong>&nbsp; Merdollars</div>
+      <div class="badge badge-success my-2 p-4 text-lg">
+        <strong>{{ globalStore.profile.money }}</strong
+        >&nbsp; Merdollars
+      </div>
     </div>
-    <div v-show="!globalStore.profile.username" class="skeleton mx-auto mt-5 h-32 w-5/6"></div>
-    <div v-show="globalStore.profile.username" class="card mx-auto mt-5 w-5/6 bg-base-200 text-center shadow-xl">
-      <div class="prose card-body mx-auto text-center" v-show="globalStore.profile.bio">
+    <div
+      v-show="!globalStore.profile.username"
+      class="skeleton mx-auto mt-5 h-32 w-5/6"
+    ></div>
+    <div
+      v-show="globalStore.profile.username"
+      class="card mx-auto mt-5 w-5/6 bg-base-200 text-center shadow-xl"
+    >
+      <div
+        class="prose card-body mx-auto text-center"
+        v-show="globalStore.profile.bio"
+      >
         <h1 class="quote-top">“</h1>
         <p>
           {{ globalStore.profile.bio ?? "This user has not set a bio yet." }}
@@ -216,9 +254,14 @@ function shouldShowToggleArrow() {
       </div>
     </div>
 
-    <div v-show="userStats.monthlyLeaderboardPosition == null" class="skeleton mx-auto mt-5 h-32 w-5/6"></div>
-    <div v-show="userStats.monthlyLeaderboardPosition != null"
-      class="card stats mx-auto my-5 flex w-5/6 bg-base-200 text-center shadow sm:flex-col md:flex-row">
+    <div
+      v-show="userStats.monthlyLeaderboardPosition == null"
+      class="skeleton mx-auto mt-5 h-32 w-5/6"
+    ></div>
+    <div
+      v-show="userStats.monthlyLeaderboardPosition != null"
+      class="card stats mx-auto my-5 flex w-5/6 bg-base-200 text-center shadow sm:flex-col md:flex-row"
+    >
       <div class="stat">
         <div class="stat-figure text-sky-500">
           <HeroiconsTrophy class="text-xl" />
@@ -257,29 +300,53 @@ function shouldShowToggleArrow() {
         <div class="stat-desc">{{ globalStore.displayDate }}</div>
       </div>
     </div>
-    <div v-show="userCollectibles.length > 0" class="inventory-wrapper w-5/6 bg-base-200 mx-auto card my-5">
+    <div
+      v-show="userCollectibles.length > 0"
+      class="inventory-wrapper card mx-auto my-5 w-5/6 bg-base-200"
+    >
       <div class="prose m-5">
         <h2>Inventory</h2>
       </div>
 
-      <div class="inventory flex flex-row flex-wrap m-5" :style="{ 
-        height: inventoryExpanded ? 'auto' : '250px', 
-        overflow: inventoryExpanded ? 'visible' : 'hidden',
-        }">
-        <div class="collectible w-32 mb-5 prose relative m-5" v-for="collectible of userCollectibles">
-          <span class="quantity font-bold absolute w-8 h-8 top-[-5%] left-[-5%] rounded-full bg-info text-center">{{
-            collectible.quantity }}</span>
-          <img class="rounded-2xl m-0" :src="collectible.asset_url">
+      <div
+        class="inventory m-5 flex flex-row flex-wrap"
+        :style="{
+          height: inventoryExpanded ? 'auto' : '250px',
+          overflow: inventoryExpanded ? 'visible' : 'hidden',
+        }"
+      >
+        <div
+          class="collectible prose relative m-5 mb-5 w-32"
+          v-for="collectible of userCollectibles"
+        >
+          <span
+            class="quantity absolute left-[-5%] top-[-5%] h-8 w-8 rounded-full bg-info text-center font-bold"
+            >{{ collectible.quantity }}</span
+          >
+          <img class="m-0 rounded-2xl" :src="collectible.asset_url" />
           <h4 class="mt-0 p-0 text-center">{{ collectible.name }}</h4>
         </div>
       </div>
-      <div v-if="shouldShowToggleArrow()" class="w-full mb-2" @click="toggleInventory">
-        <HeroiconsArrowDownCircle class="text-4xl mx-auto cursor-pointer" :class="{ 'rotate-180': inventoryExpanded }" />
+      <div
+        v-if="shouldShowToggleArrow()"
+        class="mb-2 w-full"
+        @click="toggleInventory"
+      >
+        <HeroiconsArrowDownCircle
+          class="mx-auto cursor-pointer text-4xl"
+          :class="{ 'rotate-180': inventoryExpanded }"
+        />
       </div>
     </div>
-    <div v-show="userStats.monthlyLeaderboardPosition == null" class="skeleton mx-auto mt-20 h-72 w-11/12"></div>
-    <div v-show="userStats.monthlyLeaderboardPosition != null" class="chart mx-auto w-[95%]">
-      <apexchart height="400px" type="area" :options="options" :series="series" />
+    <div
+      v-show="userStats.monthlyLeaderboardPosition == null"
+      class="skeleton mx-auto mt-20 h-72 w-11/12"
+    ></div>
+    <div
+      v-show="userStats.monthlyLeaderboardPosition != null"
+      class="chart mx-auto w-[95%]"
+    >
+      <apexchart height="300" type="area" :options="options" :series="series" />
     </div>
   </div>
 </template>

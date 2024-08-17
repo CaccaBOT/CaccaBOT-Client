@@ -20,7 +20,9 @@ onMounted(async () => {
 
 <template>
   <div class="manual-wrapper prose mx-5">
-    <div class="loader-wrapper flex w-[95%] items-center justify-center">
+    <div
+      class="loader-wrapper flex h-[85vh] w-full items-center justify-center"
+    >
       <span class="loading loading-spinner loading-lg"></span>
     </div>
   </div>
@@ -29,10 +31,6 @@ onMounted(async () => {
 <style scoped>
 .manual-wrapper {
   max-width: 100%;
-}
-
-.loader-wrapper {
-  height: 85vh;
 }
 
 .loading {

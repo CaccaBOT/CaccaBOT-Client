@@ -34,7 +34,7 @@ async function clearPfp() {
 }
 
 function selectPfp() {
- (document.querySelector('#pfpSelector') as HTMLElement).click()
+  ;(document.querySelector("#pfpSelector") as HTMLElement).click()
 }
 
 function dismissModal(event) {
@@ -47,7 +47,7 @@ function onFileChange(event: Event) {
   const target = event.target as HTMLInputElement
   if (target.files && target.files.length > 0) {
     selectedFile.value = target.files[0]
-    
+
     const reader = new FileReader()
     reader.onload = (e) => {
       previewSrc.value = e.target?.result as string
@@ -60,22 +60,46 @@ function onFileChange(event: Event) {
 <template>
   <div
     class="change-profile-picture-panel-wrapper fixed left-0 top-0 z-10 flex h-[100vh] w-full items-center justify-center"
-    @click="dismissModal($event)">
+    @click="dismissModal($event)"
+  >
     <div
-      class="mx-auto flex w-[85vw] flex-col items-center gap-4 rounded-2xl bg-base-300 p-4 text-center shadow-xl sm:w-2/3 md:h-[50vh] md:w-[50vw] lg:h-[40vh] lg:w-[40vw] xl:w-[30vw]">
+      class="mx-auto flex w-[85vw] flex-col items-center gap-4 rounded-2xl bg-base-300 p-4 text-center shadow-xl sm:w-2/3 md:h-[50vh] md:w-[50vw] lg:h-[40vh] lg:w-[40vw] xl:w-[30vw]"
+    >
       <div class="prose mx-auto my-4">
         <h1>Change Profile Picture</h1>
       </div>
       <div
-        class="custom-shadow w-24 h-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 overflow-hidden">
-        <img class="w-24 h-24" :src="previewSrc ?? sessionStore.session.pfp ?? noPfp" />
+        class="custom-shadow h-24 w-24 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100"
+      >
+        <img
+          class="h-24 w-24"
+          :src="previewSrc ?? sessionStore.session.pfp ?? noPfp"
+        />
       </div>
       <div>
-      <p class="cursor-pointer text-accent my-2" @click="selectPfp">Pick a new one</p>
-      <p v-show="sessionStore.session.pfp" class="cursor-pointer text-error my-2" @click="clearPfp">Remove the current one</p>
-    </div>
-      <input id="pfpSelector" type="file" accept="image/*" class="hidden" @change="onFileChange($event)">
-      <button :disabled="selectedFile == null" class="btn btn-primary mb-4 mt-auto w-2/3 text-lg" @click="change">
+        <p class="my-2 cursor-pointer text-accent" @click="selectPfp">
+          Pick a new one
+        </p>
+        <p
+          v-show="sessionStore.session.pfp"
+          class="my-2 cursor-pointer text-error"
+          @click="clearPfp"
+        >
+          Remove the current one
+        </p>
+      </div>
+      <input
+        id="pfpSelector"
+        type="file"
+        accept="image/*"
+        class="hidden"
+        @change="onFileChange($event)"
+      />
+      <button
+        :disabled="selectedFile == null"
+        class="btn btn-primary mb-4 mt-auto w-2/3 text-lg"
+        @click="change"
+      >
         Change
       </button>
     </div>

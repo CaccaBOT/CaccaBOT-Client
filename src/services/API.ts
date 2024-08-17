@@ -38,7 +38,7 @@ export default class API {
         "X-Auth-Token": this.sessionStore.session.token,
       },
       body: JSON.stringify({
-        image: base64Pfp
+        image: base64Pfp,
       }),
     })
   }
@@ -47,7 +47,7 @@ export default class API {
     return await fetch(`${baseAPIURL}/collectible/open`, {
       headers: {
         "X-Auth-Token": this.sessionStore.session.token,
-      }
+      },
     })
   }
 
@@ -57,7 +57,7 @@ export default class API {
       headers: {
         "Content-Type": "application/json",
         "X-Auth-Token": this.sessionStore.session.token,
-      }
+      },
     })
   }
 
@@ -83,7 +83,7 @@ export default class API {
     return await fetch(`${baseAPIURL}/profile`, {
       headers: {
         "X-Auth-Token": this.sessionStore.session.token,
-      }
+      },
     })
   }
 
