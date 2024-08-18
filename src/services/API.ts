@@ -6,6 +6,10 @@ export const baseAPIURL = `${baseURL}/api`
 export default class API {
   sessionStore = useSessionStore()
 
+  async getVersion() {
+    return await fetch(`${baseAPIURL}/internals/version`)
+  }
+
   async login(username: string, password: string) {
     return await fetch(`${baseAPIURL}/auth/login`, {
       method: "POST",

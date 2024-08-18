@@ -7,14 +7,19 @@ import HeroiconsChartBar from "~icons/heroicons/chart-bar"
 import HeroiconsDownload from "~icons/heroicons/arrow-down-tray"
 import HeroiconsUsers from "~icons/heroicons/users"
 import { onMounted, ref } from "vue"
+import { useAPIStore } from "../stores/api"
+const {client} = useAPIStore()
 
+let serverVersion = ref('')
 let installPrompt = ref(null)
 
 async function install() {
   await installPrompt.value.prompt()
 }
 
-onMounted(() => {
+onMounted(async () => {
+  const {version} = await (await client.getVersion()).json()
+  serverVersion.value = version
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault()
     installPrompt.value = event
@@ -25,8 +30,9 @@ onMounted(() => {
 <template>
   <div class="home-wrapper">
     <img class="mb-5 w-80" :src="homeImage" />
-    <div class="prose">
-      <h1>CaccaBOT</h1>
+    <div class="prose text-center">
+      <h1 class="mb-0">CaccaBOT</h1>
+      <p class="m-0 text-2xl">{{ serverVersion }}</p>
     </div>
     <button
       v-show="installPrompt != null"
