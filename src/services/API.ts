@@ -22,9 +22,22 @@ export default class API {
     })
   }
 
+  async changeUsername(username: string) {
+    return await fetch(`${baseAPIURL}/profile/username`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Auth-Token": this.sessionStore.session.token,
+      },
+      body: JSON.stringify({
+        username,
+      }),
+    })
+  }
+
   async changePassword(password: string) {
     return await fetch(`${baseAPIURL}/auth/password`, {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "X-Auth-Token": this.sessionStore.session.token,

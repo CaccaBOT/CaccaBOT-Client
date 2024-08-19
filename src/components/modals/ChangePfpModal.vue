@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import router from "../router/router"
-import noPfp from "../assets/no_pfp.webp"
+import router from "../../router/router"
+import noPfp from "../../assets/no_pfp.webp"
 import { onMounted, ref } from "vue"
-import { useSessionStore } from "../stores/session"
-import { useAPIStore } from "../stores/api"
-import { useGlobalStore } from "../stores/global"
+import { useSessionStore } from "../../stores/session"
+import { useAPIStore } from "../../stores/api"
+import { useGlobalStore } from "../../stores/global"
 const sessionStore = useSessionStore()
 const globalStore = useGlobalStore()
 const { client } = useAPIStore()

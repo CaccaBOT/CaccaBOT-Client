@@ -29,6 +29,22 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+::v-deep(h5) {
+  color: var(--tw-prose-headings);
+  font-weight: 500;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.5;
+}
+
+::v-deep(h6) {
+  color: var(--tw-prose-headings);
+  font-weight: 400;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.5;
+}
+
 .manual-wrapper {
   max-width: 100%;
 }

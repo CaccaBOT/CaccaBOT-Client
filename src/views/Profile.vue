@@ -32,11 +32,6 @@ const inventoryExpanded = ref(false)
 let options = ref({})
 let series = ref([])
 
-function editUsername() {
-  //TODO: implement API call
-  isEditingUsername.value = false
-}
-
 function editBio() {
   //TODO: implement API call
   isEditingBio.value = false
@@ -220,12 +215,7 @@ function shouldShowToggleArrow() {
           <HeroiconsPencil
             v-show="isOwnProfile() && !isEditingUsername"
             class="ml-1 inline cursor-pointer text-[1.25rem]"
-            @click="isEditingUsername = !isEditingUsername"
-          />
-          <MaterialSymbolsSaveOutline
-            v-show="isOwnProfile() && isEditingUsername"
-            class="ml-1 inline cursor-pointer text-[1.25rem]"
-            @click="editUsername"
+            @click="sessionStore.showChangeUsernameModal = true"
           />
         </h1>
       </div>

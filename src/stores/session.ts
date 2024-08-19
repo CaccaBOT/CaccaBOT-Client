@@ -8,6 +8,7 @@ export const useSessionStore = defineStore("session", {
     showLoginModal: false,
     showNavMenu: false,
     showChangePasswordModal: false,
+    showChangeUsernameModal: false,
     showChangePfpModal: false,
     showMobileNavbar: false,
   }),

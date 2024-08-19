@@ -62,12 +62,8 @@ const options = ref({
   plotOptions: {
     treemap: {
       distributed: true, // Each cell can have its own color
-      enableShades: true, // Shades between nodes for better differentiation
+      enableShades: false, // Shades between nodes for better differentiation
     },
-  },
-  annotations: {
-    position: "back", // Ensure the images are behind the text
-    images: [], // This will be populated with user profile pictures if needed
   },
 })
 

@@ -8,9 +8,9 @@ import HeroiconsDownload from "~icons/heroicons/arrow-down-tray"
 import HeroiconsUsers from "~icons/heroicons/users"
 import { onMounted, ref } from "vue"
 import { useAPIStore } from "../stores/api"
-const {client} = useAPIStore()
+const { client } = useAPIStore()
 
-let serverVersion = ref('')
+let serverVersion = ref("")
 let installPrompt = ref(null)
 
 async function install() {
@@ -18,7 +18,7 @@ async function install() {
 }
 
 onMounted(async () => {
-  const {version} = await (await client.getVersion()).json()
+  const { version } = await (await client.getVersion()).json()
   serverVersion.value = version
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault()

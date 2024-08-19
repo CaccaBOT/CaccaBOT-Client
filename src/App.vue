@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import Header from "./components/Header.vue"
-import LoginPanel from "./components/LoginPanel.vue"
+import LoginModal from "./components/modals/LoginModal.vue"
 import router from "./router/router"
 import { useSessionStore } from "./stores/session"
 import { useHead } from "@unhead/vue"
 import { baseURL } from "./services/API.ts"
-import ChangePasswordPanel from "./components/ChangePasswordPanel.vue"
-import ChangePfpPanel from "./components/ChangePfpPanel.vue"
+import ChangePasswordModal from "./components/modals/ChangePasswordModal.vue"
+import ChangePfpModal from "./components/modals/ChangePfpModal.vue"
+import ChangeUsernameModal from "./components/modals/ChangeUsernameModal.vue"
 
 const sessionStore = useSessionStore()
 sessionStore.load()
@@ -24,13 +25,16 @@ useHead({
 
 <template>
   <Header />
-  <LoginPanel
+  <LoginModal
     v-show="!sessionStore.session.id && sessionStore.showLoginModal"
   />
-  <ChangePasswordPanel
+  <ChangePasswordModal
     v-show="sessionStore.session.id && sessionStore.showChangePasswordModal"
   />
-  <ChangePfpPanel
+  <ChangeUsernameModal
+    v-show="sessionStore.session.id && sessionStore.showChangeUsernameModal"
+  />
+  <ChangePfpModal
     v-show="sessionStore.session.id && sessionStore.showChangePfpModal"
   />
   <router-view v-slot="{ Component, route }">

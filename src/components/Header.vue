@@ -8,7 +8,7 @@ import poopIcon from "../assets/home.webp"
 import noPfp from "../assets/no_pfp.webp"
 import { useSessionStore } from "../stores/session"
 import NavMenu from "../components/NavMenu.vue"
-import ChangePasswordPanel from "../components/ChangePasswordPanel.vue"
+import ChangePasswordPanel from "./ChangePasswordModal.vue"
 import StreamlineCards from "~icons/streamline/cards"
 import { ref } from "vue"
 const sessionStore = useSessionStore()
