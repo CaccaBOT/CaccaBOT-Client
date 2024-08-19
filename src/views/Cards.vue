@@ -395,6 +395,8 @@ onMounted(() => {
 
 .fade-out {
   animation: fade-out 0.5s linear forwards;
+  user-select: none;
+  pointer-events: none;
 }
 
 .card::before {
