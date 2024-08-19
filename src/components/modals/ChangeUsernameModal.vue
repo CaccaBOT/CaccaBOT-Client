@@ -32,10 +32,9 @@ async function change() {
       .querySelectorAll("input")
       .forEach((x) => x.classList.add("input-bordered", "input-error"))
   } else {
-    sessionStore.showChangePasswordModal = false
+    sessionStore.showChangeUsernameModal = false
     sessionStore.showLoginModal = false
-    sessionStore.logout()
-    router.push("/")
+    sessionStore.session.username = newUsername.value
   }
 }
 
