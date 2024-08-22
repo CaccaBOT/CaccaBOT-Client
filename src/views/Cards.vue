@@ -311,7 +311,6 @@ onMounted(() => {
     <button
       v-if="sessionStore.session.money < 5"
       class="lg:w-1/8 btn btn-error mx-auto w-2/3 sm:w-2/3 md:w-1/6"
-      @click="openPack"
     >
       You can't buy this item (5 $💩)
     </button>
