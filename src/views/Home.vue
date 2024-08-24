@@ -28,7 +28,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="home-wrapper">
+  <div class="home-wrapper w-full h-[85vh] flex flex-col items-center justify-center">
     <img class="mb-5 w-80" :src="homeImage" />
     <div class="prose text-center">
       <h1 class="mb-0">CaccaBOT</h1>
@@ -47,15 +47,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.home-wrapper {
-  width: 100%;
-  height: 85vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 h1 {
   font-size: 3rem;
 }
