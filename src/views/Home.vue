@@ -47,7 +47,7 @@ onMounted(async () => {
     <a
       href="https://docs.google.com/forms/d/e/1FAIpQLSdLfTEASEb96vbTRplcNU0Y1PM8QYmdUT7oginiyAdj1skdoQ/viewform"
       target="_blank"
-      class="link link-info p-8 underline-offset-2"
+      class="link link-info underline-offset-2 mt-8"
       >Send suggestions here!</a
     >
   </div>
