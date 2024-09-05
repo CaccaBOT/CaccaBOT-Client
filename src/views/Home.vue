@@ -35,7 +35,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="home-wrapper w-full h-[85vh] flex flex-col items-center justify-center">
+  <div
+    class="home-wrapper flex h-[85vh] w-full flex-col items-center justify-center"
+  >
     <img class="mb-5 w-80" :src="homeImage" />
     <div class="prose text-center">
       <h1 class="mb-0">CaccaBOT</h1>
@@ -47,9 +49,14 @@ onMounted(async () => {
       class="btn btn-success mt-6 w-80"
     >
       <HeroiconsDownload class="text-xl" />
-
       Install
     </button>
+    <a
+      href="https://docs.google.com/forms/d/e/1FAIpQLSdLfTEASEb96vbTRplcNU0Y1PM8QYmdUT7oginiyAdj1skdoQ/viewform"
+      target="_blank"
+      class="link link-info underline-offset-2 mt-8"
+      >Send suggestions here!</a
+    >
   </div>
 </template>
 

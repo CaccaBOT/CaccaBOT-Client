@@ -108,6 +108,7 @@ async function fetchProfileStats(id) {
     options.value = {
       chart: {
         type: "area",
+        background: "transparent",
       },
       dataLabels: {
         enabled: false,
