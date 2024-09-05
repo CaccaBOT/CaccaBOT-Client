@@ -16,7 +16,9 @@ import HeroiconsArrowDownCircle from "~icons/heroicons/arrow-down-circle"
 import { Poop } from "../types/Profile.ts"
 import { DisplayedResult } from "../types/DisplayedResult.ts"
 import { useSessionStore } from "../stores/session.ts"
+import { useToast } from "vue-toastification"
 
+const toast = useToast()
 const globalStore = useGlobalStore()
 const { client } = useAPIStore()
 const sessionStore = useSessionStore()
@@ -86,10 +88,15 @@ async function fetchProfileStats(id) {
       globalStore.selectedDate.getFullYear(),
       globalStore.selectedDate.getMonth() + 1,
     )
-    userStats.value = await (await client.getMonthlyUserStats(id, date)).json()
+    try {
+      userStats.value = await (await client.getMonthlyUserStats(id, date)).json()
     monthlyUserPoops.value = await (
       await client.getMonthlyPoopsFromUser(id, date)
     ).json()
+    } catch (e) {
+      toast.error('Failed to fetch profile')
+    }
+
     const groupedByDay = groupByDay(monthlyUserPoops.value)
     const filledData = fillMissingDays(groupedByDay)
 
@@ -168,6 +175,18 @@ function shouldShowToggleArrow() {
 
   return true
 }
+
+function getRarityClass(rarityId) {
+  let rarityMap = {
+    Merdume: "rarity-common",
+    Escrementale: "rarity-rare",
+    Sensazianale: "rarity-epic",
+    Caccasmagorico: "rarity-legendary",
+  }
+
+  return rarityMap[rarityId]
+}
+
 </script>
 
 <template>
@@ -313,7 +332,7 @@ function shouldShowToggleArrow() {
             class="quantity absolute left-[-5%] top-[-5%] h-8 w-8 rounded-full bg-info text-center font-bold"
             >{{ collectible.quantity }}</span
           >
-          <img class="m-0 rounded-2xl" :src="collectible.asset_url" />
+          <img :class="getRarityClass(collectible.rarity)" class="collectible m-0 rounded-2xl" :src="collectible.asset_url" />
           <h4 class="mt-0 p-0 text-center">{{ collectible.name }}</h4>
         </div>
       </div>
@@ -372,5 +391,9 @@ function shouldShowToggleArrow() {
 .rotate-180 {
   transform: rotate(180deg);
   transition: transform 0.3s ease;
+}
+
+.collectible img {
+  border-width: 4px;
 }
 </style>

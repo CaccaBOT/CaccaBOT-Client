@@ -3,7 +3,9 @@ import { onMounted, ref } from "vue"
 import { useAPIStore } from "../stores/api"
 import noPfp from "../assets/no_pfp.webp"
 import { User } from "../types/User.ts"
+import { useToast } from "vue-toastification";
 
+const toast = useToast()
 const { client } = useAPIStore()
 const users = ref([])
 
@@ -13,8 +15,12 @@ function goToProfile(id: string) {
 }
 
 onMounted(async () => {
-  const usersResponse = await (await client.getLeaderboard()).json()
-  users.value = usersResponse.sort((a: User, b: User) => b.poops - a.poops)
+  try {
+    const usersResponse = await (await client.getLeaderboard()).json()
+    users.value = usersResponse.sort((a: User, b: User) => b.poops - a.poops)
+  } catch (e) {
+    toast.error('Failed to fetch users')
+  }
 })
 </script>
 

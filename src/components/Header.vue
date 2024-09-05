@@ -4,13 +4,10 @@ import HeroiconsTrophy from "~icons/heroicons/trophy"
 import HeroiconsBookOpen from "~icons/heroicons/book-open"
 import HeroiconsChartBar from "~icons/heroicons/chart-bar"
 import HeroiconsUsers from "~icons/heroicons/users"
-import poopIcon from "../assets/home.webp"
 import noPfp from "../assets/no_pfp.webp"
 import { useSessionStore } from "../stores/session"
 import NavMenu from "../components/NavMenu.vue"
-import ChangePasswordPanel from "./ChangePasswordModal.vue"
 import StreamlineCards from "~icons/streamline/cards"
-import { ref } from "vue"
 const sessionStore = useSessionStore()
 
 function isActive(route: string): boolean {

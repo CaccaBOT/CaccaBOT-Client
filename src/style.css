@@ -21,3 +21,19 @@ body::-webkit-scrollbar-thumb {
   );
   border-radius: 4px;
 }
+
+.rarity-legendary {
+  border: 8px solid #ffd600;
+}
+
+.rarity-epic {
+  border: 8px solid #9500ff;
+}
+
+.rarity-rare {
+  border: 8px solid #0068ff;
+}
+
+.rarity-common {
+  border: 8px solid #808080;
+}

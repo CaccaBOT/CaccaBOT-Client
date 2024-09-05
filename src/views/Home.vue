@@ -8,7 +8,9 @@ import HeroiconsDownload from "~icons/heroicons/arrow-down-tray"
 import HeroiconsUsers from "~icons/heroicons/users"
 import { onMounted, ref } from "vue"
 import { useAPIStore } from "../stores/api"
+import { useToast } from "vue-toastification"
 const { client } = useAPIStore()
+const toast = useToast()
 
 let serverVersion = ref("")
 let installPrompt = ref(null)
@@ -18,8 +20,13 @@ async function install() {
 }
 
 onMounted(async () => {
-  const { version } = await (await client.getVersion()).json()
-  serverVersion.value = version
+  try {
+    const { version } = await (await client.getVersion()).json()
+    serverVersion.value = version
+  } catch (e) {
+    toast.error('Failed to fetch server version')
+  }
+
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault()
     installPrompt.value = event

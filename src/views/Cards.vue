@@ -318,22 +318,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.rarity-legendary {
-  border: 8px solid #ffd600;
-}
-
-.rarity-epic {
-  border: 8px solid #9500ff;
-}
-
-.rarity-rare {
-  border: 8px solid #0068ff;
-}
-
-.rarity-common {
-  border: 8px solid #808080;
-}
-
 .slide-down {
   animation: slide-down 0.5s ease-in-out forwards;
 }

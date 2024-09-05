@@ -11,15 +11,21 @@ import UserCount from "../components/stats/UserCount.vue"
 import MonthlyPoopTreemapChart from "../components/stats/MonthlyPoopTreemapChart.vue"
 import PoopLineChart from "../components/stats/PoopLineChart.vue"
 import LongestStreak from "../components/stats/LongestStreak.vue"
+import { useToast } from "vue-toastification"
+const toast = useToast()
 const globalStore = useGlobalStore()
 const { client } = useAPIStore()
 
 const stats = ref(null)
 
 onMounted(async () => {
-  const response = await client.getStats()
-  if (response.ok) {
-    stats.value = await response.json()
+  try {
+    const response = await client.getStats()
+    if (response.ok) {
+      stats.value = await response.json()
+    }
+  } catch (e) {
+    toast.error('Failed to fetch stats')
   }
 })
 

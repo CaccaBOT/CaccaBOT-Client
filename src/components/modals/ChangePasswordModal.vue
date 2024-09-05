@@ -4,25 +4,31 @@ import noPfp from "../../assets/no_pfp.webp"
 import { ref } from "vue"
 import { useSessionStore } from "../../stores/session"
 import { useAPIStore } from "../../stores/api"
+import { useToast } from "vue-toastification"
 const sessionStore = useSessionStore()
 const { client } = useAPIStore()
+const toast = useToast()
 
 const newPassword = ref("")
 
 async function change() {
-  const response = await client.changePassword(newPassword.value)
-
-  if (!response.ok) {
-    newPassword.value = ""
-    document
-      .querySelectorAll("input")
-      .forEach((x) => x.classList.add("input-bordered", "input-error"))
+  try {
+    const response = await client.changePassword(newPassword.value)
+    if (!response.ok) {
+      newPassword.value = ""
+      document
+        .querySelectorAll("input")
+        .forEach((x) => x.classList.add("input-bordered", "input-error"))
+        const body = await response.json()
+        toast.error(body.error)
+    }
+    sessionStore.showChangePasswordModal = false
+    sessionStore.showLoginModal = false
+    sessionStore.logout()
+    router.push("/")
+  } catch (e) {
+    toast.error('Failed to change password')
   }
-
-  sessionStore.showChangePasswordModal = false
-  sessionStore.showLoginModal = false
-  sessionStore.logout()
-  router.push("/")
 }
 
 function dismissModal(event) {

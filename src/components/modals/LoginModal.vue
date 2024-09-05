@@ -4,13 +4,16 @@ import noPfp from "../../assets/no_pfp.webp"
 import { ref } from "vue"
 import { useSessionStore } from "../../stores/session"
 import { useAPIStore } from "../../stores/api"
+import { useToast } from "vue-toastification"
 const sessionStore = useSessionStore()
 const { client } = useAPIStore()
+const toast = useToast()
 
 const username = ref("")
 const password = ref("")
 
 async function login() {
+  try {
   const response = await client.login(username.value, password.value)
   const body = await response.json()
   username.value = ""
@@ -19,11 +22,15 @@ async function login() {
     document
       .querySelectorAll("input")
       .forEach((x) => x.classList.add("input-bordered", "input-error"))
+      toast.error(body.error)
     return
   }
 
   sessionStore.session = body
   sessionStore.save()
+  } catch (e) {
+    toast.error('Failed to login')
+  }
 }
 
 function dismissModal(event) {
