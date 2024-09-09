@@ -29,6 +29,23 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+
+::v-deep(p){
+  font-size: 0.882rem; /*15px*/
+}
+
+::v-deep(h2){
+  font-size: 1.765rem; /*30px*/
+}
+
+::v-deep(h3){
+  font-size: 1.529rem; /*26px*/
+}
+
+::v-deep(h4){
+  font-size: 1.235rem; /*21px*/
+}
+
 ::v-deep(h5) {
   color: var(--tw-prose-headings);
   font-weight: 500;
@@ -39,10 +56,11 @@ onMounted(async () => {
 
 ::v-deep(h6) {
   color: var(--tw-prose-headings);
-  font-weight: 400;
+  font-weight: 500;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
   line-height: 1.5;
+  font-size: 0.882rem;
 }
 
 .manual-wrapper {
