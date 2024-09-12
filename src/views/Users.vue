@@ -4,6 +4,7 @@ import { useAPIStore } from "../stores/api"
 import noPfp from "../assets/no_pfp.webp"
 import { User } from "../types/User.ts"
 import { useToast } from "vue-toastification";
+import merdollar from "../assets/merdollar.webp"
 
 const toast = useToast()
 const { client } = useAPIStore()
@@ -42,12 +43,12 @@ onMounted(async () => {
               <img :src="user.pfp ?? noPfp" />
             </div>
           </div>
-          <div class="h-100 flex flex-col items-center justify-between">
+          <div class="h-100 flex flex-col items-center">
             <h2 class="card-title">{{ user.username }}</h2>
-            <div class="text-md badge badge-success mt-6 p-4">
+            <div class="text-md badge badge-info mt-6 p-4">
               <strong>{{ user.poops }}</strong
-              >&nbsp; Poops | &nbsp;<strong>{{ user.money }}</strong
-              >&nbsp; 💩$
+              >&nbsp; 💩 | &nbsp;<strong>{{ user.money }}</strong
+              >&nbsp; <img class="w-[20px] h-[20px] merdollar" :src="merdollar">
             </div>
           </div>
         </div>

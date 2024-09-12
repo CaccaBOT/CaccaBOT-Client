@@ -15,6 +15,7 @@ import JSConfetti from "js-confetti"
 import { useAPIStore } from "../stores/api"
 import { useSessionStore } from "../stores/session"
 import { Card } from "../types/Card"
+import merdollar from "../assets/merdollar.webp"
 const { client } = useAPIStore()
 const sessionStore = useSessionStore()
 
@@ -306,13 +307,13 @@ onMounted(() => {
       class="lg:w-1/8 btn btn-success mx-auto w-2/3 sm:w-2/3 md:w-1/5"
       @click="openPack"
     >
-      Open Pack (5 $💩)
+      Open Pack (5 <img class="w-[20px] h-[20px] merdollar" :src="merdollar">)
     </button>
     <button
       v-if="sessionStore.session.money < 5"
       class="lg:w-1/8 btn btn-error mx-auto w-2/3 sm:w-2/3 md:w-1/5"
     >
-      You can't buy this item (5 $💩)
+      You can't buy this item (5 <img class="w-[20px] h-[20px] merdollar" :src="merdollar">)
     </button>
   </div>
 </template>
