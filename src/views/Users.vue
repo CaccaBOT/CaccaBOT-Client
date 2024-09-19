@@ -3,16 +3,17 @@ import { onMounted, ref } from "vue"
 import { useAPIStore } from "../stores/api"
 import noPfp from "../assets/no_pfp.webp"
 import { User } from "../types/User.ts"
-import { useToast } from "vue-toastification";
+import { useToast } from "vue-toastification"
 import merdollar from "../assets/merdollar.webp"
+import router from "../router/router.ts"
+import UserStatsBadge from "../components/UserStatsBadge.vue"
 
 const toast = useToast()
 const { client } = useAPIStore()
 const users = ref([])
 
 function goToProfile(id: string) {
-  //TODO: FEATURE NOT READY YET
-  //router.push(`/profile/${id}`);
+  router.push(`/profile/${id}/${new Date().getFullYear()}/${new Date().getMonth() + 1}`)
 }
 
 onMounted(async () => {
@@ -45,11 +46,7 @@ onMounted(async () => {
           </div>
           <div class="h-100 flex flex-col items-center">
             <h2 class="card-title">{{ user.username }}</h2>
-            <div class="text-md badge badge-info mt-6 p-4">
-              <strong>{{ user.poops }}</strong
-              >&nbsp; 💩 | &nbsp;<strong>{{ user.money }}</strong
-              >&nbsp; <img class="w-[20px] h-[20px] merdollar" :src="merdollar">
-            </div>
+            <UserStatsBadge :poops="user.poops" :money="user.money"/>
           </div>
         </div>
       </div>

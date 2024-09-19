@@ -17,6 +17,7 @@ import { Poop } from "../types/Profile.ts"
 import { DisplayedResult } from "../types/DisplayedResult.ts"
 import { useSessionStore } from "../stores/session.ts"
 import { useToast } from "vue-toastification"
+import UserStatsBadge from "../components/UserStatsBadge.vue"
 
 const toast = useToast()
 const globalStore = useGlobalStore()
@@ -239,10 +240,7 @@ function getRarityClass(rarityId) {
           />
         </h1>
       </div>
-      <div class="badge badge-success my-2 p-4 text-lg">
-        <strong>{{ globalStore.profile.money }}</strong
-        >&nbsp; Merdollars
-      </div>
+      <UserStatsBadge class="text-lg" :poops="globalStore.profile.poops" :money="globalStore.profile.money"/>
     </div>
     <div
       v-show="!globalStore.profile.username"
