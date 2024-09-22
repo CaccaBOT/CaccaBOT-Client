@@ -21,6 +21,16 @@ export default class API {
     })
   }
 
+  async logout(token: string) {
+    return await fetch(`${baseAPIURL}/auth/logout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token,
+      }),
+    })
+  }
+
   async changeUsername(username: string) {
     return await fetch(`${baseAPIURL}/profile/username`, {
       method: "PATCH",
@@ -78,9 +88,6 @@ export default class API {
     })
   }
 
-  async logout() {
-    // TODO: write implementation
-  }
 
   async getMonthlyLeaderboard(date: Date = new Date()) {
     return await fetch(

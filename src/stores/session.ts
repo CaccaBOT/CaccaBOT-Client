@@ -27,7 +27,9 @@ export const useSessionStore = defineStore("session", {
       this.session = await (await client.getOwnProfile()).json()
       this.session.token = token
     },
-    logout() {
+    async logout() {
+      const { client } = useAPIStore()
+      await client.logout(this.session.token)
       this.session = {}
       localStorage.removeItem("token")
     },
