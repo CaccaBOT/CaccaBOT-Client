@@ -13,7 +13,9 @@ const { client } = useAPIStore()
 const users = ref([])
 
 function goToProfile(id: string) {
-  router.push(`/profile/${id}/${new Date().getFullYear()}/${new Date().getMonth() + 1}`)
+  router.push(
+    `/profile/${id}/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
+  )
 }
 
 onMounted(async () => {
@@ -21,7 +23,7 @@ onMounted(async () => {
     const usersResponse = await (await client.getLeaderboard()).json()
     users.value = usersResponse.sort((a: User, b: User) => b.poops - a.poops)
   } catch (e) {
-    toast.error('Failed to fetch users')
+    toast.error("Failed to fetch users")
   }
 })
 </script>
@@ -46,7 +48,7 @@ onMounted(async () => {
           </div>
           <div class="h-100 flex flex-col items-center">
             <h2 class="card-title">{{ user.username }}</h2>
-            <UserStatsBadge :poops="user.poops" :money="user.money"/>
+            <UserStatsBadge :poops="user.poops" :money="user.money" />
           </div>
         </div>
       </div>

@@ -14,22 +14,22 @@ const password = ref("")
 
 async function login() {
   try {
-  const response = await client.login(username.value, password.value)
-  const body = await response.json()
-  username.value = ""
-  password.value = ""
-  if (!response.ok) {
-    document
-      .querySelectorAll("input")
-      .forEach((x) => x.classList.add("input-bordered", "input-error"))
+    const response = await client.login(username.value, password.value)
+    const body = await response.json()
+    username.value = ""
+    password.value = ""
+    if (!response.ok) {
+      document
+        .querySelectorAll("input")
+        .forEach((x) => x.classList.add("input-bordered", "input-error"))
       toast.error(body.error)
-    return
-  }
+      return
+    }
 
-  sessionStore.session = body
-  sessionStore.save()
+    sessionStore.session = body
+    sessionStore.save()
   } catch (e) {
-    toast.error('Failed to login')
+    toast.error("Failed to login")
   }
 }
 

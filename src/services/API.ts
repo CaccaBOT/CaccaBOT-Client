@@ -1,6 +1,6 @@
 import { useSessionStore } from "../stores/session"
 
-export const baseURL = "https://caccabot.duckdns.org"
+export const baseURL = "http://localhost:3000"
 export const baseAPIURL = `${baseURL}/api`
 
 export default class API {
@@ -87,7 +87,6 @@ export default class API {
       },
     })
   }
-
 
   async getMonthlyLeaderboard(date: Date = new Date()) {
     return await fetch(

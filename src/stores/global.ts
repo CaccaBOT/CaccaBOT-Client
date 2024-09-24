@@ -2,7 +2,7 @@ import { defineStore } from "pinia"
 import { useAPIStore } from "./api"
 import { Leaderboard } from "../types/Leaderboard"
 import { Profile } from "../types/Profile"
-import { useToast } from "vue-toastification";
+import { useToast } from "vue-toastification"
 
 export const useGlobalStore = defineStore("global", {
   state: () => ({
@@ -28,7 +28,7 @@ export const useGlobalStore = defineStore("global", {
         this.leaderboard = await response.json()
       } else {
         const toast = useToast()
-        toast.error("Error fetching leaderboard", {timeout: 1000})
+        toast.error("Error fetching leaderboard", { timeout: 1000 })
       }
     },
     async fetchProfile(id: string) {
@@ -41,7 +41,7 @@ export const useGlobalStore = defineStore("global", {
         this.$state.profile = await profileResponse.json()
       } else {
         const toast = useToast()
-        toast.error("Error fetching user profile", {timeout: 1000})
+        toast.error("Error fetching user profile", { timeout: 1000 })
       }
     },
     nextMonth() {

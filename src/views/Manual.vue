@@ -29,20 +29,19 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
-::v-deep(p){
+::v-deep(p) {
   font-size: 0.882rem; /*15px*/
 }
 
-::v-deep(h2){
+::v-deep(h2) {
   font-size: 1.765rem; /*30px*/
 }
 
-::v-deep(h3){
+::v-deep(h3) {
   font-size: 1.529rem; /*26px*/
 }
 
-::v-deep(h4){
+::v-deep(h4) {
   font-size: 1.235rem; /*21px*/
 }
 

@@ -19,15 +19,15 @@ async function change() {
       document
         .querySelectorAll("input")
         .forEach((x) => x.classList.add("input-bordered", "input-error"))
-        const body = await response.json()
-        toast.error(body.error)
+      const body = await response.json()
+      toast.error(body.error)
     }
     sessionStore.showChangePasswordModal = false
     sessionStore.showLoginModal = false
     sessionStore.logout()
     router.push("/")
   } catch (e) {
-    toast.error('Failed to change password')
+    toast.error("Failed to change password")
   }
 }
 

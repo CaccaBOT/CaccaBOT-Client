@@ -4,8 +4,8 @@ import router from "./router/router"
 import VueApexCharts from "vue3-apexcharts"
 import { createPinia } from "pinia"
 import { createHead } from "@unhead/vue"
-import Toast, { PluginOptions, POSITION } from "vue-toastification";
-import "vue-toastification/dist/index.css";
+import Toast, { PluginOptions, POSITION } from "vue-toastification"
+import "vue-toastification/dist/index.css"
 import App from "./App.vue"
 
 export const color =
@@ -20,6 +20,6 @@ createApp(App)
   .use(createHead())
   .use(Toast, {
     timeout: 2000,
-    position: POSITION.TOP_CENTER
+    position: POSITION.TOP_CENTER,
   } as PluginOptions)
   .mount("#app")

@@ -90,12 +90,14 @@ async function fetchProfileStats(id) {
       globalStore.selectedDate.getMonth() + 1,
     )
     try {
-      userStats.value = await (await client.getMonthlyUserStats(id, date)).json()
-    monthlyUserPoops.value = await (
-      await client.getMonthlyPoopsFromUser(id, date)
-    ).json()
+      userStats.value = await (
+        await client.getMonthlyUserStats(id, date)
+      ).json()
+      monthlyUserPoops.value = await (
+        await client.getMonthlyPoopsFromUser(id, date)
+      ).json()
     } catch (e) {
-      toast.error('Failed to fetch profile')
+      toast.error("Failed to fetch profile")
     }
 
     const groupedByDay = groupByDay(monthlyUserPoops.value)
@@ -188,7 +190,6 @@ function getRarityClass(rarityId) {
 
   return rarityMap[rarityId]
 }
-
 </script>
 
 <template>
@@ -240,7 +241,11 @@ function getRarityClass(rarityId) {
           />
         </h1>
       </div>
-      <UserStatsBadge class="text-lg" :poops="globalStore.profile.poops" :money="globalStore.profile.money"/>
+      <UserStatsBadge
+        class="text-lg"
+        :poops="globalStore.profile.poops"
+        :money="globalStore.profile.money"
+      />
     </div>
     <div
       v-show="!globalStore.profile.username"
@@ -324,14 +329,18 @@ function getRarityClass(rarityId) {
         }"
       >
         <div
-          class="collectible cursor-pointer prose relative m-5 mb-5 w-32"
+          class="collectible prose relative m-5 mb-5 w-32 cursor-pointer"
           v-for="collectible of userCollectibles"
         >
           <span
             class="quantity absolute left-[-5%] top-[-5%] h-8 w-8 rounded-full bg-info text-center font-bold"
             >{{ collectible.quantity }}</span
           >
-          <img :class="getRarityClass(collectible.rarity)" class="collectible m-0 rounded-2xl" :src="collectible.asset_url" />
+          <img
+            :class="getRarityClass(collectible.rarity)"
+            class="collectible m-0 rounded-2xl"
+            :src="collectible.asset_url"
+          />
           <h4 class="mt-0 p-0 text-center">{{ collectible.name }}</h4>
         </div>
       </div>

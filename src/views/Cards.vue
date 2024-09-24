@@ -4,7 +4,7 @@ import JSConfetti from "js-confetti"
 import { useAPIStore } from "../stores/api"
 import { useSessionStore } from "../stores/session"
 import { Card } from "../types/Card"
-import Pack from '../components/Pack.vue'
+import Pack from "../components/Pack.vue"
 import merdollar from "../assets/merdollar.webp"
 const { client } = useAPIStore()
 const sessionStore = useSessionStore()
@@ -42,7 +42,7 @@ function getRarityClass(rarityId) {
 async function reset() {
   isOpening.value = false
   await packRef.value.reset()
-  rerender.value++;
+  rerender.value++
 }
 </script>
 
@@ -51,8 +51,8 @@ async function reset() {
     <div
       class="card-pack mt-[5vh] flex cursor-pointer flex-row items-center justify-center"
     >
-  <Pack :key="rerender" ref="packRef"/>
-  </div>
+      <Pack :key="rerender" ref="packRef" />
+    </div>
     <div
       class="card-wrapper mt-24 flex hidden w-full items-center justify-center"
     >
@@ -81,13 +81,14 @@ async function reset() {
       class="lg:w-1/8 btn btn-success mx-auto w-2/3 sm:w-2/3 md:w-1/5"
       @click="openPack"
     >
-      Open Pack (5 <img class="w-[20px] h-[20px] merdollar" :src="merdollar">)
+      Open Pack (5 <img class="merdollar h-[20px] w-[20px]" :src="merdollar" />)
     </button>
     <button
       v-if="sessionStore.session.money < 5"
       class="lg:w-1/8 btn btn-error mx-auto w-2/3 sm:w-2/3 md:w-1/5"
     >
-      You can't buy this item (5 <img class="w-[20px] h-[20px] merdollar" :src="merdollar">)
+      You can't buy this item (5
+      <img class="merdollar h-[20px] w-[20px]" :src="merdollar" />)
     </button>
   </div>
 </template>

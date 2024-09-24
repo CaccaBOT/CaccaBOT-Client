@@ -24,7 +24,7 @@ onMounted(async () => {
     const { version } = await (await client.getVersion()).json()
     serverVersion.value = version
   } catch (e) {
-    toast.error('Failed to fetch server version')
+    toast.error("Failed to fetch server version")
   }
 
   window.addEventListener("beforeinstallprompt", (event) => {
@@ -54,7 +54,7 @@ onMounted(async () => {
     <a
       href="https://docs.google.com/forms/d/e/1FAIpQLSdLfTEASEb96vbTRplcNU0Y1PM8QYmdUT7oginiyAdj1skdoQ/viewform"
       target="_blank"
-      class="link link-info underline-offset-2 mt-8"
+      class="link link-info mt-8 underline-offset-2"
       >Send suggestions here!</a
     >
   </div>
