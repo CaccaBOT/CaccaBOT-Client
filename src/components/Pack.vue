@@ -89,35 +89,42 @@ function loadModel(scene: Scene) {
   loader.setDRACOLoader(dracoLoader)
 
   loader.load("card-pack.glb", (gltf) => {
-    model = gltf.scene
-    model.scale.set(0.06, 0.06, 0.06)
-    model.tick = (delta: number) => {
-      if (!userInteracting) {
-        model.rotation.y += delta * rotationSpeed
-      }
+  model = gltf.scene
+  model.scale.set(0.06, 0.06, 0.06)
+  
+  model.tick = (delta: number) => {
+    if (!userInteracting) {
+      model.rotation.y += delta * rotationSpeed
+    }
 
-      if (rotationSpeed >= 2) {
-        rotationSpeed *= exponentialFactor
-        if (rotationSpeed > 300) {
-          shrinking = true
-        }
-      }
-
-      if (shrinking) {
-        model.scale.multiplyScalar(0.95)
-        if (model.scale.x < 0.001) {
-          scene.remove(model)
-          stopAnimation();
-          document.querySelector(".card-pack")?.classList.add("hidden")
-          document.querySelector(".card-wrapper")?.classList.remove("hidden")
-          document.querySelector(".card-wrapper")?.classList.add("zoom-in")
-          document.querySelector(".card-info")?.classList.remove("hidden")
-          showConfetti()
-        }
+    if (!shrinking && rotationSpeed >= 2) {
+      rotationSpeed *= exponentialFactor
+      if (rotationSpeed > 300) {
+        shrinking = true
       }
     }
-    scene.add(model)
-  })
+
+    if (shrinking) {
+      model.scale.multiplyScalar(0.95)
+
+      if (model.scale.x < 0.001) {
+        scene.remove(model)
+        stopAnimation()
+        document.querySelector(".card-pack")?.classList.add("hidden")
+        document.querySelector(".card-wrapper")?.classList.remove("hidden")
+        document.querySelector(".card-wrapper")?.classList.add("zoom-in")
+        document.querySelector(".card-info")?.classList.remove("hidden")
+        showConfetti()
+
+        rotationSpeed = 1
+        shrinking = false
+      }
+    }
+  }
+  
+  scene.add(model)
+})
+
 }
 
 let animationId: number;
