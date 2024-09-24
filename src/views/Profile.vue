@@ -324,7 +324,7 @@ function getRarityClass(rarityId) {
         }"
       >
         <div
-          class="collectible prose relative m-5 mb-5 w-32"
+          class="collectible cursor-pointer prose relative m-5 mb-5 w-32"
           v-for="collectible of userCollectibles"
         >
           <span
