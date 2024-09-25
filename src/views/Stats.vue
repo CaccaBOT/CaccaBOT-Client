@@ -173,8 +173,4 @@ const mockUser = {
 .stats-widgets {
   max-width: 100%;
 }
-
-.loading {
-  transform: scale(1.5);
-}
 </style>

@@ -89,16 +89,12 @@ async function fetchProfileStats(id) {
       globalStore.selectedDate.getFullYear(),
       globalStore.selectedDate.getMonth() + 1,
     )
-    try {
       userStats.value = await (
         await client.getMonthlyUserStats(id, date)
       ).json()
       monthlyUserPoops.value = await (
         await client.getMonthlyPoopsFromUser(id, date)
       ).json()
-    } catch (e) {
-      toast.error("Failed to fetch profile")
-    }
 
     const groupedByDay = groupByDay(monthlyUserPoops.value)
     const filledData = fillMissingDays(groupedByDay)
@@ -194,12 +190,15 @@ function getRarityClass(rarityId) {
 
 <template>
   <div class="profile-wrapper">
+    <div
+      v-show="globalStore.profile.username == null"
+      class="loader-wrapper flex h-[85vh] w-full items-center justify-center"
+    >
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+    <div v-show="globalStore.profile.username" class="profile-info-wrapper">
     <div class="profile-header mx-auto mt-8 text-center">
       <div class="avatar">
-        <div
-          v-show="!globalStore.profile.username"
-          class="skeleton w-32 shrink-0 rounded-full"
-        ></div>
         <div
           v-show="globalStore.profile.username"
           class="custom-shadow w-24 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100"
@@ -224,10 +223,6 @@ function getRarityClass(rarityId) {
           </div>
         </div>
       </div>
-      <div
-        v-show="!globalStore.profile.username"
-        class="skeleton mx-auto mt-5 h-6 w-1/6"
-      ></div>
       <div v-show="globalStore.profile.username" class="username">
         <h1
           class="mx-auto w-max outline-none"
@@ -248,10 +243,6 @@ function getRarityClass(rarityId) {
       />
     </div>
     <div
-      v-show="!globalStore.profile.username"
-      class="skeleton mx-auto mt-5 h-32 w-5/6"
-    ></div>
-    <div
       v-show="globalStore.profile.username"
       class="card mx-auto mt-5 w-5/6 bg-base-200 text-center shadow-xl"
     >
@@ -266,11 +257,6 @@ function getRarityClass(rarityId) {
         <h1 class="quote-bottom">“</h1>
       </div>
     </div>
-
-    <div
-      v-show="userStats.monthlyLeaderboardPosition == null"
-      class="skeleton mx-auto mt-5 h-32 w-5/6"
-    ></div>
     <div
       v-show="userStats.monthlyLeaderboardPosition != null"
       class="card stats mx-auto my-5 flex w-5/6 bg-base-200 text-center shadow sm:flex-col md:flex-row"
@@ -356,15 +342,12 @@ function getRarityClass(rarityId) {
       </div>
     </div>
     <div
-      v-show="userStats.monthlyLeaderboardPosition == null"
-      class="skeleton mx-auto mt-20 h-72 w-11/12"
-    ></div>
-    <div
       v-show="userStats.monthlyLeaderboardPosition != null"
       class="chart mx-auto w-[95%]"
     >
       <apexchart height="300" type="area" :options="options" :series="series" />
     </div>
+  </div>
   </div>
 </template>
 

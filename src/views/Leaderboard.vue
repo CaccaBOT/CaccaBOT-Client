@@ -186,14 +186,12 @@ function updateNewMonth() {
     >
       NO POOPS FOUND
     </h2>
-
     <div
       v-show="globalStore.isFetching"
-      class="mx-auto flex w-11/12 flex-col gap-2"
+      class="loader-wrapper flex h-[70vh] w-full items-center justify-center"
     >
-      <div v-for="n in 15" class="skeleton h-12 w-full"></div>
+      <span class="loading loading-spinner loading-lg"></span>
     </div>
-
     <div
       v-show="globalStore.leaderboard.length > 0 && !globalStore.isFetching"
       class="overflow-x-auto"

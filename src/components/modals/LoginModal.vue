@@ -47,8 +47,7 @@ function dismissModal(event) {
   >
     <form
       class="mx-auto flex h-2/3 w-[85vw] flex-col items-center gap-4 rounded-2xl bg-base-300 p-4 text-center shadow-xl sm:w-2/3 md:w-[50vw] lg:w-[40vw] xl:w-[30vw]"
-      @submit="login"
-      @submit.prevent="onSubmit"
+      @submit.prevent="() => {}"
     >
       <div class="prose mx-auto my-4">
         <h1>Authentication</h1>

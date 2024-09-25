@@ -10,7 +10,7 @@ import UserStatsBadge from "../components/UserStatsBadge.vue"
 
 const toast = useToast()
 const { client } = useAPIStore()
-const users = ref([])
+const users = ref(null)
 
 function goToProfile(id: string) {
   router.push(
@@ -30,6 +30,12 @@ onMounted(async () => {
 
 <template>
   <div class="users-wrapper">
+    <div
+      v-show="users == null"
+      class="loader-wrapper flex h-[85vh] w-full items-center justify-center"
+    >
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
     <div
       class="users flex w-full flex-row flex-wrap items-center justify-center"
     >
