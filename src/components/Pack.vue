@@ -29,21 +29,22 @@ let shrinking = false
 let userInteracting = false
 let width = window.innerWidth / 3
 let height = window.innerHeight * 0.7
+let confettiSize = 50
+let confettiNumber = 50
 let model: any;
 
 function updateDimensions() {
   const screenWidth = window.innerWidth
-  const screenHeight = window.innerHeight
 
   if (screenWidth >= 1200) {
     width = screenWidth / 3
-    height = screenHeight * 0.7
   } else if (screenWidth >= 768) {
     width = screenWidth / 2
-    height = screenHeight * 0.6
+    confettiSize = 100
   } else {
     width = screenWidth
-    height = screenHeight * 0.5
+    confettiSize = 100
+    confettiNumber = 20
   }
 }
 
@@ -55,8 +56,8 @@ function createRenderer() {
 
 function createCamera() {
   const aspectRatio = width / height
-  const camera = new PerspectiveCamera(35, aspectRatio, 0.1, 100)
-  camera.position.set(0, 0, 10)
+  const camera = new PerspectiveCamera(35, aspectRatio, 0.1, 500)
+  camera.position.set(0, 0, 160)
   return camera
 }
 
@@ -90,7 +91,7 @@ function loadModel(scene: Scene) {
 
   loader.load("card-pack.glb", (gltf) => {
   model = gltf.scene
-  model.scale.set(0.06, 0.06, 0.06)
+  model.scale.set(1, 1, 1)
   
   model.tick = (delta: number) => {
     if (!userInteracting) {
@@ -175,7 +176,8 @@ async function reset() {
 function showConfetti() {
   confetti.addConfetti({
     emojis: ["💩", "🚽", "🧻"],
-    emojiSize: 50,
+    emojiSize: confettiSize,
+    confettiNumber
   })
 }
 

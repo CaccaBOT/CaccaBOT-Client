@@ -88,7 +88,7 @@ function dismissModal(event) {
       </div>
       <button
         :disabled="username.length == 0 || password.length == 0"
-        class="btn btn-primary mb-4 mt-auto w-2/3 text-lg"
+        class="btn btn-primary my-4 w-2/3 text-lg"
         @click="login"
       >
         Login

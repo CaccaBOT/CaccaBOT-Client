@@ -26,6 +26,7 @@ async function openPack() {
   document
     .querySelector(".card")
     .classList.add(getRarityClass(foundCard.value.rarity))
+  document.querySelector('.card-info > h2').classList.add(getTextRarityClass(foundCard.value.rarity))
 }
 
 function getRarityClass(rarityId) {
@@ -39,17 +40,32 @@ function getRarityClass(rarityId) {
   return rarityMap[rarityId]
 }
 
+function getTextRarityClass(rarityId) {
+  let rarityMap = {
+    Merdume: "text-rarity-common",
+    Escrementale: "text-rarity-rare",
+    Sensazianale: "text-rarity-epic",
+    Caccasmagorico: "text-rarity-legendary",
+  }
+
+  return rarityMap[rarityId]
+}
+
 async function reset() {
   isOpening.value = false
   await packRef.value.reset()
   rerender.value++
+  document
+    .querySelector(".card")
+    .classList.remove(getRarityClass(foundCard.value.rarity))
+  document.querySelector('.card-info > h2').classList.remove(getTextRarityClass(foundCard.value.rarity))
 }
 </script>
 
 <template>
-  <div class="cards-wrapper flex h-[80vh] flex-col justify-between">
+  <div class="cards-wrapper flex sm:h-[75vh] md:h-[80vh] flex-col justify-between">
     <div
-      class="card-pack mt-[5vh] flex cursor-pointer flex-row items-center justify-center"
+      class="card-pack flex cursor-pointer flex-row items-center justify-center"
     >
       <Pack :key="rerender" ref="packRef" />
     </div>
@@ -105,26 +121,6 @@ async function reset() {
 
   to {
     transform: translateY(100vh);
-  }
-}
-
-@keyframes glint {
-  0% {
-    box-shadow:
-      0 0 3px 2px rgba(255, 255, 255, 0.5),
-      0 0 5px 3px;
-  }
-
-  50% {
-    box-shadow:
-      0 0 10px 5px rgba(255, 255, 255, 0.5),
-      0 0 10px 5px;
-  }
-
-  100% {
-    box-shadow:
-      0 0 3px 2px rgba(255, 255, 255, 0.5),
-      0 0 5px 3px;
   }
 }
 

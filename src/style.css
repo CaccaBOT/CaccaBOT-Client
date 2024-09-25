@@ -37,3 +37,19 @@ body::-webkit-scrollbar-thumb {
 .rarity-common {
   border: 8px solid #808080;
 }
+
+.text-rarity-legendary {
+  color: #ffd600;
+}
+
+.text-rarity-epic {
+  color: #9500ff;
+}
+
+.text-rarity-rare {
+  color: #0068ff;
+}
+
+.text-rarity-common {
+  color: #808080;
+}
