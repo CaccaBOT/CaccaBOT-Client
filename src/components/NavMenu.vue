@@ -1,15 +1,10 @@
 <script setup lang="ts">
 import router from "../router/router"
-import noPfp from "../assets/no_pfp.webp"
-import { ref } from "vue"
 import HeroiconsLogout from "~icons/heroicons/arrow-left-end-on-rectangle"
 import HeroiconsUser from "~icons/heroicons/user"
 import MaterialSymbolsPassword from "~icons/material-symbols/password"
 import { useSessionStore } from "../stores/session"
-import { useAPIStore } from "../stores/api"
-import { useGlobalStore } from "../stores/global"
 const sessionStore = useSessionStore()
-const { client } = useAPIStore()
 
 function showChangePasswordModal() {
   if (sessionStore.session.id) {

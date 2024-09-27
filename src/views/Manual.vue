@@ -30,19 +30,19 @@ onMounted(async () => {
 
 <style scoped>
 ::v-deep(p) {
-  font-size: 0.882rem; /*15px*/
+  font-size: 1rem;
 }
 
 ::v-deep(h2) {
-  font-size: 1.765rem; /*30px*/
+  font-size: 1.7rem;
 }
 
 ::v-deep(h3) {
-  font-size: 1.529rem; /*26px*/
+  font-size: 1.5rem;
 }
 
 ::v-deep(h4) {
-  font-size: 1.235rem; /*21px*/
+  font-size: 1.2rem;
 }
 
 ::v-deep(h5) {
@@ -64,9 +64,5 @@ onMounted(async () => {
 
 .manual-wrapper {
   max-width: 100%;
-}
-
-.loading {
-  transform: scale(1.5);
 }
 </style>

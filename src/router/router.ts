@@ -43,6 +43,7 @@ const router = createRouter({
 router.afterEach(async (to, from) => {
   const globalStore = useGlobalStore()
   const sessionStore = useSessionStore()
+  sessionStore.showMobileNavbar = false
   switch (to.name) {
     case "monthlyLeaderboard":
       await globalStore.fetchLeaderboard(
